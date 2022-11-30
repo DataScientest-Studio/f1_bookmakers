@@ -7,7 +7,7 @@ Config file for Streamlit App
 from member import Member
 
 
-TITLE = "My Awesome App"
+TITLE = "Streamlit Formula 1"
 
 TEAM_MEMBERS = [
     Member(
@@ -18,4 +18,4 @@ TEAM_MEMBERS = [
     Member("Jane Doe"),
 ]
 
-PROMOTION = "Promotion Bootcamp Data Scientist - April 2021"
+PROMOTION = "Promotion Continue Data Scientist - April 2022"

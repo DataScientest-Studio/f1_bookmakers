@@ -1,4 +1,21 @@
-h1,
+:root{
+  --main-bg-color:#15151e;
+  --red-color: #e10600;
+  --color-1: #d0d0d2;
+}
+
+/* font family = F1Black ? */
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');  */
+@import url('./fonts/Formula1-Bold_web_0.ttf');
+
+.css-ffhzg2 {
+  background-color: var(--main-bg-color);
+}
+
+h1 {
+  font-family: Formula1;
+}
+/* h1,
 h2,
 h3,
 h4 {
@@ -7,30 +24,49 @@ h4 {
 
 code {
   color: #1ec3bc;
-}
+} */
 
-#MainMenu {
+/* #MainMenu {
   display: none;
-}
+} */
 
 div[data-testid="stDecoration"] {
   display: none;
 }
 
 footer {
-  display: none;
+  display: none !important;
 }
 
 /* Radio buttons */
 
-.st-cc {
+/* .st-cc {
   color: black;
   font-weight: 500;
+} */
+
+
+/* Intro */
+
+section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] {
+  border-top: 8px solid var(--red-color);
+  border-right: 8px solid var(--red-color);
+  border-top-right-radius: 23px;
+}
+
+section[tabindex="0"] h1 {
+  border-top: 1px solid var(--color-1);
+  border-right: 1px solid var(--color-1);
+  border-top-right-radius: 25px;
+}
+
+section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] img {
+  border-top-right-radius: 15px;
 }
 
 /* Sidebar */
 
-section[data-testid="stSidebar"] > div {
+/* section[data-testid="stSidebar"] > div {
   background-color: #10b8dd;
   padding-top: 2rem;
   padding-left: 1.5rem;
@@ -60,26 +96,26 @@ section[data-testid="stSidebar"] hr {
 
 section[data-testid="stSidebar"] h2 {
   color: white;
-}
+} */
 
 /* Images */
 
-button[title="View fullscreen"] {
+/* button[title="View fullscreen"] {
   display: none;
-}
+} */
 
 /* hr */
 
-hr {
+/* hr {
   width: 200px;
   border-width: 5px;
   border-color: #10b8dd;
   margin-top: 0px;
-}
+} */
 
 /* First Page */
 
-section[tabindex="0"] .block-container {
+/* section[tabindex="0"] .block-container {
   padding-top: 0px;
   padding-bottom: 0px;
-}
+} */

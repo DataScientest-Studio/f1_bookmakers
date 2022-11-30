@@ -1,31 +1,20 @@
 import streamlit as st
 
 
-title = "My Awesome DataScientest project."
+title = "F1 bookmaker"
 sidebar_name = "Introduction"
 
 
 def run():
 
-    # TODO: choose between one of these GIFs
-    # st.image("https://dst-studio-template.s3.eu-west-3.amazonaws.com/1.gif")
-    st.image("https://dst-studio-template.s3.eu-west-3.amazonaws.com/2.gif")
-    # st.image("https://dst-studio-template.s3.eu-west-3.amazonaws.com/3.gif")
+    st.image("https://www.formula1.com/content/dam/fom-website/sutton/2022/Italy/Sunday/1422823415.jpg.transform/9col/image.jpg", width=704)
 
     st.title(title)
 
-    st.markdown("---")
-
     st.markdown(
         """
-        Here is a bootsrap template for your DataScientest project, built with [Streamlit](https://streamlit.io).
+        Ce projet a été réalisé dans le cadre de notre formation Data Scientist
 
-        You can browse streamlit documentation and demos to get some inspiration:
-        - Check out [streamlit.io](https://streamlit.io)
-        - Jump into streamlit [documentation](https://docs.streamlit.io)
-        - Use a neural net to [analyze the Udacity Self-driving Car Image
-          Dataset] (https://github.com/streamlit/demo-self-driving)
-        - Explore a [New York City rideshare dataset]
-          (https://github.com/streamlit/demo-uber-nyc-pickups)
+        Le but de ce projet est de se servir de l’ensemble des données disponibles pour prédire soit le gagnant, soit le podium de chaque course d’une saison de F1. En complément nous essayerons aussi de prédire le classement général sur la saison 2021.
         """
     )
