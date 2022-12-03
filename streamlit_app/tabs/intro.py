@@ -7,7 +7,7 @@ sidebar_name = "Introduction"
 
 def run():
 
-    st.image("https://www.formula1.com/content/dam/fom-website/sutton/2022/Italy/Sunday/1422823415.jpg.transform/9col/image.jpg", width=704)
+    st.image("https://www.formula1.com/content/dam/fom-website/sutton/2022/Italy/Sunday/1422823415.jpg.transform/9col/image.jpg", width=1080)
 
     st.title(title)
 
