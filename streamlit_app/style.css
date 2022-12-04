@@ -5,17 +5,6 @@
   --color-1: #d0d0d2;
 }
 
-/* font family = F1Black ? */
-/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');  */
-/* @import url(https://fonts.googleapis.com/css?family=Titillium+Web:400,400i,600,600i); */
-@font-face {
-  font-family: 'Formula1 Bold';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Formula1 Bold'), url(https://github.com/DataScientest-Studio/f1_bookmakers/raw/main/streamlit_app/fonts/Formula1-Bold_web_0.ttf) format('truetype');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
 @font-face {
   font-family: 'Titillium Web';
   font-style: normal;
@@ -31,51 +20,15 @@
   src: url(https://fonts.gstatic.com/s/zendots/v10/XRXX3ICfm00IGoesQdaDRs4.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-@font-face {
+/* @font-face {
   font-family: 'Russo One';
   font-style: normal;
   font-weight: 400;
   src: url(https://fonts.gstatic.com/s/russoone/v14/Z9XUDmZRWg6M1LvRYsHOz8mJ.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-.css-ffhzg2 {
-  background-color: var(--main-bg-color);
-}
-
-.css-12oz5g7 {
-  max-width: 70rem;
-}
-
-h1 {
-  font-family: 'Zen Dots';
-}
-
-.css-13sdm1b {
-  font-family: "Titillium Web";
-}
-
-.css-b7s55g {
-  background-color: var(--main-bg-color);
-  width: 15rem;
-  border-right: 10px solid var(--gray-color);
-}
-
-/* h1,
-h2,
-h3,
-h4 {
-  color: #000000;
-}
-
-code {
-  color: #1ec3bc;
 } */
 
-/* #MainMenu {
-  display: none;
-} */
-
+/* divers */
 div[data-testid="stDecoration"] {
   display: none;
 }
@@ -84,31 +37,84 @@ footer {
   display: none !important;
 }
 
-/* Radio buttons */
 
-/* .st-cc {
-  color: black;
-  font-weight: 500;
-} */
+/* sidebar */
+.css-b7s55g {
+  background-color: var(--main-bg-color);
+  width: 15rem;
+  border-right: 10px solid var(--gray-color);
+}
 
 
-/* Intro */
+/* section */
+.css-ffhzg2 {
+  background-color: var(--main-bg-color);
+}
 
-section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] {
-  border-top: 8px solid var(--red-color);
-  border-right: 8px solid var(--red-color);
-  border-top-right-radius: 23px;
+.css-12oz5g7 {
+  max-width: 70rem;
 }
 
 section[tabindex="0"] h1 {
   border-top: 1px solid var(--color-1);
   border-right: 1px solid var(--color-1);
   border-top-right-radius: 25px;
+  font-family: 'Zen Dots';
+  font-style: italic;
+}
+
+section[tabindex="0"] h2,
+section[tabindex="0"] h3 {
+  font-family: 'Zen Dots';
+}
+section[tabindex="0"] h2 .css-zt5igj,
+section[tabindex="0"] h3 .css-zt5igj {
+  width: fit-content;
+}
+section[tabindex="0"] h2 span,
+section[tabindex="0"] h3 span {
+  border-bottom: 2px solid var(--red-color);
+}
+
+.css-13sdm1b {
+  font-family: "Titillium Web";
+}
+
+.css-13sdm1b a {
+  font-weight: bold;
+  text-decoration: none;
+  font-style: 'Zen Dots';
+}
+
+
+/* Intro */
+section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] {
+  border-top: 8px solid var(--red-color);
+  border-right: 8px solid var(--red-color);
+  border-top-right-radius: 23px;
 }
 
 section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] img {
   border-top-right-radius: 15px;
 }
+
+
+/* 
+code {
+  color: #1ec3bc;
+} */
+
+/* #MainMenu {
+  display: none;
+} */
+
+
+/* Radio buttons */
+
+/* .st-cc {
+  color: black;
+  font-weight: 500;
+} */
 
 /* Sidebar */
 
