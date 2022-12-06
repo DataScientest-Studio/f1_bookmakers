@@ -45,6 +45,10 @@ footer {
   border-right: 10px solid var(--gray-color);
 }
 
+section[data-testid="stSidebar"] button[title="View fullscreen"] {
+  display: none;
+}
+
 
 /* section */
 .css-ffhzg2 {
@@ -88,7 +92,7 @@ section[tabindex="0"] h3 span {
 
 
 /* Intro */
-section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] {
+/* section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] {
   border-top: 8px solid var(--red-color);
   border-right: 8px solid var(--red-color);
   border-top-right-radius: 23px;
@@ -96,7 +100,7 @@ section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImag
 
 section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] img {
   border-top-right-radius: 15px;
-}
+} */
 
 
 /* 
@@ -122,10 +126,6 @@ code {
   background-color: #10b8dd;
   padding-top: 2rem;
   padding-left: 1.5rem;
-}
-
-section[data-testid="stSidebar"] button[title="View fullscreen"] {
-  display: none;
 }
 
 section[data-testid="stSidebar"] button[kind="icon"] {

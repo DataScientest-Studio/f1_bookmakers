@@ -4,10 +4,10 @@ import streamlit as st
 title = "F1 bookmaker"
 sidebar_name = "Introduction"
 
-
 def run():
 
-    st.image("https://www.formula1.com/content/dam/fom-website/sutton/2022/Italy/Sunday/1422823415.jpg.transform/9col/image.jpg", width=1080)
+    st.markdown('<style>section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] {border-top: 8px solid var(--red-color); border-right: 8px solid var(--red-color); border-top-right-radius: 23px;} section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] img {border-top-right-radius: 15px;} button[title="View fullscreen"] {display: none;}</style>', unsafe_allow_html=True)
+    st.image(r"./assets/banniere_intro.jpg", width=1080)
 
     st.title(title)
 

@@ -396,7 +396,7 @@ def run():
 
         La table « Sprint results » fournit les résultats des séances Sprint des pilotes.
 
-        C’est une mini-course introduit en 2021 sur 3 Grand prix en test et reconduit pour 2022.
+        C’est une mini-course introduite en 2021 sur 3 Grand Prix en test et reconduite pour 2022.
 
         Le Sprint se déroule après la séance de qualification dont le classement final constitue la grille de départ du Sprint. Le classement à l'arrivée du Sprint définit la grille de départ de la course.
         """
