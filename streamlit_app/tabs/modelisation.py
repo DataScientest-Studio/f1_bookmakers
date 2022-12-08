@@ -12,7 +12,7 @@ from sklearn.metrics import classification_report
 from sklearn.model_selection import GridSearchCV
 
 title = "Modélisations"
-sidebar_name = "modelisation"
+sidebar_name = "Modélisation"
 
 def run():
     st.title(title)

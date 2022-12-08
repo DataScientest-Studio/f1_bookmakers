@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 
-title = "Exploration données"
-sidebar_name = "dataset"
+title = "Exploration des données"
+sidebar_name = "Exploration des données"
 
 def run():
     # Entête
