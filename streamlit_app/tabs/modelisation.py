@@ -95,10 +95,16 @@ def run():
     
 
     # rapport classification et matrice de confusion
-    confusion_matrix = pd.crosstab(df_test_proba['positionOrder'], df_test_proba['prediction'], rownames=['Classe réelle'], colnames=['Classe prédite'])
-    st.dataframe(confusion_matrix)
+    col1, col2, col3 = st.columns(3)
+    col1.write('Matrice de confusion')
+    confusion_matrix = pd.crosstab(df_test_proba['positionOrder'], df_test_proba['prediction'])
+    confusion_matrix.rename(index={0 : 'Classe 0 réel', 1 : 'Classe 1 réel'}, columns={0 : 'Classe 0 prédite', 1 : 'Classe 1 prédite'})
+    col1.dataframe(confusion_matrix)
 
-    st.markdown(classification_report(y_test, df_test_proba['prediction']))
+    col2.write('Rapport de classification')
+    classif_report_df = pd.DataFrame(classification_report(y_test, df_test_proba['prediction'], output_dict=True)).T[:2]
+    classif_report_df['support'] = classif_report_df['support'].astype('int')
+    col2.write(classif_report_df)
 
     st.markdown("""#### Comparaison pilotes vainqueurs et prédictions""")
 
