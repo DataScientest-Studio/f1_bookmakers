@@ -1,7 +1,7 @@
 import streamlit as st
 
 title = "Data visualisation"
-sidebar_name = "dataviz"
+sidebar_name = "Visualisation"
 
 def run():
     st.title(title)
