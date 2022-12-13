@@ -60,10 +60,18 @@ def run():
     # ----------------------------
     st.markdown(
         """
-        ## Machine learning
+        ## Prédiction vainqueur
+        ### Itération 1
+
+        Nous avons ciblé le championnat 2021 comme échantillon de test pour les prédictions.
+        
+        Les données de la manière suivante :
+        - Jeu d’entraînement : toutes les données jusqu’à l’année 2020 incluse.
+        - Jeu de test : les données de l’année 2021
+
         """)
 
-    model_selector = st.selectbox(label='', options=('', 'Régression logistique', 'Forêt aléatoire', 'Arbre de décision'),
+    model_selector = st.selectbox(label='', options=('', 'Régression logistique', 'Forêt aléatoire', 'Arbre de décision'), key="iter1",
                                     format_func=lambda x: "< Choix du modèle >" if x == '' else x)
     
     if model_selector == 'Régression logistique':
@@ -76,9 +84,9 @@ def run():
         param_col1, param_col2, param_col3, param_col4 = st.columns(4)
 
         with param_col1:
-            C_param_selector = st.selectbox(label='C', options=(0.001, 0.01, 0.1, 1, 10), index=2)
+            C_param_selector = st.selectbox(label='C', options=(0.001, 0.01, 0.1, 1, 10), index=1, key='log-iter1')
 
-        if st.button('Résultats'):  
+        if st.button('Résultats', key='log-iter1'):  
 
             st.write('---')
 
@@ -89,7 +97,6 @@ def run():
             # probabilité avec predict_proba
             y_pred_log_ro2 = log_reg.predict_proba(X_test_scaled)
             df_y_pred_log_ro2 = pd.DataFrame(y_pred_log_ro2, columns=['proba_0', 'proba_1'])
-            #st.dataframe(df_y_pred_log_ro2.head(20))
 
 
             # création dataframe des résultats
@@ -316,4 +323,189 @@ def run():
                 st.markdown("""#### Pilotes vainqueurs VS prédictions""")
                 st.dataframe(winners_results_dt, height=735)
 
+    st.write('---')
+
+    st.markdown(
+        """
+        ### Itération 2
+
+        Après la première itération du championnat 2021, nous souhaitions voir s’il était possible d’ajouter les données des courses passées dans le jeu d’entrainement à chaque course et observer les résultats obtenus.
+
+        Pour la première course du championnat, nous avons la répartition des données suivante :
+        - Jeu d’entraînement : toutes les données jusqu’à l’année 2020 incluse.
+        - Jeu de test : les données de la 1ere course du championnat 2021.
+
+        Pour la deuxième course, la répartition serait la suivante :
+        - Jeu d’entraînement : toutes les données jusqu’à l’année 2020 incluse + les données de la 1ere course du championnat 2021.
+        - Jeu de test : les données de la 2e course du championnat 2021.
+
+        Pour la troisième course, nous aurions :
+        - Jeu d’entraînement : toutes les données jusqu’à l’année 2020 incluse + les données de la 1ere et 2e courses du championnat 2021.
+        - Jeu de test : les données de la 3e course du championnat 2021.
+
+        Et ainsi de suite.
+
+        Les modèles sont réajustés à chaque mise à jour des jeux d’entrainements et les résultats cumulés au fur et à mesure des courses.
+
+        """)
     
+    model_selector_2 = st.selectbox(label='', options=('', 'Régression logistique', 'Forêt aléatoire', 'Arbre de décision'), key='iter2',
+                                    format_func=lambda x: "< Choix du modèle >" if x == '' else x)
+
+    if model_selector_2 == 'Régression logistique':
+        # ----------------------------
+        # Modèle régression logistique
+        # ----------------------------
+
+        # Choix des paramètres
+        st.markdown("""#### Paramètres""")
+        param_col1, param_col2, param_col3, param_col4 = st.columns(4)
+
+        with param_col1:
+            C_param_selector = st.selectbox(label='C', options=(0.001, 0.01, 0.1, 1, 10), index=1, key='log-iter2')
+
+        if st.button('Résultats', key='log-iter2'):  
+
+            st.write('---')
+
+            # initialisation données features / target
+            X_train = df_train.drop(['year', 'round', 'positionOrder'], axis=1)
+            y_train = df_train['positionOrder']
+
+            # instanciation fonction de normalisation des données
+            scaler = StandardScaler().fit(X_train)
+
+            # instanciation modèle
+            log_reg = LogisticRegression(C=C_param_selector)
+
+            # initialisation dataframe compilation des vainqueurs réels et prédits
+            df_winner = pd.DataFrame(columns=['round', 'Winner', 'Predicted winner'])
+
+            def predict_round_winner(n):
+                # pour la 1ere course (round=1)
+                #    jeux données train = jeux données initiales
+                #    jeux données test = données de la course
+                
+                # pour les courses suivantes (round > 1)
+                #    jeux données train = jeux données initiales + données des courses précédentes
+                #    jeux données test = données de la course
+                
+                if n==1:
+                    X_train = df_train.drop(['year', 'round', 'positionOrder'], axis=1)
+                    y_train = df_train['positionOrder']
+                    
+                    X_test_round_n = df_test[df_test['round']==n].drop(['year', 'round', 'positionOrder'], axis=1)
+                    y_test_round_n = df_test[df_test['round']==n]['positionOrder']
+
+                else:
+                    X_previous_round = df_test[df_test['round']<=(n-1)].drop(['year', 'round', 'positionOrder'], axis=1)
+                    y_previous_round = df_test[df_test['round']<=(n-1)]['positionOrder']
+                    
+                    X_train = pd.concat([df_train.drop(['year', 'round', 'positionOrder'], axis=1), X_previous_round], axis=0)
+                    y_train = pd.concat([df_train['positionOrder'], y_previous_round], axis=0)
+                    
+                    X_test_round_n = df_test[df_test['round']==n].drop(['year', 'round', 'positionOrder'], axis=1)
+                    y_test_round_n = df_test[df_test['round']==n]['positionOrder']
+
+                
+                # normalisation des données
+                X_train_scaled = scaler.transform(X_train)
+                X_test_round_n_scaled = scaler.transform(X_test_round_n)
+
+                # rééchantillonnage
+                X_ro, y_ro = ros.fit_resample(X_train_scaled, y_train)
+
+                # entrainement du modèle
+                log_reg.fit(X_ro, y_ro)
+
+                # probabilité avec predict_proba
+                y_pred_log_ro = log_reg.predict_proba(X_test_round_n_scaled)
+                df_y_pred_log_ro = pd.DataFrame(y_pred_log_ro, columns=['proba_0', 'proba_1'])
+
+                
+                # dataframe des résultats de la course
+                df_test_round_n_proba = pd.concat([df_test[df_test['round']==n].reset_index(), df_y_pred_log_ro], axis=1)
+                # ajout colonne prediction initialisée à 0
+                df_test_round_n_proba['prediction'] = 0
+
+                # on identifie la valeur max de la probabilité classe 1 et on affecte valeur 1 dans prediction à l'index max
+                max_proba_1 = df_test_round_n_proba['proba_1'].max()
+                index_max_proba_1 = df_test_round_n_proba[df_test_round_n_proba['proba_1']==max_proba_1].index
+                df_test_round_n_proba.loc[index_max_proba_1, 'prediction'] = 1
+                
+                
+                # dataframe résultat global avec concaténation des données à chaque course
+                global df_test_proba
+                if n==1:
+                    df_test_proba = df_test_round_n_proba
+                else:
+                    df_test_proba = pd.concat([df_test_proba, df_test_round_n_proba], axis=0)
+
+                # on identifie le pilote vainqueur réel
+                real_winner = df_test_round_n_proba[df_test_round_n_proba['positionOrder']==1]['driverId'].values[0]
+                # on identifie le pilote prédit vainqueur par le modèle
+                predicted_winner = df_test_round_n_proba[df_test_round_n_proba['prediction']==1]['driverId'].values[0]
+                
+                # dataframe où on regroupe les vainqueurs réel et prédit de la course
+                df_result_round_n = pd.DataFrame({'round' : [n],
+                                                'Real winner' : [real_winner],
+                                                'Predicted winner' : [predicted_winner]})
+                
+                # on fusionne les vainqueurs dans le dataframe final
+                global df_winner
+                df_winner = pd.concat([df_winner, df_result_round_n], axis=0)
+                
+                return df_winner
+
+            # --------------------
+
+            # liste des courses par raceId
+            round_list = list(np.sort(df_test['round'].unique()))
+            
+            # boucle sur chaque Grand Prix en appliquant la fonction
+            for race in round_list:
+                predict_round_winner(race)
+
+            # rapport classification et matrice de confusion
+            confusion_matrix = pd.crosstab(df_test_proba['positionOrder'], df_test_proba['prediction'])
+            confusion_matrix.columns = ['Pred. 0', 'Pred. 1']
+
+            classif_report_df = pd.DataFrame(classification_report(y_test, df_test_proba['prediction'], output_dict=True)).T[:2]
+            classif_report_df['support'] = classif_report_df['support'].astype('int')
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown("""#### Matrice de confusion""")
+                st.dataframe(confusion_matrix)
+
+                st.write('---')
+
+                st.markdown("""#### Rapport de classification""")
+                st.write(classif_report_df)
+
+
+            # # dataframe avec les pilotes vainqueurs réels
+            # winner_real_log = df_test_proba[df_test_proba["positionOrder"]==1][['round','driverId']]
+            # # dataframe avec les pilotes vainqueurs dans les prédicitons
+            # winner_predicted_log = df_test_proba[df_test_proba["prediction"]==1][['round','driverId']]
+
+            # # fusion des données pilotes dans les 2 dataframes
+            # winner_real_log = winner_real_log.merge(right=drivers_data[['driverId', 'surname']], on='driverId')\
+            #                                     .rename(columns={'surname' : 'Winner'})\
+            #                                     .drop(['driverId'], axis=1)
+            # winner_predicted_log = winner_predicted_log.merge(right=drivers_data[['driverId', 'surname']], on='driverId')\
+            #                                     .rename(columns={'surname' : 'Predicted winner'})\
+            #                                     .drop(['driverId'], axis=1)
+            # # fusion des 2 dataframes
+            # winners_results_log = winner_real_log.merge(right=winner_predicted_log, on='round').sort_values(by=['round']).reset_index(drop=True)
+
+
+            with col2:
+                st.markdown("""#### Pilotes vainqueurs VS prédictions""")
+                st.dataframe(df_winner, height=735)
+    
+    elif model_selector_2 == 'Forêt aléatoire':
+        st.write('Random forest')
+    
+    elif model_selector_2 == 'Arbre de décision':
+        st.write('Tree decision')
