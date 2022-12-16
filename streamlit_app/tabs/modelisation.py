@@ -380,8 +380,13 @@ def run():
 
             # initialisation dataframe compilation des vainqueurs réels et prédits
             df_winner = pd.DataFrame(columns=['round', 'Winner', 'Predicted winner'])
+            df_test_proba = pd.DataFrame()
 
-            def predict_round_winner(n):
+            # liste des courses par raceId
+            round_list = list(np.sort(df_test['round'].unique()))
+            
+            # boucle sur chaque Grand Prix
+            for n in round_list:
                 # pour la 1ere course (round=1)
                 #    jeux données train = jeux données initiales
                 #    jeux données test = données de la course
@@ -435,7 +440,6 @@ def run():
                 
                 
                 # dataframe résultat global avec concaténation des données à chaque course
-                global df_test_proba
                 if n==1:
                     df_test_proba = df_test_round_n_proba
                 else:
@@ -448,57 +452,40 @@ def run():
                 
                 # dataframe où on regroupe les vainqueurs réel et prédit de la course
                 df_result_round_n = pd.DataFrame({'round' : [n],
-                                                'Real winner' : [real_winner],
+                                                'Winner' : [real_winner],
                                                 'Predicted winner' : [predicted_winner]})
                 
                 # on fusionne les vainqueurs dans le dataframe final
-                global df_winner
                 df_winner = pd.concat([df_winner, df_result_round_n], axis=0)
-                
-                return df_winner
 
             # --------------------
 
-            # liste des courses par raceId
-            round_list = list(np.sort(df_test['round'].unique()))
-            
-            # boucle sur chaque Grand Prix en appliquant la fonction
-            for race in round_list:
-                predict_round_winner(race)
-
             # rapport classification et matrice de confusion
-            confusion_matrix = pd.crosstab(df_test_proba['positionOrder'], df_test_proba['prediction'])
-            confusion_matrix.columns = ['Pred. 0', 'Pred. 1']
+            confusion_matrix_2 = pd.crosstab(df_test_proba['positionOrder'], df_test_proba['prediction'])
+            confusion_matrix_2.columns = ['Pred. 0', 'Pred. 1']
 
-            classif_report_df = pd.DataFrame(classification_report(y_test, df_test_proba['prediction'], output_dict=True)).T[:2]
-            classif_report_df['support'] = classif_report_df['support'].astype('int')
+            classif_report_df_2 = pd.DataFrame(classification_report(df_test_proba['positionOrder'], df_test_proba['prediction'], output_dict=True)).T[:2]
+            classif_report_df_2['support'] = classif_report_df_2['support'].astype('int')
             
             col1, col2 = st.columns(2)
             with col1:
                 st.markdown("""#### Matrice de confusion""")
-                st.dataframe(confusion_matrix)
+                st.dataframe(confusion_matrix_2)
 
                 st.write('---')
 
                 st.markdown("""#### Rapport de classification""")
-                st.write(classif_report_df)
+                st.write(classif_report_df_2)
 
-
-            # # dataframe avec les pilotes vainqueurs réels
-            # winner_real_log = df_test_proba[df_test_proba["positionOrder"]==1][['round','driverId']]
-            # # dataframe avec les pilotes vainqueurs dans les prédicitons
-            # winner_predicted_log = df_test_proba[df_test_proba["prediction"]==1][['round','driverId']]
-
-            # # fusion des données pilotes dans les 2 dataframes
-            # winner_real_log = winner_real_log.merge(right=drivers_data[['driverId', 'surname']], on='driverId')\
-            #                                     .rename(columns={'surname' : 'Winner'})\
-            #                                     .drop(['driverId'], axis=1)
-            # winner_predicted_log = winner_predicted_log.merge(right=drivers_data[['driverId', 'surname']], on='driverId')\
-            #                                     .rename(columns={'surname' : 'Predicted winner'})\
-            #                                     .drop(['driverId'], axis=1)
-            # # fusion des 2 dataframes
-            # winners_results_log = winner_real_log.merge(right=winner_predicted_log, on='round').sort_values(by=['round']).reset_index(drop=True)
-
+            df_winner['Winner'] = df_winner['Winner'].astype('int')
+            # fusion des données pilotes dans le dataframe
+            df_winner = df_winner.merge(right=drivers_data[['driverId', 'surname']], left_on='Winner', right_on='driverId')\
+                                                .drop(['driverId', 'Winner'], axis=1)\
+                                                .rename(columns={'surname' : 'Winner'})
+            df_winner = df_winner.merge(right=drivers_data[['driverId', 'surname']], left_on='Predicted winner', right_on='driverId')\
+                                                .drop(['driverId', 'Predicted winner'], axis=1)\
+                                                .rename(columns={'surname' : 'Predicted winner'})\
+                                                .sort_values(by=['round']).reset_index(drop=True)
 
             with col2:
                 st.markdown("""#### Pilotes vainqueurs VS prédictions""")
