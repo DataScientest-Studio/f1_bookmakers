@@ -148,6 +148,7 @@ def run():
                                                 .drop(['driverId'], axis=1)
             # fusion des 2 dataframes
             winners_results_log = winner_real_log.merge(right=winner_predicted_log, on='round').sort_values(by=['round']).reset_index(drop=True)
+            winners_results_log['match'] = winners_results_log.apply(lambda row: '✅' if row['Winner']==row['Predicted winner'] else '❌', axis=1)
 
 
             with col2:
@@ -234,6 +235,7 @@ def run():
                                                 .drop(['driverId'], axis=1)
             # fusion des 2 dataframes
             winners_results_rf = winner_real_rf.merge(right=winner_predicted_rf, on='round').sort_values(by=['round']).reset_index(drop=True)
+            winners_results_rf['match'] = winners_results_rf.apply(lambda row: '✅' if row['Winner']==row['Predicted winner'] else '❌', axis=1)
 
 
             with col2:
@@ -317,6 +319,7 @@ def run():
                                                 .drop(['driverId'], axis=1)
             # fusion des 2 dataframes
             winners_results_dt = winner_real_dt.merge(right=winner_predicted_dt, on='round').sort_values(by=['round']).reset_index(drop=True)
+            winners_results_dt['match'] = winners_results_dt.apply(lambda row: '✅' if row['Winner']==row['Predicted winner'] else '❌', axis=1)
 
 
             with col2:
@@ -458,7 +461,6 @@ def run():
                 # on fusionne les vainqueurs dans le dataframe final
                 df_winner = pd.concat([df_winner, df_result_round_n], axis=0)
 
-            # --------------------
 
             # rapport classification et matrice de confusion
             confusion_matrix_2 = pd.crosstab(df_test_proba['positionOrder'], df_test_proba['prediction'])
@@ -486,6 +488,7 @@ def run():
                                                 .drop(['driverId', 'Predicted winner'], axis=1)\
                                                 .rename(columns={'surname' : 'Predicted winner'})\
                                                 .sort_values(by=['round']).reset_index(drop=True)
+            df_winner['match'] = df_winner.apply(lambda row: '✅' if row['Winner']==row['Predicted winner'] else '❌', axis=1)
 
             with col2:
                 st.markdown("""#### Pilotes vainqueurs VS prédictions""")
