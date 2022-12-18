@@ -119,9 +119,11 @@ def run():
             # rapport classification et matrice de confusion
             confusion_matrix = pd.crosstab(df_test_proba['positionOrder'], df_test_proba['prediction'])
             confusion_matrix.columns = ['Pred. 0', 'Pred. 1']
+            confusion_matrix.index = ['Real val. 0', 'Real val. 1']
 
             classif_report_df = pd.DataFrame(classification_report(y_test, df_test_proba['prediction'], output_dict=True)).T[:2]
             classif_report_df['support'] = classif_report_df['support'].astype('int')
+            classif_report_df.index = ['Class 0', 'Class 1']
             
             col1, col2 = st.columns(2)
             with col1:
@@ -166,13 +168,13 @@ def run():
         param_col1, param_col2, param_col3, param_col4 = st.columns(4)
 
         with param_col1:
-            n_estimators_param_selector = st.selectbox(label='n_estimators', options=(10, 50, 100, 250), index=2)
+            n_estimators_param_selector = st.selectbox(label='n_estimators', options=(10, 50, 100, 250), index=2, key='rf_param1-iter1')
         with param_col2:
-            min_samples_leaf_param_selector = st.selectbox(label='min_samples_leaf', options=(1, 3, 5), index=0)
+            min_samples_leaf_param_selector = st.selectbox(label='min_samples_leaf', options=(1, 3, 5), index=0, key='rf_param2-iter1')
         with param_col3:
-            max_features_param_selector = st.selectbox(label='max_features', options=('sqrt', 'log2'), index=1)
+            max_features_param_selector = st.selectbox(label='max_features', options=('sqrt', 'log2'), index=1, key='rf_param2-iter1')
 
-        if st.button('Résultats'):
+        if st.button('Résultats', key='rf-iter1'):
 
             st.write('---')
         
@@ -206,9 +208,11 @@ def run():
             # rapport classification et matrice de confusion
             confusion_matrix_rf = pd.crosstab(df_test_prob_rf['positionOrder'], df_test_prob_rf['prediction'])
             confusion_matrix_rf.columns = ['Pred. 0', 'Pred. 1']
+            confusion_matrix_rf.index = ['Real val. 0', 'Real val. 1']
 
             classif_report_rf_df = pd.DataFrame(classification_report(y_test, df_test_prob_rf['prediction'], output_dict=True)).T[:2]
             classif_report_rf_df['support'] = classif_report_rf_df['support'].astype('int')
+            classif_report_rf_df.index = ['Class 0', 'Class 1']
             
             col1, col2 = st.columns(2)
             with col1:
@@ -253,16 +257,16 @@ def run():
         param_col1, param_col2, param_col3, param_col4 = st.columns(4)
 
         with param_col1:
-            criterion_param_selector = st.selectbox(label='criterion', options=('entropy', 'gini'), index=0)
+            criterion_param_selector = st.selectbox(label='criterion', options=('entropy', 'gini'), index=0, key='dt_param1-iter1')
         with param_col2:
-            mmax_depth_param_selector = st.selectbox(label='max_depth', options=(1, 2, 3, 5, 6, 7), index=3)
+            max_depth_param_selector = st.selectbox(label='max_depth', options=(1, 2, 3, 5, 6, 7), index=3, key='dt_param2-iter1')
 
-        if st.button('Résultats'):
+        if st.button('Résultats', key='dt-iter1'):
 
             st.write('---')
 
             # instanciation modèle
-            dt_clf = DecisionTreeClassifier(criterion=criterion_param_selector, max_depth=5, random_state=143)
+            dt_clf = DecisionTreeClassifier(criterion=criterion_param_selector, max_depth=max_depth_param_selector, random_state=143)
             dt_clf.fit(X_ro, y_ro)
 
             # probabilité avec predict_proba
@@ -290,9 +294,11 @@ def run():
             # rapport classification et matrice de confusion
             confusion_matrix_dt = pd.crosstab(df_test_prob_dt['positionOrder'], df_test_prob_dt['prediction'])
             confusion_matrix_dt.columns = ['Pred. 0', 'Pred. 1']
+            confusion_matrix_dt.index = ['Real val. 0', 'Real val. 1']
 
             classif_report_dt_df = pd.DataFrame(classification_report(y_test, df_test_prob_dt['prediction'], output_dict=True)).T[:2]
             classif_report_dt_df['support'] = classif_report_dt_df['support'].astype('int')
+            classif_report_dt_df.index = ['Class 0', 'Class 1']
             
             col1, col2 = st.columns(2)
             with col1:
@@ -465,9 +471,11 @@ def run():
             # rapport classification et matrice de confusion
             confusion_matrix_2 = pd.crosstab(df_test_proba['positionOrder'], df_test_proba['prediction'])
             confusion_matrix_2.columns = ['Pred. 0', 'Pred. 1']
+            confusion_matrix_2.index = ['Real val. 0', 'Real val. 1']
 
             classif_report_df_2 = pd.DataFrame(classification_report(df_test_proba['positionOrder'], df_test_proba['prediction'], output_dict=True)).T[:2]
             classif_report_df_2['support'] = classif_report_df_2['support'].astype('int')
+            classif_report_df_2.index = ['Class 0', 'Class 1']
             
             col1, col2 = st.columns(2)
             with col1:
@@ -479,7 +487,6 @@ def run():
                 st.markdown("""#### Rapport de classification""")
                 st.write(classif_report_df_2)
 
-            df_winner['Winner'] = df_winner['Winner'].astype('int')
             # fusion des données pilotes dans le dataframe
             df_winner = df_winner.merge(right=drivers_data[['driverId', 'surname']], left_on='Winner', right_on='driverId')\
                                                 .drop(['driverId', 'Winner'], axis=1)\
@@ -495,7 +502,285 @@ def run():
                 st.dataframe(df_winner, height=735)
     
     elif model_selector_2 == 'Forêt aléatoire':
-        st.write('Random forest')
+        # ----------------------
+        # Modèle Forêt aléatoire
+        # ----------------------
+        
+        # Choix des paramètres
+        st.markdown("""#### Paramètres""")
+        param_col1, param_col2, param_col3, param_col4 = st.columns(4)
+
+        with param_col1:
+            n_estimators_param_selector = st.selectbox(label='n_estimators', options=(10, 50, 100, 250), index=2, key='rf_param1-iter2')
+        with param_col2:
+            min_samples_leaf_param_selector = st.selectbox(label='min_samples_leaf', options=(1, 3, 5), index=0, key='rf_param2-iter2')
+        with param_col3:
+            max_features_param_selector = st.selectbox(label='max_features', options=('sqrt', 'log2'), index=1, key='rf_param2-iter2')
+
+        if st.button('Résultats', key='rf-iter2'):
+
+            st.write('---')
+
+            # initialisation données features / target
+            X_train = df_train.drop(['year', 'round', 'positionOrder'], axis=1)
+            y_train = df_train['positionOrder']
+
+            # instanciation fonction de normalisation des données
+            scaler = StandardScaler().fit(X_train)
+        
+            # instanciation modèle
+            rf = RandomForestClassifier(n_jobs=-1, max_features = max_features_param_selector, min_samples_leaf = min_samples_leaf_param_selector,
+                                            n_estimators = n_estimators_param_selector, random_state=1430)
+            
+            # initialisation dataframe compilation des vainqueurs réels et prédits
+            df_winner_rf = pd.DataFrame(columns=['round', 'Winner', 'Predicted winner'])
+            df_test_proba_rf = pd.DataFrame()
+
+            # liste des courses par raceId
+            round_list_rf = list(np.sort(df_test['round'].unique()))
+
+
+            # boucle sur chaque course
+            for n in round_list_rf:
+                # pour la 1ere course (round=1)
+                #    jeux données train = jeux données initiales
+                #    jeux données test = données de la course
+                
+                # pour les courses suivantes (round > 1)
+                #    jeux données train = jeux données initiales + données des courses précédentes
+                #    jeux données test = données de la course
+                
+                if n==1:
+                    X_train = df_train.drop(['year', 'round', 'positionOrder'], axis=1)
+                    y_train = df_train['positionOrder']
+                    
+                    X_test_round_n = df_test[df_test['round']==n].drop(['year', 'round', 'positionOrder'], axis=1)
+                    y_test_round_n = df_test[df_test['round']==n]['positionOrder']
+                
+                else:
+                    X_previous_round = df_test[df_test['round']<=(n-1)].drop(['year', 'round', 'positionOrder'], axis=1)
+                    y_previous_round = df_test[df_test['round']<=(n-1)]['positionOrder']
+                    
+                    X_train = pd.concat([df_train.drop(['year', 'round', 'positionOrder'], axis=1), X_previous_round], axis=0)
+                    y_train = pd.concat([df_train['positionOrder'], y_previous_round], axis=0)
+                    
+                    X_test_round_n = df_test[df_test['round']==n].drop(['year', 'round', 'positionOrder'], axis=1)
+                    y_test_round_n = df_test[df_test['round']==n]['positionOrder']
+
+                    
+                # normalisation des données
+                X_train_scaled = scaler.transform(X_train)
+                X_test_round_n_scaled = scaler.transform(X_test_round_n)
+
+                # entrainement du modèle
+                rf.fit(X_train_scaled, y_train)
+
+                # probabilité avec predict_proba
+                y_pred_rf_proba = rf.predict_proba(X_test_round_n_scaled)
+                df_y_pred_rf_proba = pd.DataFrame(y_pred_rf_proba, columns=['proba_0', 'proba_1'])
+
+                
+                # dataframe des résultats de la course
+                df_test_round_n_proba = pd.concat([df_test[df_test['round']==n].reset_index(), df_y_pred_rf_proba], axis=1)
+                # ajout colonne prediction initialisée à 0
+                df_test_round_n_proba['prediction'] = 0
+
+                # on identifie la valeur max de la probabilité classe 1 et on affecte valeur 1 dans prediction à l'index max
+                max_proba_1 = df_test_round_n_proba['proba_1'].max()
+                index_max_proba_1 = df_test_round_n_proba[df_test_round_n_proba['proba_1']==max_proba_1].index
+                df_test_round_n_proba.loc[index_max_proba_1, 'prediction'] = 1
+                
+                
+                # dataframe résultat global avec concaténation des données à chaque course
+                if n==1:
+                    df_test_proba_rf = df_test_round_n_proba
+                else:
+                    df_test_proba_rf = pd.concat([df_test_proba_rf, df_test_round_n_proba], axis=0)
+
+                # on identifie le pilote vainqueur réel
+                real_winner = df_test_round_n_proba[df_test_round_n_proba['positionOrder']==1]['driverId'].values[0]
+                # on identifie le pilote prédit vainqueur par le modèle
+                predicted_winner = df_test_round_n_proba[df_test_round_n_proba['prediction']==1]['driverId'].values[0]
+                
+                # dataframe où on regroupe les vainqueurs réel et prédit de la course
+                df_result_round_n = pd.DataFrame({'round' : [n],
+                                                'Winner' : [real_winner],
+                                                'Predicted winner' : [predicted_winner]})
+                
+                # on fusionne les vainqueurs dans le dataframe final
+                df_winner_rf = pd.concat([df_winner_rf, df_result_round_n], axis=0)
+            
+
+            # rapport classification et matrice de confusion
+            confusion_matrix_rf_2 = pd.crosstab(df_test_proba_rf['positionOrder'], df_test_proba_rf['prediction'])
+            confusion_matrix_rf_2.columns = ['Pred. 0', 'Pred. 1']
+            confusion_matrix_rf_2.index = ['Real val. 0', 'Real val. 1']
+
+            classif_report_rf_df_2 = pd.DataFrame(classification_report(df_test_proba_rf['positionOrder'], df_test_proba_rf['prediction'], output_dict=True)).T[:2]
+            classif_report_rf_df_2['support'] = classif_report_rf_df_2['support'].astype('int')
+            classif_report_rf_df_2.index = ['Class 0', 'Class 1']
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown("""#### Matrice de confusion""")
+                st.dataframe(confusion_matrix_rf_2)
+
+                st.write('---')
+
+                st.markdown("""#### Rapport de classification""")
+                st.write(classif_report_rf_df_2)
+
+            # fusion des données pilotes dans le dataframe
+            df_winner_rf = df_winner_rf.merge(right=drivers_data[['driverId', 'surname']], left_on='Winner', right_on='driverId')\
+                                                .drop(['driverId', 'Winner'], axis=1)\
+                                                .rename(columns={'surname' : 'Winner'})
+            df_winner_rf = df_winner_rf.merge(right=drivers_data[['driverId', 'surname']], left_on='Predicted winner', right_on='driverId')\
+                                                .drop(['driverId', 'Predicted winner'], axis=1)\
+                                                .rename(columns={'surname' : 'Predicted winner'})\
+                                                .sort_values(by=['round']).reset_index(drop=True)
+            df_winner_rf['match'] = df_winner_rf.apply(lambda row: '✅' if row['Winner']==row['Predicted winner'] else '❌', axis=1)
+
+            with col2:
+                st.markdown("""#### Pilotes vainqueurs VS prédictions""")
+                st.dataframe(df_winner_rf, height=735)
     
     elif model_selector_2 == 'Arbre de décision':
-        st.write('Tree decision')
+        # ------------------------
+        # Modèle Arbre de décision
+        # ------------------------
+        
+        # Choix des paramètres
+        st.markdown("""#### Paramètres""")
+        param_col1, param_col2, param_col3, param_col4 = st.columns(4)
+
+        with param_col1:
+            criterion_param_selector = st.selectbox(label='criterion', options=('entropy', 'gini'), index=0, key='dt_param1-iter2')
+        with param_col2:
+            max_depth_param_selector = st.selectbox(label='max_depth', options=(1, 2, 3, 5, 6, 7), index=3, key='dt_param2-iter2')
+
+        if st.button('Résultats', key='dt-iter2'):
+
+            st.write('---')
+
+            # initialisation données features / target
+            X_train = df_train.drop(['year', 'round', 'positionOrder'], axis=1)
+            y_train = df_train['positionOrder']
+
+            # instanciation fonction de normalisation des données
+            scaler = StandardScaler().fit(X_train)
+
+            # instanciation modèle
+            dt_clf = DecisionTreeClassifier(criterion=criterion_param_selector, max_depth=max_depth_param_selector, random_state=143)
+            
+            # initialisation dataframe compilation des vainqueurs réels et prédits
+            df_winner_dt = pd.DataFrame(columns=['round', 'Winner', 'Predicted winner'])
+            df_test_proba_dt = pd.DataFrame()
+
+            # liste des courses par raceId
+            round_list_dt = list(np.sort(df_test['round'].unique()))
+
+            # boucle sur chaque course
+            for n in round_list_dt:
+                # pour la 1ere course (round=1)
+                #    jeux données train = jeux données initiales
+                #    jeux données test = données de la course
+                
+                # pour les courses suivantes (round > 1)
+                #    jeux données train = jeux données initiales + données des courses précédentes
+                #    jeux données test = données de la course
+                
+                if n==1:
+                    X_train = df_train.drop(['year', 'round', 'positionOrder'], axis=1)
+                    y_train = df_train['positionOrder']
+                    
+                    X_test_round_n = df_test[df_test['round']==n].drop(['year', 'round', 'positionOrder'], axis=1)
+                    y_test_round_n = df_test[df_test['round']==n]['positionOrder']
+                
+                else:
+                    X_previous_round = df_test[df_test['round']<=(n-1)].drop(['year', 'round', 'positionOrder'], axis=1)
+                    y_previous_round = df_test[df_test['round']<=(n-1)]['positionOrder']
+                    
+                    X_train = pd.concat([df_train.drop(['year', 'round', 'positionOrder'], axis=1), X_previous_round], axis=0)
+                    y_train = pd.concat([df_train['positionOrder'], y_previous_round], axis=0)
+                    
+                    X_test_round_n = df_test[df_test['round']==n].drop(['year', 'round', 'positionOrder'], axis=1)
+                    y_test_round_n = df_test[df_test['round']==n]['positionOrder']
+
+                    
+                # normalisation des données
+                X_train_scaled = scaler.transform(X_train)
+                X_test_round_n_scaled = scaler.transform(X_test_round_n)
+
+                # rééchantillonnage
+                X_ro, y_ro = ros.fit_resample(X_train_scaled, y_train)
+
+                # entrainement du modèle
+                dt_clf.fit(X_ro, y_ro)
+
+                # probabilité avec predict_proba
+                y_pred_dt_proba = dt_clf.predict_proba(X_test_round_n_scaled)
+                df_y_pred_dt_proba = pd.DataFrame(y_pred_dt_proba, columns=['proba_0', 'proba_1'])
+
+                
+                # dataframe des résultats de la course
+                df_test_round_n_proba = pd.concat([df_test[df_test['round']==n].reset_index(), df_y_pred_dt_proba], axis=1)
+                # ajout colonne prediction initialisée à 0
+                df_test_round_n_proba['prediction'] = 0
+
+                # on identifie la valeur max de la probabilité classe 1 et on affecte valeur 1 dans prediction à l'index max
+                max_proba_1 = df_test_round_n_proba['proba_1'].max()
+                index_max_proba_1 = df_test_round_n_proba[df_test_round_n_proba['proba_1']==max_proba_1].index
+                df_test_round_n_proba.loc[index_max_proba_1, 'prediction'] = 1
+                
+                
+                # dataframe résultat global avec concaténation des données à chaque course
+                if n==1:
+                    df_test_proba_dt = df_test_round_n_proba
+                else:
+                    df_test_proba_dt = pd.concat([df_test_proba_dt, df_test_round_n_proba], axis=0)
+
+                # on identifie le pilote vainqueur réel
+                real_winner = df_test_round_n_proba[df_test_round_n_proba['positionOrder']==1]['driverId'].values[0]
+                # on identifie le pilote prédit vainqueur par le modèle
+                predicted_winner = df_test_round_n_proba[df_test_round_n_proba['prediction']==1]['driverId'].values[0]
+                
+                # dataframe où on regroupe les vainqueurs réel et prédit de la course
+                df_result_round_n = pd.DataFrame({'round' : [n],
+                                                'Winner' : [real_winner],
+                                                'Predicted winner' : [predicted_winner]})
+                
+                # on fusionne les vainqueurs dans le dataframe final
+                df_winner_dt = pd.concat([df_winner_dt, df_result_round_n], axis=0)
+            
+            # rapport classification et matrice de confusion
+            confusion_matrix_dt_2 = pd.crosstab(df_test_proba_dt['positionOrder'], df_test_proba_dt['prediction'])
+            confusion_matrix_dt_2.columns = ['Pred. 0', 'Pred. 1']
+            confusion_matrix_dt_2.index = ['Real val. 0', 'Real val. 1']
+
+            classif_report_dt_df_2 = pd.DataFrame(classification_report(df_test_proba_dt['positionOrder'], df_test_proba_dt['prediction'], output_dict=True)).T[:2]
+            classif_report_dt_df_2['support'] = classif_report_dt_df_2['support'].astype('int')
+            classif_report_dt_df_2.index = ['Class 0', 'Class 1']
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown("""#### Matrice de confusion""")
+                st.dataframe(confusion_matrix_dt_2)
+
+                st.write('---')
+
+                st.markdown("""#### Rapport de classification""")
+                st.write(classif_report_dt_df_2)
+
+
+            df_winner_dt = df_winner_dt.merge(right=drivers_data[['driverId', 'surname']], left_on='Winner', right_on='driverId')\
+                                                .drop(['driverId', 'Winner'], axis=1)\
+                                                .rename(columns={'surname' : 'Winner'})
+            df_winner_dt = df_winner_dt.merge(right=drivers_data[['driverId', 'surname']], left_on='Predicted winner', right_on='driverId')\
+                                                .drop(['driverId', 'Predicted winner'], axis=1)\
+                                                .rename(columns={'surname' : 'Predicted winner'})\
+                                                .sort_values(by=['round']).reset_index(drop=True)
+            df_winner_dt['match'] = df_winner_dt.apply(lambda row: '✅' if row['Winner']==row['Predicted winner'] else '❌', axis=1)
+
+            with col2:
+                st.markdown("""#### Pilotes vainqueurs VS prédictions""")
+                st.dataframe(df_winner_dt, height=735)
