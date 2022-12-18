@@ -9,10 +9,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import classification_report
-from sklearn.model_selection import GridSearchCV
 
 title = "Modélisations"
-sidebar_name = "Modélisation"
+sidebar_name = "Modélisation - Vainqueur"
 
 def run():
     st.title(title)
@@ -30,6 +29,9 @@ def run():
 
     # suppression des lignes avec nan
     df = df.dropna()
+
+    df_columns = ['driverId', 'constructorId', 'grid', 'fastestLapSpeed_classes', 'positionOrder', 'driverStandingPosition', 'driverWins', 'constructorStandingPosition', 'constructorWins']
+    df[df_columns] = df[df_columns].astype('int')
 
     # modif valeurs positionOrder à 1 pour prédire le gagnant (position = 1) sinon 0 pour les autres valeurs
     df['positionOrder'] = df['positionOrder'].apply(lambda x: 1 if x==1 else 0)
