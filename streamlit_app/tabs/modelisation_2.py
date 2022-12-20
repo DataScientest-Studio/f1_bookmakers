@@ -57,7 +57,7 @@ def run():
     X_train_scaled = scaler.transform(X_train)
     X_test_scaled = scaler.transform(X_test)
 
-    # rééchantillonnage (Régréssion Log + Arbre de décision)
+    # rééchantillonnage (Régression Log + Arbre de décision)
     from imblearn.over_sampling import RandomOverSampler
     ros = RandomOverSampler()
     X_ro_top3, y_ro_top3 = ros.fit_resample(X_train_scaled, y_train_top3)

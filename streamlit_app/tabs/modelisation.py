@@ -52,7 +52,7 @@ def run():
     X_train_scaled = scaler.transform(X_train)
     X_test_scaled = scaler.transform(X_test)
 
-    # rééchantillonnage (Régréssion Log + Arbre de décision)
+    # rééchantillonnage (Régression Log + Arbre de décision)
     from imblearn.over_sampling import RandomOverSampler
     ros = RandomOverSampler()
     X_ro, y_ro = ros.fit_resample(X_train_scaled, y_train)
@@ -83,9 +83,9 @@ def run():
 
         # Choix des paramètres
         st.markdown("""#### Paramètres""")
-        param_col1, param_col2, param_col3, param_col4 = st.columns(4)
+        param_col1_iter1, param_col2_iter1, param_col3_iter1, param_col4_iter1 = st.columns(4)
 
-        with param_col1:
+        with param_col1_iter1:
             C_param_selector = st.selectbox(label='C', options=(0.001, 0.01, 0.1, 1, 10), index=1, key='log-iter1')
 
         if st.button('Résultats', key='log-iter1'):  
@@ -127,8 +127,8 @@ def run():
             classif_report_df['support'] = classif_report_df['support'].astype('int')
             classif_report_df.index = ['Class 0', 'Class 1']
             
-            col1, col2 = st.columns(2)
-            with col1:
+            col1_iter1, col2_iter1 = st.columns(2)
+            with col1_iter1:
                 st.markdown("""#### Matrice de confusion""")
                 st.dataframe(confusion_matrix)
 
@@ -155,7 +155,7 @@ def run():
             winners_results_log['match'] = winners_results_log.apply(lambda row: '✅' if row['Winner']==row['Predicted winner'] else '❌', axis=1)
 
 
-            with col2:
+            with col2_iter1:
                 st.markdown("""#### Pilotes vainqueurs VS prédictions""")
                 st.dataframe(winners_results_log, height=735)
     
@@ -167,13 +167,13 @@ def run():
         
         # Choix des paramètres
         st.markdown("""#### Paramètres""")
-        param_col1, param_col2, param_col3, param_col4 = st.columns(4)
+        param_col1_iter1, param_col2_iter1, param_col3_iter1, param_col4_iter1 = st.columns(4)
 
-        with param_col1:
+        with param_col1_iter1:
             n_estimators_param_selector = st.selectbox(label='n_estimators', options=(10, 50, 100, 250), index=2, key='rf_param1-iter1')
-        with param_col2:
+        with param_col2_iter1:
             min_samples_leaf_param_selector = st.selectbox(label='min_samples_leaf', options=(1, 3, 5), index=0, key='rf_param2-iter1')
-        with param_col3:
+        with param_col3_iter1:
             max_features_param_selector = st.selectbox(label='max_features', options=('sqrt', 'log2'), index=1, key='rf_param2-iter1')
 
         if st.button('Résultats', key='rf-iter1'):
@@ -216,8 +216,8 @@ def run():
             classif_report_rf_df['support'] = classif_report_rf_df['support'].astype('int')
             classif_report_rf_df.index = ['Class 0', 'Class 1']
             
-            col1, col2 = st.columns(2)
-            with col1:
+            col1_iter1, col2_iter1 = st.columns(2)
+            with col1_iter1:
                 st.markdown("""#### Matrice de confusion""")
                 st.dataframe(confusion_matrix_rf)
 
@@ -244,7 +244,7 @@ def run():
             winners_results_rf['match'] = winners_results_rf.apply(lambda row: '✅' if row['Winner']==row['Predicted winner'] else '❌', axis=1)
 
 
-            with col2:
+            with col2_iter1:
                 st.markdown("""#### Pilotes vainqueurs VS prédictions""")
                 st.dataframe(winners_results_rf, height=735)
     
@@ -256,11 +256,11 @@ def run():
         
         # Choix des paramètres
         st.markdown("""#### Paramètres""")
-        param_col1, param_col2, param_col3, param_col4 = st.columns(4)
+        param_col1_iter1, param_col2_iter1, param_col3_iter1, param_col4_iter1 = st.columns(4)
 
-        with param_col1:
+        with param_col1_iter1:
             criterion_param_selector = st.selectbox(label='criterion', options=('entropy', 'gini'), index=0, key='dt_param1-iter1')
-        with param_col2:
+        with param_col2_iter1:
             max_depth_param_selector = st.selectbox(label='max_depth', options=(1, 2, 3, 5, 6, 7), index=3, key='dt_param2-iter1')
 
         if st.button('Résultats', key='dt-iter1'):
@@ -302,8 +302,8 @@ def run():
             classif_report_dt_df['support'] = classif_report_dt_df['support'].astype('int')
             classif_report_dt_df.index = ['Class 0', 'Class 1']
             
-            col1, col2 = st.columns(2)
-            with col1:
+            col1_iter1, col2_iter1 = st.columns(2)
+            with col1_iter1:
                 st.markdown("""#### Matrice de confusion""")
                 st.dataframe(confusion_matrix_dt)
 
@@ -330,7 +330,7 @@ def run():
             winners_results_dt['match'] = winners_results_dt.apply(lambda row: '✅' if row['Winner']==row['Predicted winner'] else '❌', axis=1)
 
 
-            with col2:
+            with col2_iter1:
                 st.markdown("""#### Pilotes vainqueurs VS prédictions""")
                 st.dataframe(winners_results_dt, height=735)
 
@@ -370,9 +370,9 @@ def run():
 
         # Choix des paramètres
         st.markdown("""#### Paramètres""")
-        param_col1, param_col2, param_col3, param_col4 = st.columns(4)
+        param_col1_iter2, param_col2_iter2, param_col3_iter2, param_col4_iter2 = st.columns(4)
 
-        with param_col1:
+        with param_col1_iter2:
             C_param_selector = st.selectbox(label='C', options=(0.001, 0.01, 0.1, 1, 10), index=1, key='log-iter2')
 
         if st.button('Résultats', key='log-iter2'):  
@@ -479,8 +479,8 @@ def run():
             classif_report_df_2['support'] = classif_report_df_2['support'].astype('int')
             classif_report_df_2.index = ['Class 0', 'Class 1']
             
-            col1, col2 = st.columns(2)
-            with col1:
+            col1_iter2, col2_iter2 = st.columns(2)
+            with col1_iter2:
                 st.markdown("""#### Matrice de confusion""")
                 st.dataframe(confusion_matrix_2)
 
@@ -499,7 +499,7 @@ def run():
                                                 .sort_values(by=['round']).reset_index(drop=True)
             df_winner['match'] = df_winner.apply(lambda row: '✅' if row['Winner']==row['Predicted winner'] else '❌', axis=1)
 
-            with col2:
+            with col2_iter2:
                 st.markdown("""#### Pilotes vainqueurs VS prédictions""")
                 st.dataframe(df_winner, height=735)
     
@@ -510,13 +510,13 @@ def run():
         
         # Choix des paramètres
         st.markdown("""#### Paramètres""")
-        param_col1, param_col2, param_col3, param_col4 = st.columns(4)
+        param_col1_iter2, param_col2_iter2, param_col3_iter2, param_col4_iter2 = st.columns(4)
 
-        with param_col1:
+        with param_col1_iter2:
             n_estimators_param_selector = st.selectbox(label='n_estimators', options=(10, 50, 100, 250), index=2, key='rf_param1-iter2')
-        with param_col2:
+        with param_col2_iter2:
             min_samples_leaf_param_selector = st.selectbox(label='min_samples_leaf', options=(1, 3, 5), index=0, key='rf_param2-iter2')
-        with param_col3:
+        with param_col3_iter2:
             max_features_param_selector = st.selectbox(label='max_features', options=('sqrt', 'log2'), index=1, key='rf_param2-iter2')
 
         if st.button('Résultats', key='rf-iter2'):
@@ -622,8 +622,8 @@ def run():
             classif_report_rf_df_2['support'] = classif_report_rf_df_2['support'].astype('int')
             classif_report_rf_df_2.index = ['Class 0', 'Class 1']
             
-            col1, col2 = st.columns(2)
-            with col1:
+            col1_iter2, col2_iter2 = st.columns(2)
+            with col1_iter2:
                 st.markdown("""#### Matrice de confusion""")
                 st.dataframe(confusion_matrix_rf_2)
 
@@ -642,7 +642,7 @@ def run():
                                                 .sort_values(by=['round']).reset_index(drop=True)
             df_winner_rf['match'] = df_winner_rf.apply(lambda row: '✅' if row['Winner']==row['Predicted winner'] else '❌', axis=1)
 
-            with col2:
+            with col2_iter2:
                 st.markdown("""#### Pilotes vainqueurs VS prédictions""")
                 st.dataframe(df_winner_rf, height=735)
     
@@ -653,11 +653,11 @@ def run():
         
         # Choix des paramètres
         st.markdown("""#### Paramètres""")
-        param_col1, param_col2, param_col3, param_col4 = st.columns(4)
+        param_col1_iter2, param_col2_iter2, param_col3_iter2, param_col4_iter2 = st.columns(4)
 
-        with param_col1:
+        with param_col1_iter2:
             criterion_param_selector = st.selectbox(label='criterion', options=('entropy', 'gini'), index=0, key='dt_param1-iter2')
-        with param_col2:
+        with param_col2_iter2:
             max_depth_param_selector = st.selectbox(label='max_depth', options=(1, 2, 3, 5, 6, 7), index=3, key='dt_param2-iter2')
 
         if st.button('Résultats', key='dt-iter2'):
@@ -763,8 +763,8 @@ def run():
             classif_report_dt_df_2['support'] = classif_report_dt_df_2['support'].astype('int')
             classif_report_dt_df_2.index = ['Class 0', 'Class 1']
             
-            col1, col2 = st.columns(2)
-            with col1:
+            col1_iter2, col2_iter2 = st.columns(2)
+            with col1_iter2:
                 st.markdown("""#### Matrice de confusion""")
                 st.dataframe(confusion_matrix_dt_2)
 
@@ -783,6 +783,6 @@ def run():
                                                 .sort_values(by=['round']).reset_index(drop=True)
             df_winner_dt['match'] = df_winner_dt.apply(lambda row: '✅' if row['Winner']==row['Predicted winner'] else '❌', axis=1)
 
-            with col2:
+            with col2_iter2:
                 st.markdown("""#### Pilotes vainqueurs VS prédictions""")
                 st.dataframe(df_winner_dt, height=735)
