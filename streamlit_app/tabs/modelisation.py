@@ -261,7 +261,7 @@ def run():
         with param_col1_iter1:
             criterion_param_selector = st.selectbox(label='criterion', options=('entropy', 'gini'), index=0, key='dt_param1-iter1')
         with param_col2_iter1:
-            max_depth_param_selector = st.selectbox(label='max_depth', options=(1, 2, 3, 5, 6, 7), index=3, key='dt_param2-iter1')
+            max_depth_param_selector = st.selectbox(label='max_depth', options=(1, 2, 3, 4, 5, 6, 7), index=4, key='dt_param2-iter1')
 
         if st.button('Résultats', key='dt-iter1'):
 
@@ -658,7 +658,7 @@ def run():
         with param_col1_iter2:
             criterion_param_selector = st.selectbox(label='criterion', options=('entropy', 'gini'), index=0, key='dt_param1-iter2')
         with param_col2_iter2:
-            max_depth_param_selector = st.selectbox(label='max_depth', options=(1, 2, 3, 5, 6, 7), index=3, key='dt_param2-iter2')
+            max_depth_param_selector = st.selectbox(label='max_depth', options=(1, 2, 3, 4, 5, 6, 7), index=4, key='dt_param2-iter2')
 
         if st.button('Résultats', key='dt-iter2'):
 
@@ -786,3 +786,13 @@ def run():
             with col2_iter2:
                 st.markdown("""#### Pilotes vainqueurs VS prédictions""")
                 st.dataframe(df_winner_dt, height=735)
+    
+    # ----------------------------
+    # Conclusion
+    # ----------------------------
+    st.write('---')
+    st.markdown(
+        """
+        ## Récap
+
+        """)
