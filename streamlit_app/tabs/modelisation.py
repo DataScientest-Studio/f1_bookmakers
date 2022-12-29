@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 from sklearn.preprocessing import StandardScaler
-#from sklearn.model_selection import train_test_split
+from imblearn.over_sampling import RandomOverSampler
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -53,7 +53,6 @@ def run():
     X_test_scaled = scaler.transform(X_test)
 
     # rééchantillonnage (Régression Log + Arbre de décision)
-    from imblearn.over_sampling import RandomOverSampler
     ros = RandomOverSampler()
     X_ro, y_ro = ros.fit_resample(X_train_scaled, y_train)
     
@@ -174,7 +173,7 @@ def run():
         with param_col2_iter1:
             min_samples_leaf_param_selector = st.selectbox(label='min_samples_leaf', options=(1, 3, 5), index=0, key='rf_param2-iter1')
         with param_col3_iter1:
-            max_features_param_selector = st.selectbox(label='max_features', options=('sqrt', 'log2'), index=1, key='rf_param2-iter1')
+            max_features_param_selector = st.selectbox(label='max_features', options=('sqrt', 'log2'), index=1, key='rf_param3-iter1')
 
         if st.button('Résultats', key='rf-iter1'):
 
@@ -517,7 +516,7 @@ def run():
         with param_col2_iter2:
             min_samples_leaf_param_selector = st.selectbox(label='min_samples_leaf', options=(1, 3, 5), index=0, key='rf_param2-iter2')
         with param_col3_iter2:
-            max_features_param_selector = st.selectbox(label='max_features', options=('sqrt', 'log2'), index=1, key='rf_param2-iter2')
+            max_features_param_selector = st.selectbox(label='max_features', options=('sqrt', 'log2'), index=1, key='rf_param3-iter2')
 
         if st.button('Résultats', key='rf-iter2'):
 
