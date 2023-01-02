@@ -104,7 +104,7 @@ def run():
             st.write('---')
 
             # instanciation modèle
-            log_reg = LogisticRegression(C=C_param_selector)
+            log_reg = LogisticRegression(C=C_param_selector, random_state=1430)
             log_reg.fit(X_ro_top3, y_ro_top3)
 
             # probabilité avec predict_proba
@@ -146,15 +146,6 @@ def run():
             classif_report_df['support'] = classif_report_df['support'].astype('int')
             classif_report_df.index = ['Class 0', 'Class 1', 'Class 2', 'Class 3']
             
-            col1_iter1, col2_iter1 = st.columns(2)
-            with col1_iter1:
-                st.markdown("""#### Matrice de confusion""")
-                st.dataframe(confusion_matrix)
-
-                st.write('---')
-
-                st.markdown("""#### Rapport de classification""")
-                st.write(classif_report_df)
             
             # dataframe des pilotes réels
             podium_real_log = df_test_proba[df_test_proba["positionOrder"]!=0][['round', 'positionOrder', 'driverId']]
@@ -187,6 +178,25 @@ def run():
                     if driver in drivers_list:
                         index_driver = temp_df[temp_df['Predicted driver']==driver].index
                         podium_real_log.loc[index_driver, 'Top 3 unranked'] = '✔'
+            
+            score_top_3_ranked_log = np.around((podium_real_log[podium_real_log['Top 3 ranked']=='✅'].shape[0] / podium_real_log.shape[0]) * 100, 2)
+            score_top_3_unranked_log = np.around((podium_real_log[podium_real_log['Top 3 unranked']=='✔'].shape[0] / podium_real_log.shape[0]) * 100, 2)
+
+
+            col1_iter1, col2_iter1 = st.columns(2)
+            with col1_iter1:
+                st.markdown("""#### Matrice de confusion""")
+                st.dataframe(confusion_matrix)
+
+                st.write('---')
+
+                st.markdown("""#### Rapport de classification""")
+                st.write(classif_report_df)
+
+                st.write('---')
+
+                st.metric(label='Score Top 3 ranked', value='{}%'.format(score_top_3_ranked_log))
+                st.metric(label='Score Top 3 unranked', value='{}%'.format(score_top_3_unranked_log))
 
             with col2_iter1:
                 st.markdown("""#### Pilotes top 3 VS prédictions""")
@@ -257,16 +267,6 @@ def run():
             classif_report_rf_df = pd.DataFrame(classification_report(df_test_prob_rf['positionOrder'], df_test_prob_rf['prediction'], output_dict=True)).T[:4]
             classif_report_rf_df['support'] = classif_report_rf_df['support'].astype('int')
             classif_report_rf_df.index = ['Class 0', 'Class 1', 'Class 2', 'Class 3']
-            
-            col1_iter1, col2_iter1 = st.columns(2)
-            with col1_iter1:
-                st.markdown("""#### Matrice de confusion""")
-                st.dataframe(confusion_matrix_rf)
-
-                st.write('---')
-
-                st.markdown("""#### Rapport de classification""")
-                st.write(classif_report_rf_df)
 
 
             # dataframe des pilotes réels
@@ -300,6 +300,24 @@ def run():
                     if driver in drivers_list:
                         index_driver = temp_df[temp_df['Predicted driver']==driver].index
                         podium_real_rf.loc[index_driver, 'Top 3 unranked'] = '✔'
+            
+            score_top_3_ranked_rf = np.around((podium_real_rf[podium_real_rf['Top 3 ranked']=='✅'].shape[0] / podium_real_rf.shape[0]) * 100, 2)
+            score_top_3_unranked_rf = np.around((podium_real_rf[podium_real_rf['Top 3 unranked']=='✔'].shape[0] / podium_real_rf.shape[0]) * 100, 2)
+
+            col1_iter1, col2_iter1 = st.columns(2)
+            with col1_iter1:
+                st.markdown("""#### Matrice de confusion""")
+                st.dataframe(confusion_matrix_rf)
+
+                st.write('---')
+
+                st.markdown("""#### Rapport de classification""")
+                st.write(classif_report_rf_df)
+
+                st.write('---')
+
+                st.metric(label='Score Top 3 ranked', value='{}%'.format(score_top_3_ranked_rf))
+                st.metric(label='Score Top 3 unranked', value='{}%'.format(score_top_3_unranked_rf))
 
             with col2_iter1:
                 st.markdown("""#### Pilotes top 3 VS prédictions""")
@@ -369,16 +387,6 @@ def run():
             classif_report_dt_df = pd.DataFrame(classification_report(df_test_prob_dt['positionOrder'], df_test_prob_dt['prediction'], output_dict=True)).T[:4]
             classif_report_dt_df['support'] = classif_report_dt_df['support'].astype('int')
             classif_report_dt_df.index = ['Class 0', 'Class 1', 'Class 2', 'Class 3']
-            
-            col1_iter1, col2_iter1 = st.columns(2)
-            with col1_iter1:
-                st.markdown("""#### Matrice de confusion""")
-                st.dataframe(confusion_matrix_dt)
-
-                st.write('---')
-
-                st.markdown("""#### Rapport de classification""")
-                st.write(classif_report_dt_df)
 
 
             # dataframe des pilotes réels
@@ -412,6 +420,24 @@ def run():
                     if driver in drivers_list:
                         index_driver = temp_df[temp_df['Predicted driver']==driver].index
                         podium_real_dt.loc[index_driver, 'Top 3 unranked'] = '✔'
+            
+            score_top_3_ranked_dt = np.around((podium_real_dt[podium_real_dt['Top 3 ranked']=='✅'].shape[0] / podium_real_dt.shape[0]) * 100, 2)
+            score_top_3_unranked_dt = np.around((podium_real_dt[podium_real_dt['Top 3 unranked']=='✔'].shape[0] / podium_real_dt.shape[0]) * 100, 2)
+
+            col1_iter1, col2_iter1 = st.columns(2)
+            with col1_iter1:
+                st.markdown("""#### Matrice de confusion""")
+                st.dataframe(confusion_matrix_dt)
+
+                st.write('---')
+
+                st.markdown("""#### Rapport de classification""")
+                st.write(classif_report_dt_df)
+
+                st.write('---')
+
+                st.metric(label='Score Top 3 ranked', value='{}%'.format(score_top_3_ranked_dt))
+                st.metric(label='Score Top 3 unranked', value='{}%'.format(score_top_3_unranked_dt))
 
             with col2_iter1:
                 st.markdown("""#### Pilotes top 3 VS prédictions""")
@@ -835,6 +861,9 @@ def run():
                         index_driver = temp_df[temp_df['Predicted driver']==driver].index
                         podium_real_log_opt1.loc[index_driver, 'Top 3 unranked'] = '✔'
             
+            score_top_3_ranked_log_opt1 = np.around((podium_real_log_opt1[podium_real_log_opt1['Top 3 ranked']=='✅'].shape[0] / podium_real_log_opt1.shape[0]) * 100, 2)
+            score_top_3_unranked_log_opt1 = np.around((podium_real_log_opt1[podium_real_log_opt1['Top 3 unranked']=='✔'].shape[0] / podium_real_log_opt1.shape[0]) * 100, 2)
+            
 
             # ---------
             # Option 2
@@ -925,6 +954,10 @@ def run():
                     if driver in drivers_list:
                         index_driver = temp_df[temp_df['Predicted driver']==driver].index
                         podium_real_log_opt2.loc[index_driver, 'Top 3 unranked'] = '✔'
+            
+            
+            score_top_3_ranked_log_opt2 = np.around((podium_real_log_opt2[podium_real_log_opt2['Top 3 ranked']=='✅'].shape[0] / podium_real_log_opt2.shape[0]) * 100, 2)
+            score_top_3_unranked_log_opt2 = np.around((podium_real_log_opt2[podium_real_log_opt2['Top 3 unranked']=='✔'].shape[0] / podium_real_log_opt2.shape[0]) * 100, 2)
 
             # ----------
             # Résultats
@@ -943,6 +976,11 @@ def run():
 
                 st.write('---')
 
+                st.metric(label='Score Top 3 ranked', value='{}%'.format(score_top_3_ranked_log_opt1))
+                st.metric(label='Score Top 3 unranked', value='{}%'.format(score_top_3_unranked_log_opt1))
+
+                st.write('---')
+
                 st.markdown("""#### Pilotes top 3 VS prédictions""")
                 st._legacy_dataframe(podium_real_log_opt1.style.apply(df_background_color, axis=1), height=735)
 
@@ -956,6 +994,11 @@ def run():
 
                 st.markdown("""#### Rapport de classification""")
                 st.write(classif_report_df_3_opt2)
+
+                st.write('---')
+
+                st.metric(label='Score Top 3 ranked', value='{}%'.format(score_top_3_ranked_log_opt2))
+                st.metric(label='Score Top 3 unranked', value='{}%'.format(score_top_3_unranked_log_opt2))
 
                 st.write('---')
 
@@ -1057,6 +1100,9 @@ def run():
                         index_driver = temp_df[temp_df['Predicted driver']==driver].index
                         podium_real_rf_opt1.loc[index_driver, 'Top 3 unranked'] = '✔'
             
+            score_top_3_ranked_rf_opt1 = np.around((podium_real_rf_opt1[podium_real_rf_opt1['Top 3 ranked']=='✅'].shape[0] / podium_real_rf_opt1.shape[0]) * 100, 2)
+            score_top_3_unranked_rf_opt1 = np.around((podium_real_rf_opt1[podium_real_rf_opt1['Top 3 unranked']=='✔'].shape[0] / podium_real_rf_opt1.shape[0]) * 100, 2)
+            
             # ---------
             # Option 2
             # ---------
@@ -1147,6 +1193,9 @@ def run():
                         index_driver = temp_df[temp_df['Predicted driver']==driver].index
                         podium_real_rf_opt2.loc[index_driver, 'Top 3 unranked'] = '✔'
             
+            score_top_3_ranked_rf_opt2 = np.around((podium_real_rf_opt2[podium_real_rf_opt2['Top 3 ranked']=='✅'].shape[0] / podium_real_rf_opt2.shape[0]) * 100, 2)
+            score_top_3_unranked_rf_opt2 = np.around((podium_real_rf_opt2[podium_real_rf_opt2['Top 3 unranked']=='✔'].shape[0] / podium_real_rf_opt2.shape[0]) * 100, 2)
+            
 
             # ----------
             # Résultats
@@ -1165,6 +1214,11 @@ def run():
 
                 st.write('---')
 
+                st.metric(label='Score Top 3 ranked', value='{}%'.format(score_top_3_ranked_rf_opt1))
+                st.metric(label='Score Top 3 unranked', value='{}%'.format(score_top_3_unranked_rf_opt1))
+
+                st.write('---')
+
                 st.markdown("""#### Pilotes top 3 VS prédictions""")
                 st._legacy_dataframe(podium_real_rf_opt1.style.apply(df_background_color, axis=1), height=735)
             
@@ -1178,6 +1232,11 @@ def run():
 
                 st.markdown("""#### Rapport de classification""")
                 st.write(classif_report_rf_df_3_opt2)
+
+                st.write('---')
+
+                st.metric(label='Score Top 3 ranked', value='{}%'.format(score_top_3_ranked_rf_opt2))
+                st.metric(label='Score Top 3 unranked', value='{}%'.format(score_top_3_unranked_rf_opt2))
 
                 st.write('---')
 
@@ -1276,6 +1335,9 @@ def run():
                         index_driver = temp_df[temp_df['Predicted driver']==driver].index
                         podium_real_dt_opt1.loc[index_driver, 'Top 3 unranked'] = '✔'
             
+            score_top_3_ranked_dt_opt1 = np.around((podium_real_dt_opt1[podium_real_dt_opt1['Top 3 ranked']=='✅'].shape[0] / podium_real_dt_opt1.shape[0]) * 100, 2)
+            score_top_3_unranked_dt_opt1 = np.around((podium_real_dt_opt1[podium_real_dt_opt1['Top 3 unranked']=='✔'].shape[0] / podium_real_dt_opt1.shape[0]) * 100, 2)
+            
             # ---------
             # Option 2
             # ---------
@@ -1364,6 +1426,9 @@ def run():
                     if driver in drivers_list:
                         index_driver = temp_df[temp_df['Predicted driver']==driver].index
                         podium_real_dt_opt2.loc[index_driver, 'Top 3 unranked'] = '✔'
+            
+            score_top_3_ranked_dt_opt2 = np.around((podium_real_dt_opt2[podium_real_dt_opt2['Top 3 ranked']=='✅'].shape[0] / podium_real_dt_opt2.shape[0]) * 100, 2)
+            score_top_3_unranked_dt_opt2 = np.around((podium_real_dt_opt2[podium_real_dt_opt2['Top 3 unranked']=='✔'].shape[0] / podium_real_dt_opt2.shape[0]) * 100, 2)
 
             
             # ----------
@@ -1383,6 +1448,11 @@ def run():
 
                 st.write('---')
 
+                st.metric(label='Score Top 3 ranked', value='{}%'.format(score_top_3_ranked_dt_opt1))
+                st.metric(label='Score Top 3 unranked', value='{}%'.format(score_top_3_unranked_dt_opt1))
+
+                st.write('---')
+
                 st.markdown("""#### Pilotes top 3 VS prédictions""")
                 st._legacy_dataframe(podium_real_dt_opt1.style.apply(df_background_color, axis=1), height=735)
             
@@ -1396,6 +1466,11 @@ def run():
 
                 st.markdown("""#### Rapport de classification""")
                 st.write(classif_report_dt_df_3_opt2)
+
+                st.write('---')
+
+                st.metric(label='Score Top 3 ranked', value='{}%'.format(score_top_3_ranked_dt_opt2))
+                st.metric(label='Score Top 3 unranked', value='{}%'.format(score_top_3_unranked_dt_opt2))
 
                 st.write('---')
 
@@ -1413,21 +1488,93 @@ def run():
         ## Récap
 
         """)
-    col1_results, col2_results = st.columns(2)
+    plt.rcParams['font.sans-serif'] = 'Arial'
+    plt.rcParams['font.size'] = 11
+    plt.rcParams['font.weight'] = 'bold'
     plt.rcParams['axes.facecolor'] = '#0e1117'
-    plt.rcParams['axes.edgecolor'] = '#fff'
+    plt.rcParams['axes.edgecolor'] = '#38383f'
     plt.rcParams['axes.titlecolor'] = '#fff'
+    plt.rcParams['axes.labelcolor'] = '#fff'
+    plt.rcParams['axes.labelsize'] = 'large'
+    plt.rcParams['axes.grid'] = True
+    plt.rcParams['axes.grid.axis'] = 'y'
+    plt.rcParams['axes.axisbelow'] = True
+    plt.rcParams['grid.color'] = '#d0d0d2'
+    plt.rcParams['grid.alpha'] = 0.3
     plt.rcParams['xtick.color'] = '#fff'
     plt.rcParams['ytick.color'] = '#fff'
     plt.rcParams['figure.facecolor'] = '#15151e'
 
-    with col1_results:
-        chart_data = pd.DataFrame(data=[0.50, 0.35, 0.60], columns=['score'], index=['Régression logistique', 'Foret aléatoire', 'Arbre de décision'])
-        st.dataframe(chart_data)
-        st.bar_chart(chart_data)
+    st.write('#### Top 3')
+    models_top3 = ['Rég. logistique\nTop 3 ranked', 'Rég. logistique\nTop 3 unranked', 'Foret aléatoire\nTop 3 ranked', 'Foret aléatoire\nTop 3 unranked', 'Arbre de décision\nTop 3 ranked', 'Arbre de décision\nTop 3 unranked']
+    score_models_top3 = [0.18, 0.45, 0.20, 0.60, 0.28, 0.49]
+    color_models_top3 = ['#54b985cf', '#4c78a8', '#54b985cf', '#e10600', '#54b985cf', '#4c78a8']
 
-        fig = plt.figure(figsize=(6.4, 3.5))
-        plt.bar(['Régression logistique', 'Foret aléatoire', 'Arbre de décision'], [0.50, 0.35, 0.60])
-        plt.title('Modèles')
-        plt.ylabel('Score')
-        st.pyplot(fig)
+    fig_top3 = plt.figure(figsize=(14, 3.5))
+    plt.bar(x=models_top3, height=score_models_top3, width=0.6, color=color_models_top3)
+    plt.title('Modèles')
+    plt.ylabel('Score')
+    plt.ylim([0,1])
+
+    for i in range(len(score_models_top3)):
+        plt.annotate(str(score_models_top3[i]), xy=(models_top3[i], score_models_top3[i]), ha='center', va='bottom', color='#fff')
+
+    st.pyplot(fig_top3)
+
+    st.write('#### Podium')
+    models_podium = ['Rég. logistique', 'Foret aléatoire', 'Arbre de décision']
+    score_models_podium  = [0.60, 0.63, 0.65]
+    color_models_podium  = [ '#4c78a8', '#4c78a8', '#e10600']
+
+    fig_podium = plt.figure(figsize=(6.5, 3.5))
+    plt.bar(x=models_podium, height=score_models_podium, width=0.6, color=color_models_podium)
+    plt.title('Modèles')
+    plt.ylabel('Score')
+    plt.ylim([0,1])
+
+    for i in range(len(score_models_podium)):
+        plt.annotate(str(score_models_podium[i]), xy=(models_podium[i], score_models_podium[i]), ha='center', va='bottom', color='#fff')
+
+    col1_results, col2_results = st.columns(2)
+    with col1_results:
+        st.pyplot(fig_podium)
+    
+    st.markdown(
+        """
+        #### Top 3 + Podium
+
+        - Option 1
+        """)
+    models_top3_podium_opt1 = ['Rég. logistique\nTop 3 ranked', 'Rég. logistique\nTop 3 unranked', 'Foret aléatoire\nTop 3 ranked', 'Foret aléatoire\nTop 3 unranked', 'Arbre de décision\nTop 3 ranked', 'Arbre de décision\nTop 3 unranked']
+    score_models_top3_podium_opt1 = [0.35, 0.60, 0.28, 0.63, 0.18, 0.65]
+    color_models_top3_podium_opt1 = ['#54b985cf', '#4c78a8', '#54b985cf', '#4c78a8', '#54b985cf', '#e10600']
+
+    fig_top3_podium_opt1 = plt.figure(figsize=(14, 3.5))
+    plt.bar(x=models_top3_podium_opt1, height=score_models_top3_podium_opt1, width=0.6, color=color_models_top3_podium_opt1)
+    plt.title('Modèles')
+    plt.ylabel('Score')
+    plt.ylim([0,1])
+
+    for i in range(len(score_models_top3_podium_opt1)):
+        plt.annotate(str(score_models_top3_podium_opt1[i]), xy=(models_top3_podium_opt1[i], score_models_top3_podium_opt1[i]), ha='center', va='bottom', color='#fff')
+    
+    st.pyplot(fig_top3_podium_opt1)
+
+    st.markdown(
+        """
+        - Option 2
+        """)
+    models_top3_podium_opt2 = ['Rég. logistique\nTop 3 ranked', 'Rég. logistique\nTop 3 unranked', 'Foret aléatoire\nTop 3 ranked', 'Foret aléatoire\nTop 3 unranked', 'Arbre de décision\nTop 3 ranked', 'Arbre de décision\nTop 3 unranked']
+    score_models_top3_podium_opt2 = [0.22, 0.62, 0.21, 0.62, 0.38, 0.69]
+    color_models_top3_podium_opt2 = ['#54b985cf', '#4c78a8', '#54b985cf', '#4c78a8', '#54b985cf', '#e10600']
+
+    fig_top3_podium_opt2 = plt.figure(figsize=(14, 3.5))
+    plt.bar(x=models_top3_podium_opt2, height=score_models_top3_podium_opt2, width=0.6, color=color_models_top3_podium_opt2)
+    plt.title('Modèles')
+    plt.ylabel('Score')
+    plt.ylim([0,1])
+
+    for i in range(len(score_models_top3_podium_opt2)):
+        plt.annotate(str(score_models_top3_podium_opt2[i]), xy=(models_top3_podium_opt2[i], score_models_top3_podium_opt2[i]), ha='center', va='bottom', color='#fff')
+    
+    st.pyplot(fig_top3_podium_opt2)
