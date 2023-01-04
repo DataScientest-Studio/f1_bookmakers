@@ -1521,7 +1521,10 @@ def run():
 
     st.pyplot(fig_top3)
 
-    st.write('#### Podium')
+    st.write(
+        """
+        #### Podium
+        """)
     models_podium = ['Rég. logistique', 'Foret aléatoire', 'Arbre de décision']
     score_models_podium  = [0.60, 0.63, 0.65]
     color_models_podium  = [ '#4c78a8', '#4c78a8', '#e10600']
