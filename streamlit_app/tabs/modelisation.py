@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 import matplotlib.pyplot as plt
-import plotly.express as px 
+import plotly.express as px
 
 from sklearn.preprocessing import StandardScaler
 from imblearn.over_sampling import RandomOverSampler
@@ -15,7 +15,7 @@ from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import classification_report
 
-title = "Modélisations"
+title = "Modélisation - Vainqueur"
 sidebar_name = "Modélisation - Vainqueur"
 
 def run():
@@ -24,8 +24,6 @@ def run():
     # -----------------------
     # préparation des données
     # -----------------------
-
-    st.markdown('## Données')
 
     # chargement données
     df = pd.read_csv(r"../data/df_results_meteo_circuit_classement.csv", sep=';', index_col=0)
@@ -40,7 +38,7 @@ def run():
 
     # modif valeurs positionOrder à 1 pour prédire le gagnant (position = 1) sinon 0 pour les autres valeurs
     df['positionOrder'] = df['positionOrder'].apply(lambda x: 1 if x==1 else 0)
-    st.dataframe(df.head(20))
+
 
     # jeux données train/test
     df_train = df[df['year']<=2020]
@@ -61,17 +59,79 @@ def run():
     ros = RandomOverSampler()
     X_ro, y_ro = ros.fit_resample(X_train_scaled, y_train)
     
+
+    st.markdown(
+        """
+        Dans cette partie, nous allons aborder la méthodologie de modélisation pour prédire le vainqueur des Grand Prix.
+
+        ## Méthodologie
+
+        En partant de notre dataframe, la variable cible est la colonne « positionOrder ».
+
+        Afin de déterminer le vainqueur :
+        - La position 1 aura la valeur 1
+        - Les autres positions auront les valeurs 0
+        
+        Voici par exemple ce que l'on obtient :
+        """)
+    st.dataframe(df.reset_index().head(20))
+    st.markdown(
+        """
+        Néammoins, cela engendre un déséquilibre des données avec la valeur 0 comme classe majoritaire. On utilise donc une méthode de réechantillonnage pour équilibrer les données et avoir un ratio classes minoritaire / majoritaire satisfaisant (nous avons utlisée la méthode **RandomOverSampler**).
+        
+        Pour les prédictions, on récupère des modèles la probabilité que chaque pilote finisse à la première place. Le vainqueur sera celui avec la plus forte probabilité de gagner.
+
+        <ul><li><b>Etape 1</b> : calcul des probabilités
+        
+        Avec la fonction <b>predict_proba()</b>, nous récupérons les probabilités des classes du modèle :
+        
+        La colonne **proba_0** indique la probabilité que le pilote soit perdant. Inversement la colonne **proba_1** indique la probabilité que le pilote soit gagnant.</li></ul>
+        """, unsafe_allow_html=True)
+    st.image(r'./assets/modelisation_vainqueur_proba_etape1.jpg')
+    st.markdown('<style> section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(6) > div > div > div > img {margin-left: 3rem;} </style>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <ul><li><b>Etape 2</b> : définition du vainqueur pour chaque course
+        
+        Pour déterminer le vainqueur d’un Grand prix :
+
+        <ul><li>Les probabilités sont fusionnées avec le jeu de données test.</li>
+        <li>Une colonne « Prédiction » initialisée à 0 est rajoutée.</li></ul>
+        """, unsafe_allow_html=True)
+    st.image(r'./assets/modelisation_vainqueur_proba_etape2.jpg')
+    st.markdown('<style> section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(9) > div > div > div > img {margin-left: 3rem;} </style>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <ul><li><b>Etape 3</b> : prédiction
+        
+        Une boucle est appliquée pour tous les grands Grand Prix (ou « raceId ») :
+        
+        <ul><li>On regroupe par raceId</li>
+        <li>La valeur maximale de la probabilité classe 1 (ou proba_1) est identifiée</li>
+        <li>Sur cette ligne, on définit la valeur 1 dans la colonne « Prédiction »</li></ul>
+        """, unsafe_allow_html=True)
+    st.image(r'./assets/modelisation_vainqueur_proba_etape3.jpg')
+    st.markdown('<style> section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(12) > div > div > div > img {margin-left: 3rem;} </style>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        Cette méthodologie nous permet d’avoir un vainqueur pour chaque Grand Prix dans les prédictions et ce même si les probabilités de la classe 1 ne dépassent pas les 50% sur un même Grand Prix.
+
+        ---
+        """, unsafe_allow_html=True)
+
+    
     # ----------------------------
     # Algorithmes
     # ----------------------------
     st.markdown(
         """
-        ## Prédiction vainqueur
-        ### Itération 1
+        ## Prédictions
 
         Nous avons ciblé le championnat 2021 comme échantillon de test pour les prédictions.
+
+        ### Itération 1
         
-        Les données de la manière suivante :
+        Les données sont départagées de la manière suivante :
         - Jeu d’entraînement : toutes les données jusqu’à l’année 2020 incluse.
         - Jeu de test : les données de l’année 2021
 
@@ -518,17 +578,17 @@ def run():
         """
         ### Itération 2
 
-        Après la première itération du championnat 2021, nous souhaitions voir s’il était possible d’ajouter les données des courses passées dans le jeu d’entrainement à chaque course et observer les résultats obtenus.
+        Nous souhaitions voir s’il était possible d’ajouter les données des courses passées dans le jeu d’entrainement à chaque course et observer les résultats obtenus.
 
-        Pour la première course du championnat, nous avons la répartition des données suivante :
+        Pour la <u>première course</u> du championnat, nous avons la répartition des données suivante :
         - Jeu d’entraînement : toutes les données jusqu’à l’année 2020 incluse.
         - Jeu de test : les données de la 1ere course du championnat 2021.
 
-        Pour la deuxième course, la répartition serait la suivante :
+        Pour la <u>deuxième course</u>, la répartition serait la suivante :
         - Jeu d’entraînement : toutes les données jusqu’à l’année 2020 incluse + les données de la 1ere course du championnat 2021.
         - Jeu de test : les données de la 2e course du championnat 2021.
 
-        Pour la troisième course, nous aurions :
+        Pour la <u>troisième course</u>, nous aurions :
         - Jeu d’entraînement : toutes les données jusqu’à l’année 2020 incluse + les données de la 1ere et 2e courses du championnat 2021.
         - Jeu de test : les données de la 3e course du championnat 2021.
 
@@ -536,7 +596,7 @@ def run():
 
         Les modèles sont réajustés à chaque mise à jour des jeux d’entrainements et les résultats cumulés au fur et à mesure des courses.
 
-        """)
+        """, unsafe_allow_html=True)
     
     model_selector_2 = st.selectbox(label='', options=('', 'Régression logistique', 'Forêt aléatoire', 'Arbre de décision', 'KNN'), key='iter2',
                                     format_func=lambda x: "< Choix du modèle >" if x == '' else x)
@@ -1112,7 +1172,7 @@ def run():
     st.write('---')
     st.markdown(
         """
-        ## Récap
+        ## Résultats
 
         """)
     plt.rcParams['font.sans-serif'] = 'Arial'
@@ -1173,3 +1233,17 @@ def run():
             #### Itération 2
             """)
         st.pyplot(fig_iter2)
+    
+    st.markdown(
+        """
+        Les modèles obtiennent sensiblement les mêmes scores, mis à part le modèle de **foret aléatoire** auquel on observe une amélioration significative dans la 2e itérations.
+
+        Il est également à noter que le modèle **SVC** a un temps de calcul assez long. Il n'a pas été retenu pour la 2e itération, vu qu'une boucle est appliquée à chaque Grand Prix de la saison.
+        
+        Avec un score de 55%, le modèle **régression logistique** est le plus performant. Les résultats identiques sur les 2 itérations confirme la bonne stabilité du modèle et nous indique qu’il n’est pas nécessaire de réajuster les jeux d’entrainement sur une saison.
+
+        On note que le modèle semble relativement bon pour prédire les favoris mais a du mal à détecter les outsiders.
+
+        En utilisant ce modèle, on a simulé les paris sur la saison 2021 : avec une mise de 100€, on aurait obtenu un gain net de 320€
+
+        """, unsafe_allow_html=True)

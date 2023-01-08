@@ -53,6 +53,7 @@ section[data-testid="stSidebar"] button[title="View fullscreen"] {
 /* section */
 .css-ffhzg2 {
   background-color: var(--main-bg-color);
+  letter-spacing: 0.2px;
 }
 
 .css-12oz5g7 {
@@ -60,8 +61,8 @@ section[data-testid="stSidebar"] button[title="View fullscreen"] {
 }
 
 section[tabindex="0"] h1 {
-  border-top: 1px solid var(--color-1);
-  border-right: 1px solid var(--color-1);
+  border-top: 5px solid var(--gray-color);
+  border-right: 5px solid var(--gray-color);
   border-top-right-radius: 25px;
   font-family: 'Zen Dots';
   font-style: italic;
@@ -88,6 +89,10 @@ section[tabindex="0"] h3 span {
   font-weight: bold;
   text-decoration: none;
   font-style: 'Zen Dots';
+}
+
+section[tabindex="0"] ul {
+  margin: 0 0 1rem 1rem;
 }
 
 
