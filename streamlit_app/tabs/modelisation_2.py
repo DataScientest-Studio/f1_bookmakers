@@ -13,7 +13,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import classification_report
 
-title = "Modélisations"
+title = "Modélisation - Top 3"
 sidebar_name = "Modélisation - Top 3"
 
 def run():
@@ -29,7 +29,6 @@ def run():
     # préparation des données
     # -----------------------
 
-    st.markdown('## Données')
 
     # chargement données
     df = pd.read_csv(r"../data/df_results_meteo_circuit_classement.csv", sep=';', index_col=0)
@@ -46,7 +45,6 @@ def run():
     df['podium'] = df['positionOrder'].apply(lambda x: 0 if x>3 else 1)
     # modif valeurs positionOrder 1/2/3 pour prédire top 3 sinon 0 pour les autres valeurs
     df['positionOrder'] = df['positionOrder'].apply(lambda x: 0 if x>3 else x)
-    st.dataframe(df.head(20))
 
     # jeux données train/test
     df_train = df[df['year']<=2020]
@@ -70,19 +68,58 @@ def run():
     ros = RandomOverSampler()
     X_ro_top3, y_ro_top3 = ros.fit_resample(X_train_scaled, y_train_top3)
     X_ro_podium, y_ro_podium = ros.fit_resample(X_train_scaled, y_train_podium)
+
+    st.markdown(
+        """
+        Dans cette partie, nous allons aborder la méthodologie de modélisation pour prédire le top 3 des Grand Prix.
+
+        ## Méthodologie : Top 3
+
+        En partant de notre dataframe, la variable cible est la colonne « positionOrder ».
+
+        Afin de déterminer le top 3 :
+        - Nous ajustons la colonne « positionOrder » en gardant uniquement les positions 1 / 2 / 3
+        - Les autres positions sont mises à zéro
+
+        Par exemple :
+        """)
+    st.dataframe(df.reset_index().head(20))
+    st.markdown(
+        """
+        Pour prédire le top 3 d’un Grand prix, nous récupérons les probabilités des classes du modèle avec la fonction predict_proba() et nous avons testée une première méthode :
+
+        <ul>
+            <li>Les probabilités sont fusionnées avec le jeu données test.</li>
+            <li>Une colonne « Prédiction » initialisée à 0 est rajoutée.</li>
+            <li>Une boucle est appliquée pour chaque Grand Prix :
+                <ul>
+                    <li>Les données du Grand Prix correspondant sont sélectionnées.</li>
+                    <li>La valeur maximale de la probabilité classe 1 est identifiée.</li>
+                    <li>On définit la valeur 1 dans la colonne « Prédiction » pour la ligne correspondant à la probabilité maxi définie précédemment.</li>
+                </ul>
+            </li>
+        </ul>
+        **image**
+        <ul>
+            <ul>
+                <li>La ligne qui vient d’être assignée à la première place est filtrée.</li>
+                <li>La valeur maximale de la probabilité classe 2 est identifiée.</li>
+                <li>On définit la valeur 2 dans la colonne « Prédiction » pour cette ligne.</li>
+            </ul>
+        </ul>
+        **image**
+        <ul>
+            <ul>
+                <li>Les lignes assignées aux deux premières places sont filtrées.</li>
+                <li>La valeur maximale de la probabilité classe 3 est identifiée.</li>
+                <li>On définit la valeur 3 dans la colonne « Prédiction » pour cette ligne.</li>
+            </ul>
+        </ul>
+        """, unsafe_allow_html=True)
     
     # ----------------------------
     # Algorithmes
     # ----------------------------
-    st.markdown(
-        """
-        ## Top 3
-
-        Nous souhaitons explorer la possibilité de prédire le top 3 d’arrivée d’une course.
-
-        Nous ajustons la variable cible « positionOrder » en gardant les uniquement les positions 1 / 2 / 3, les autres valeurs sont mises à zéro.
-
-        """)
     
     model_selector = st.selectbox(label='', options=('', 'Régression logistique', 'Forêt aléatoire', 'Arbre de décision'), key="iter1",
                                     format_func=lambda x: "< Choix du modèle >" if x == '' else x)
@@ -447,7 +484,7 @@ def run():
 
     st.markdown(
         """
-        ## Podium
+        ## Méthodologie : Podium
 
         Nous avons opté pour une variable cible « podium » qui a pour valeur 1 les positions 1 / 2 / 3 de la variable « positionOrder » et zéro pour les autres positions.
 
@@ -747,7 +784,7 @@ def run():
 
     st.markdown(
         """
-        ## Top 3 + Podium
+        ## Méthodologie : Top 3 + Podium
 
         Après avoir exploré l’approche « podium », nous avons pensé à 2 possibilités pour obtenir un classement top 3 :
 
@@ -1485,7 +1522,7 @@ def run():
     st.write('---')
     st.markdown(
         """
-        ## Récap
+        ## Résultats
 
         """)
     plt.rcParams['font.sans-serif'] = 'Arial'

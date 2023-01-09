@@ -409,9 +409,9 @@ def run():
         param_col1_iter1, param_col2_iter1, param_col3_iter1, param_col4_iter1 = st.columns(4)
 
         with param_col1_iter1:
-            C_param_selector = st.selectbox(label='C', options=(0.1, 0.05, 1, 10), index=0, key='svc_param1-iter1')
+            C_param_selector = st.selectbox(label='C', options=(0.05, 0.1, 1, 10), index=1, key='svc_param1-iter1')
         with param_col2_iter1:
-            kernel_param_selector = st.selectbox(label='kernel', options=('linear', 'poly', 'rbf'), index=2, key='svc_param2-iter1')
+            kernel_param_selector = st.selectbox(label='kernel', options=('linear', 'poly', 'rbf'), index=0, key='svc_param2-iter1')
 
         if st.button('Résultats', key='svc-iter1'):
 
@@ -1193,7 +1193,7 @@ def run():
     plt.rcParams['figure.facecolor'] = '#15151e'
 
     models_iter1 = ['Régression\nlogistique', 'Foret\naléatoire', 'Arbre de\ndécision', 'SVC', 'KNN']
-    score_models_iter1  = [0.55, 0.33, 0.50, 0.35, 0.29]
+    score_models_iter1  = [0.55, 0.33, 0.50, 0.50, 0.29]
     color_models_iter1  = [ '#e10600', '#4c78a8', '#4c78a8', '#4c78a8', '#4c78a8']
 
     fig_iter1 = plt.figure(figsize=(6.5, 3.5))

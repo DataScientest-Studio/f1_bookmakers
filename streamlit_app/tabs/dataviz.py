@@ -28,7 +28,7 @@ sidebar_name = "DataViz'"
 
 def run():
     
-
+    st.markdown('<style>section[tabindex="0"] div[data-testid="stImage"] {margin: auto;} section[tabindex="0"] div[data-testid="stImage"] img {width: 900px !important;} </style>', unsafe_allow_html=True)
 
     st.title(title)
     st.write('Cette page va présenter divers graphiques exploitant nos jeux de données :')
@@ -78,7 +78,7 @@ def run():
     st.dataframe(races.head())
     
     
-    st.write('Finalement, on les regroupe en un seul dataframe : ') 
+    st.write('Finalement, on les regroupe en un seul dataframe dont voici un échantillon : ') 
     
     
     df_races_final=circuits.merge(races, left_on='circuitId',right_on='circuitId',
@@ -103,7 +103,7 @@ def run():
     #création du slider
     saison_min,saison_max=st.slider("Choisissez les années voulues ", min_value=year_min, max_value=year_max,value=(year_min,year_max))
     #choix de la projection
-    projection = st.selectbox(label='Choisissez la projection (pour les cartophiles) ', options=map_projections, help="Quelle carte ?",key='projection')
+    projection = st.selectbox(label='Choisissez la projection (_pour les cartophiles_) ', options=map_projections, help="Quelle carte ?",key='projection')
     #affichage              
     affichage_circuit = px.scatter_geo(data_frame=df_races_final[(df_races_final['year']<=saison_max) & (df_races_final['year']>=saison_min)] ,
                                        lat='lat', lon='lng', title='Emplacement des circuits dans le monde',
@@ -125,6 +125,9 @@ def run():
     
 ######### Début Partie  - Course le jour de votre birthday
 
+
+    
+    
     st.markdown(
              """
              ## Quelle course a eu lieu le jour de votre anniversaire ?
@@ -146,18 +149,22 @@ def run():
     
     date = st.date_input("Choisissez maintenant votre jour de naissance.",min_value=datetime.date(1950, 1, 1),max_value=datetime.date(2029,1 , 1))
     
-    #liste_day_birth = range(1,32)
-    #liste_month_birth = range(1,13)
-    #day_birth = st.selectbox(label='Votre jour de naissance', options=liste_day_birth)
-    #month_birth = st.selectbox(label='Votre mois de naissance', options=liste_month_birth)
+    ### fonction permettant de surligner en vert la ligne
+    
+    ### hexa vert  #006117
+    def df_background_color_bday(s):
+        return ['background-color: #006117']*len(s) if s['date'] == date else ['background-color: #0e1117']*len(s)
     
     day_birth = date.day
     month_birth = date.month
     
     
     if st.button(label="Alors ?",args=None, help ="ça arrive...", disabled=False):
-        st.write("Voici la liste des courses s'étant déroulé le jour de votre naissance : ")
-        st.dataframe(df_races_final[(df_races_final['day']==day_birth) & (df_races_final['month']==month_birth)][['circuitId', 'Nom de la course','name_circuits','location','country','date']])
+        st.write("Voici la liste des courses s'étant déroulées le jour de votre naissance : ")
+        st.dataframe(df_races_final[(df_races_final['day']==day_birth) &
+                                    (df_races_final['month']==month_birth)]
+                     [['circuitId', 'Nom de la course','name_circuits','location','country','date']]
+                     .style.apply(df_background_color_bday, axis=1))
         
         #affichage               
         affichage_circuit_2 = px.scatter_geo(data_frame=df_races_final[(df_races_final['day']==day_birth) & (df_races_final['month']==month_birth)] ,
@@ -168,7 +175,7 @@ def run():
                                    projection =projection)
         
         affichage_circuit_2.update_layout(height=700)
-        st.plotly_chart(affichage_circuit_2, use_container_width=True)
+        st.plotly_chart(affichage_circuit_2, projection='Miller', use_container_width=True)
 
 ######### Fin Partie  - Course le jour de votre birthday    
     
@@ -338,7 +345,8 @@ def run():
     session_type = 'R'  # R= race ; P1=Practice 1 ; ...
     
 
-    if st.button(label="Visualisation",args=None, help ="L'affichage peut prendre un peu de temps", disabled=False, key='1_visu'):
+    if st.button(label="Visualisation",args=None, help ="L'affichage peut prendre un peu de temps",
+                 disabled=False, key='1_visu',):
         
         
         session = ff1.get_session(annee, course, session_type)

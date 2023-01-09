@@ -1,5 +1,10 @@
 import streamlit as st
 import pandas as pd
+
+import matplotlib.pyplot as plt
+#import plotly.express as px 
+
+
 # import numpy as np
 # import time
 # from joblib import dump, load
@@ -20,8 +25,8 @@ sidebar_name = "Classement 2021"
 
 def run():
 
-    st.markdown('<style>.stProgress div[role="progressbar"] div.st-bs {height: 1.6rem; background-color: unset;} .stProgress div[role="progressbar"] div.st-bn {background-color: #e10600;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(55) > div.css-1xh5rm1 {gap:0.5rem;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(55) > div.css-1xh5rm1 div[data-testid="stHorizontalBlock"] div[data-testid="column"]:nth-child(2) div[data-testid="stMarkdownContainer"] {font-family: "Zen Dots"; border-left: 3px solid #38383f;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(55) > div.css-1xh5rm1 div[data-testid="stHorizontalBlock"] div[data-testid="column"]:nth-child(2) div[data-testid="stMarkdownContainer"] > p {padding: 2px 0 0 7px; font-size: 0.9rem; text-align: center;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(55) > div.css-1xh5rm1 div[data-testid="stHorizontalBlock"] div[data-testid="column"]:nth-child(1) div[data-testid="stMarkdownContainer"] {font-family: "Zen Dots"; background-color: #d0d0d2; border-bottom-right-radius: 5px;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(55) > div.css-1xh5rm1 div[data-testid="stHorizontalBlock"] div[data-testid="column"]:nth-child(1) div[data-testid="stMarkdownContainer"] > p {font-size: 0.9rem; color: #15151e; font-weight: 700; text-align: center;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(55) > div.css-1xh5rm1 > div:nth-child(1) {margin-bottom: 1rem;} </style>', unsafe_allow_html=True)
-    
+    st.markdown('<style>.stProgress div[role="progressbar"] div.st-bs {height: 1.6rem; background-color: unset;} .stProgress div[role="progressbar"] div.st-bn {background-color: #e10600;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(43) > div.css-1xh5rm1 {gap:0.5rem;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(43) > div.css-1xh5rm1 div[data-testid="stHorizontalBlock"] div[data-testid="column"]:nth-child(2) div[data-testid="stMarkdownContainer"] {font-family: "Zen Dots"; border-left: 3px solid #38383f;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(43) > div.css-1xh5rm1 div[data-testid="stHorizontalBlock"] div[data-testid="column"]:nth-child(2) div[data-testid="stMarkdownContainer"] > p {padding: 2px 0 0 7px; font-size: 0.9rem; text-align: center;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(43) > div.css-1xh5rm1 div[data-testid="stHorizontalBlock"] div[data-testid="column"]:nth-child(1) div[data-testid="stMarkdownContainer"] {font-family: "Zen Dots"; background-color: #d0d0d2; border-bottom-right-radius: 5px;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(43) > div.css-1xh5rm1 div[data-testid="stHorizontalBlock"] div[data-testid="column"]:nth-child(1) div[data-testid="stMarkdownContainer"] > p {font-size: 0.9rem; color: #15151e; font-weight: 700; text-align: center;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(43) > div.css-1xh5rm1 > div:nth-child(1) {margin-bottom: 1rem;} </style>', unsafe_allow_html=True)
+
     st.title(title)
 
     st.markdown(
@@ -31,26 +36,28 @@ def run():
         """
     )
 
-    #df_results = pd.read_csv(r'..\data\df_results_class_complet.csv',sep=',')
-   # data_scaled = pd.read_csv(r'..\data\data_scaled_class_complet.csv',sep=',')
-    #df_drivers = pd.read_csv(r'..\data\drivers.csv',sep=',')
-    # on importe depuis un csv le vrai classement
-    #resultats_2021=pd.read_csv(r'..\data\Classement_2021.csv', encoding = 'utf-8',sep=';')
+  
     points = pd.read_csv(r'..\data\points_classement_2021.csv',sep=',',index_col = 0)
-    y_proba = pd.read_csv(r'..\data\proba_class_complet.csv',sep=',',index_col = 0)
     races = pd.read_csv(r'..\data\races.csv',sep=',')
     results = pd.read_csv(r'..\data\results.csv',sep=',')
     drivers = pd.read_csv(r'..\data\drivers.csv',sep=',')
     rfc_proba = pd.read_csv(r'..\data\rfc_proba_complet.csv',sep=',',index_col=0)
     svc_proba = pd.read_csv(r'..\data\svc_proba_complet.csv',sep=',',index_col=0)
+    logreg_proba = pd.read_csv(r'..\data\logreg_proba_complet.csv',sep=',',index_col=0)
+    tree_proba = pd.read_csv(r'..\data\decisiontree_proba_complet.csv',sep=',',index_col=0)
+    compar_svc = pd.read_csv(r'..\data\compar_svc_class_complet.csv',sep=',',index_col=0)
+    compar_rfc = pd.read_csv(r'..\data\compar_rfc_class_complet.csv',sep=',',index_col=0)
+    compar_logreg = pd.read_csv(r'..\data\compar_logreg_class_complet.csv',sep=',',index_col=0)
+    compar_tree = pd.read_csv(r'..\data\compar_decisiontreee_class_complet.csv',sep=',',index_col=0)
+    
     
     st.markdown(
         """
-        ## Application du modèle
+        ## Modélisation et récupération des probabilités
         """)
     st.write("Comme précédemment on part donc de notre dataframe. On demande maintenant à nos modèles de nous donner la probabilité "
              "que chaque pilote finisse à chacune des 20 positions. Voici par exemple ce que l'on obtient : ")
-    st.write("Chaque colonne 'proba_j' représentant la probabilité d'être en 'j_ème' position")
+    st.write("Chaque colonne _proba_n_ représentant la probabilité d'être en n_ème position")
     st.write("Chaque ligne représentant un pilote _(driverId)_ lors d'un GP donné _(raceId)_ comme on peut le voir ici")
     st.dataframe(rfc_proba.head())
     
@@ -86,69 +93,205 @@ def run():
         ## Résultats
         """)
         
-    st.write("Ce qui nous donne pour les modèles LinearSVC et Random Forest : ")
+    st.write("Ce qui nous donne en fonction de nos modèles: ")
+   
     
-    st.write("_Info : vous pouvez cliquer sur le nom d'une colonne pour l'ordonner_ ")
-    col1, col2 = st.columns(2)
-
-    with col1:  
-        ## import dataframe SVC
-        st.subheader("Linear SVC")
-        compar_svc = pd.read_csv(r'..\data\compar_svc_class_complet.csv',sep=',',index_col=0)
-        st.dataframe(compar_svc)
-        st.write("L'écart de points moyen est de ", compar_svc['diff_points'].abs().mean())
-    with col2:
-        ## import dataframe RFC
-        st.subheader("Random Forest Classifier")
-        compar_rfc = pd.read_csv(r'..\data\compar_rfc_class_complet.csv',sep=',',index_col=0)
-        st.dataframe(compar_rfc)
-        compar_rfc['diff_points'].abs().mean()
-        st.write("L'écart de points moyen est de ", compar_rfc['diff_points'].abs().mean())
-    
-    st.write("Les deux premières colonnes _points_totaux_1073_ et _classement_final_ présentent les résultats du modèle. " 
-             "Les colonnes _points_reels_ et _classement_final_reel_ sont les vrais résultats. "
-             "Les deux colonnes de droite présentent les différences entre les résultats réels et ceux prédits.")
-    st.write("             ")
-    st.write("             ")
-    st.write("Une image valant mille mots, voici les représentations graphiques associées : ")
-    
-
  
-    ## import image SVC
-    st.header("Linear SVC - Ordonné selon le classement réel")
-    image_svc = Image.open(r'..\data\classement_2021_svc.png')
-    st.image(image_svc)
+    ##### AFFICHAGE des ecart de points et classement
     
-    st.header("Linear SVC - Ordonné selon le classement prédit")
-    image_svc_2 = Image.open(r'..\data\classement_2021_svc_2.png')
-    st.image(image_svc_2)
     
-    st.write("             ")
-    st.write("On remarque rapidement que ce modèle ne semble pas optimal, voire pas bon du tout. Ce que confirme l'écart moyen de 88 points."
-             "Il semble que celui-ci privilégie les anciens champions du monde ou en d'autres termes les pilotes avec le plus de victoires "
-             "en Championnat, en effet, il place Raikkonen, Hamilton, Vettel et Alonso en tête. ")
-    st.write(      "Sans surprise on observe des écarts de points entre les prédictions et la réalité allant jusqu'à 433...ce qui est énorme. "
-             "Pour aller plus loin, il faudrait utiliser un outil comme [Shap](https://shap.readthedocs.io/en/latest/) pour "
-             "tenter de comprendre le comportement du modèle.")
+    models = ['SVC','Random Forest Classifier','Régression Logistique','Arbe de décision']
+    ecart_point  = [round(compar_svc['diff_points'].abs().mean(), 1),
+                    round(compar_rfc['diff_points'].abs().mean(),1),
+                    round(compar_logreg['diff_points'].abs().mean(),1),
+                    round(compar_tree['diff_points'].abs().mean(),1)]
+    
+    ecart_place  = [round(compar_svc['diff_classement'].abs().mean(),1),
+                    round(compar_rfc['diff_classement'].abs().mean(),1),
+                    round(compar_logreg['diff_classement'].abs().mean(),1),
+                    round(compar_tree['diff_classement'].abs().mean(),1)]
+    
+    color_models  = [ '#4c78a8', '#4c78a8', '#4c78a8','#e10600']
+    
+    fig_1 = plt.figure(figsize=(15, 3))
+    plt.bar(x=models, height=ecart_point, width=0.6, color=color_models)
+    plt.title('Ecart de points moyen en fonction du modèle')
+    plt.ylabel('Ecart de points')
+    plt.xticks(rotation=45, ha='right')
+    for i in range(len(ecart_point)):
+         plt.annotate(str(ecart_point[i]), xy=(models[i], ecart_point[i]), ha='center', va='bottom', color='#fff')
+    st.pyplot(fig_1)
+    
+    fig_2 = plt.figure(figsize=(15, 3))
+    plt.bar(x=models, height=ecart_place, width=0.6, color=color_models)
+    plt.title('Ecart de classement en fonction du modèle')
+    plt.ylabel('Ecart de classement')
+    plt.xticks(rotation=45, ha='right')
+    for i in range(len(ecart_point)):
+         plt.annotate(str(ecart_place[i]), xy=(models[i], ecart_place[i]), ha='center', va='bottom', color='#fff')
+    st.pyplot(fig_2) 
+    
+    st.write("On voit très rapidement que le modèle d'arbre de décision est très performant. ")
+    
+    
+    def df_background_color_class_ok(s):
+        if s['classement_final'] == s['classement_final_reel']:
+            return ['background-color: #43D41E']*len(s)
+        elif abs(s['classement_final'] - s['classement_final_reel']) == 1:
+            return ['background-color: #F5B10F']*len(s)
+        else:
+            return ['background-color: #0e1117']*len(s)
+    
+        
+    with st.expander("Pour avoir le détail des dataframes :"):
+        st.write("_Les deux premières colonnes _points_totaux_1073_ et _classement_final_ présentent les résultats du modèle._ " 
+                 "_Les colonnes _points_reels_ et _classement_final_reel_ sont les vrais résultats._ "
+                 "_Les deux colonnes de droite présentent les différences entre les résultats réels et ceux prédits._ ")
+        st.write("_La ligne apparait en vert si le classement du pilote prédit est le même que le classement réel._ \n\n "
+                 "_La ligne apparait en orange si la différence entre la prédiction et la réalite est d'une seule place._ ")
+        st.write("_Vous pouvez cliquer sur le nom d'une colonne pour l'ordonner (classé par classement final réel par défaut)_ ")
+        
+        col1, col2, col3, col4 = st.columns(4)
 
-    ## import image RFC
-    st.header("Random Forest Classifier - Ordonné selon le classement réel")
-    image_rfc = Image.open(r'..\data\classement_2021_rfc.png')
-    st.image(image_rfc)
+        with col1:
+            linear = st.checkbox('Modèle Linear SVC', key='0_linear')
+        with col2:
+            rfc = st.checkbox('Modèle Random Forest Classifier',key='0_rfc')
+        with col3:
+            log_reg = st.checkbox('Modèle Logistic Regression',key='0_log_reg')
+        with col4:
+            tree = st.checkbox('Modèle Arbre de décision',key='0_tree')
     
-    st.header("Random Forest Classifier - Ordonné selon le classement prédit")
-    image_rfc_2 = Image.open(r'..\data\classement_2021_rfc_2.png')
-    st.image(image_rfc_2)
-    st.write("             ")
-    st.write("Pour les deux premmières places, les résultats sont très bons ! "
-             "On observe un écart de seulement 1.5 points pour Verstappen et 16.5 pour Hamilton soient respectivement 0.3% et 4.2% d'écart ! "
-             "L'écart moyen est seulement de 29.5 points contre 88 précédemment. ")
-    st.write("Le plus grand écart de points est de 124 et cela concerne Pérez, qui a, d'après ce modèle, clairement sous-performé. "
-             "Mais cela peut s'expliquer : En regardant de plus près Perez n’a pas terminé 6 courses sur les 22 "
-             "(ce qui est un chiffre très élevé pour une écurie comme RedBull). Sur les 16 restantes, "
-             "il a marqué en moyenne 11.9 points, ce qui ramené à une saison de 22 courses aurait fait une saison "
-             "à 262 points. Même si on est encore loin des 314 points prédits, cela l’aurait quand même placé en 3ème position, comme prédit par le modèle.")
+        if linear:  
+            ## import dataframe SVC
+            st.subheader("Linear SVC")
+            st.write("Ecart de points moyen : "+str(round(compar_svc['diff_points'].abs().mean(),1)))
+            st.write("Ecart de classement moyen : "+str(round(compar_svc['diff_classement'].abs().mean(),1)))
+            st.dataframe(compar_svc.sort_values(by='classement_final_reel').style.apply(df_background_color_class_ok, axis=1))
+           
+            
+        if rfc:
+            ## import dataframe RFC
+            st.subheader("Random Forest Classifier")
+            st.write("Ecart de points moyen : "+str(round(compar_rfc['diff_points'].abs().mean(),1)))
+            st.write("Ecart de classement moyen : "+str(round(compar_rfc['diff_classement'].abs().mean(),1)))
+            st.dataframe(compar_rfc.sort_values(by='classement_final_reel').style.apply(df_background_color_class_ok, axis=1))
+    
+        
+        if log_reg:
+             ## import dataframe LogReg
+             st.subheader("Régression logistique")    
+             st.write("Ecart de points moyen : "+str(round(compar_logreg['diff_points'].abs().mean(),1)))
+             st.write("Ecart de classement moyen : "+str(round(compar_logreg['diff_classement'].abs().mean(),1)))
+             st.dataframe(compar_logreg.sort_values(by='classement_final_reel').style.apply(df_background_color_class_ok, axis=1))
+    
+        if tree:  
+            ## import dataframe SVC
+            st.subheader("Decision Tree")
+            st.write("Ecart de points moyen : "+str(round(compar_tree['diff_points'].abs().mean(),1)))
+            st.write("Ecart de classement moyen : "+str(round(compar_tree['diff_classement'].abs().mean(),1)))
+            st.dataframe(compar_tree.sort_values(by='classement_final_reel').style.apply(df_background_color_class_ok, axis=1))
 
+
+    st.write("             ")
+    st.markdown(
+        """
+        ## Représentation Graphique
+        """)
+    st.write("Une image valant mille dataframes, voici les représentations graphiques associées comparant les prédictions des modèles "
+             "et les points réellement engrangés par les pilotes: ")
+    
+
+    with st.expander("Pour avoir les représentations graphiques :"):
+        ### Choix des modèles à afficher
+        col1,col2,col3,col4 = st.columns(4)
+        with col1:
+            linear = st.checkbox('Modèle Linear SVC')
+        with col2:
+            rfc = st.checkbox('Modèle Random Forest Classifier')
+        with col3:
+            log_reg = st.checkbox('Modèle Logistic Regression')
+        with col4:
+            tree = st.checkbox('Modèle Arbre de décision')
+            
+        ### Test
+        st.write("        ")
+        st.write("        ")
+        if linear:
+     
+            ## import image SVC
+            st.subheader("Linear SVC - Ordonné selon le classement réel")
+            image_svc = Image.open(r'..\data\classement_2021_svc.png')
+            st.image(image_svc)
+            
+            st.subheader("Linear SVC - Ordonné selon le classement prédit")
+            image_svc_2 = Image.open(r'..\data\classement_2021_svc_2.png')
+            st.image(image_svc_2)
+            
+            st.write("             ")
+            st.write("On remarque rapidement que ce modèle ne semble pas optimal, voire pas bon du tout. Ce que confirme l'écart moyen de 88 points."
+                     "Il semble que celui-ci privilégie les anciens champions du monde ou en d'autres termes les pilotes avec le plus de victoires "
+                     "en Championnat, en effet, il place Raikkonen, Hamilton, Vettel et Alonso en tête. ")
+            st.write(      "Sans surprise on observe des écarts de points entre les prédictions et la réalité allant jusqu'à 433...ce qui est énorme. "
+                     "Pour aller plus loin, il faudrait utiliser un outil comme [Shap](https://shap.readthedocs.io/en/latest/) pour "
+                     "tenter de comprendre le comportement du modèle.")
+        if rfc:
+            
+            ## import image RFC
+            st.subheader("Random Forest Classifier - Ordonné selon le classement réel")
+            image_rfc = Image.open(r'..\data\classement_2021_rfc.png')
+            st.image(image_rfc)
+            
+            st.subheader("Random Forest Classifier - Ordonné selon le classement prédit")
+            image_rfc_2 = Image.open(r'..\data\classement_2021_rfc_2.png')
+            st.image(image_rfc_2)
+            st.write("             ")
+            st.write("Pour les deux premmières places, les résultats sont très bons ! "
+                     "On observe un écart de seulement 1.5 points pour Verstappen et 16.5 pour Hamilton soient respectivement 0.3% et 4.2% d'écart ! "
+                     "L'écart moyen est seulement de 29.5 points contre 88 précédemment. ")
+            st.write("Le plus grand écart de points est de 124 et cela concerne Pérez, qui a, d'après ce modèle, clairement sous-performé. "
+                     "Mais cela peut s'expliquer : En regardant de plus près Perez n’a pas terminé 6 courses sur les 22 "
+                     "(ce qui est un chiffre très élevé pour une écurie comme RedBull). Sur les 16 restantes, "
+                     "il a marqué en moyenne 11.9 points, ce qui ramené à une saison de 22 courses aurait fait une saison "
+                     "à 262 points. Même si on est encore loin des 314 points prédits, cela l’aurait quand même placé en 3ème position, comme prédit par le modèle.")
+    
+    
+        if log_reg:
+            
+            ## import image logreg
+            st.subheader("Régression Logistique - Ordonné selon le classement réel")
+            image_logreg = Image.open(r'..\data\classement_2021_log_reg.png')
+            st.image(image_logreg)
+            
+            st.subheader("Régression Logistique - Ordonné selon le classement prédit")
+            image_logreg_2 = Image.open(r'..\data\classement_2021_log_reg_2.png')
+            st.image(image_logreg_2)
+            st.write("             ")
+            st.write("Ce modèle semble se comporter un peu comme le modèle SVC en plaçant Raikkonnen, Alonso et Vettel dans les 6 premiers. "
+                     "Cependant il semble mieux prendre en compte le présent en plaçant Hamilton, Verstappen et Perez aussi dans le top 6.")
+            st.write("Comme pour SVC on observe des écarts de points entre les prédictions et la réalité allant jusqu'à 253. "
+                        "Ici aussi l'utilisation de SHAP permettrait de comprendre quelles features sont les plus mises en avant par le modèle. "
+                        "Par pondération on pourrait alors tenter d'optimiser le modèle. ")
+        if tree:
+            
+            ## import image tree
+            st.subheader("Decision Tree - Ordonné selon le classement réel")
+            image_tree = Image.open(r'..\data\classement_2021_decision_tree.png')
+            st.image(image_tree)
+            
+            st.subheader("Régression Logistique - Ordonné selon le classement prédit")
+            image_tree_2 = Image.open(r'..\data\classement_2021_decision_tree_2.png')
+            st.image(image_tree_2)
+            st.write("C'est de très loin le meilleur modèle ! Encore meilleur que le Random Forest, l'écart moyen est de 10.5 points! "
+                     "Les plus grands écarts de points sont pour Verstappen et Hamilton (49 et 43 points), le 3ème plus grand n'est que de 28 points. ! "
+                     "Point intéressant, sur les 21 pilotes, seuls 4 ont été surévalués (Russel, Gasly, Latifi, Vettel). Il semble que le modèle "
+                     "a une tendance a clairement sous-évalué les performances des pilotes. ")
+            st.write("Au niveau du classement le Top 7 est correctement prédit, dans l'ordre qui plus est. Les positions 8 et 9, "
+                     "ainsi que 10 et 11 sont simplement inversées. ")
+        
+
+
+    
     
     ####################################### FIN SAISON
     ###################################### Début Proba 1 Pilote
@@ -169,10 +312,16 @@ def run():
     col1, col2, col3, col4 = st.columns(4)
 
     with col1: 
-        model = st.selectbox(label='Choix du modèle', options = ['Linear SVC','Random Forest Classifier'], key='0_model')
+        model = st.selectbox(label='Choix du modèle', options = ['Linear SVC','Random Forest Classifier','Logistic Regression','Decision Tree'], key='0_model')
         if model == 'Linear SVC':
             st.write("[page Scikit-Learn](https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html)")
             df_proba = svc_proba
+        elif model == 'Logistic Regression':
+            st.write("[page Scikit-Learn](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)")
+            df_proba = logreg_proba 
+        elif model == 'Decision Tree':
+            st.write("[page Scikit-Learn](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html)")
+            df_proba = tree_proba
         else :
             df_proba = rfc_proba
             st.write("[page Scikit-Learn](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)")
@@ -228,6 +377,7 @@ def run():
             driver_id =  drivers[drivers['surname'] == driver_1][["driverId"]].iloc[0,0]
         
         st.write("[page Wiki du pilote]("+drivers[drivers['driverId']==driver_id][['url']].iloc[0,0]+")")
+
     
     with st.container():
         
