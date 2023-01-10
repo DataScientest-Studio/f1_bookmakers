@@ -1,0 +1,21 @@
+﻿round;Winner;Predicted winner - Régression logistique;Cote - Régression logistique;Predicted winner - Forêt aléatoire;Cote - Forêt aléatoire;Predicted winner - Arbre de décision;Cote - Arbre de décision
+1;Hamilton;Pérez;2,1;Hamilton;2,1;Verstappen;2,1
+2;Verstappen;Hamilton;2,8;Hamilton;2,8;Hamilton;2,8
+3;Hamilton;Hamilton;2,1;Hamilton;2,1;Hamilton;2,1
+4;Hamilton;Hamilton;2,1;Hamilton;2,1;Hamilton;2,1
+5;Verstappen;Verstappen;2,9;Leclerc;2,9;Verstappen;2,9
+6;Pérez;Hamilton;7;Verstappen;7;Hamilton;7
+7;Verstappen;Verstappen;2,1;Verstappen;2,1;Verstappen;2,1
+8;Verstappen;Hamilton;1,9;Verstappen;1,9;Verstappen;1,9
+9;Verstappen;Verstappen;1,8;Verstappen;1,8;Verstappen;1,8
+10;Hamilton;Verstappen;2,8;Verstappen;2,8;Verstappen;2,8
+11;Ocon;Hamilton;17;Hamilton;17;Hamilton;17
+12;Verstappen;Verstappen;1,8;Hamilton;1,8;Verstappen;1,8
+13;Verstappen;Verstappen;1,8;Verstappen;1,8;Verstappen;1,8
+14;Ricciardo;Verstappen;25;Verstappen;25;Verstappen;25
+15;Hamilton;Hamilton;2,8;Norris;2,8;Norris;2,8
+16;Bottas;Verstappen;3,3;Hamilton;3,3;Verstappen;3,3
+18;Verstappen;Verstappen;1,8;Hamilton;1,8;Bottas;1,8
+19;Hamilton;Verstappen;2,2;Verstappen;2,2;Bottas;2,2
+21;Hamilton;Hamilton;2,4;Hamilton;2,4;Hamilton;2,4
+22;Verstappen;Verstappen;1,6;Verstappen;1,6;Verstappen;1,6

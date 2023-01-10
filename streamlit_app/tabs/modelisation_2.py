@@ -18,7 +18,7 @@ sidebar_name = "Modélisation - Top 3"
 
 def run():
 
-    #st.markdown('<style>section[tabindex="0"] div[data-testid="stHorizontalBlock"]:last-child div[data-testid="column"].css-keje6w {border-right: 4px solid var(--gray-color); border-top: 4px solid var(--gray-color); border-top-right-radius: 15px; padding: 5px 5px 0 0;}</style>', unsafe_allow_html=True)
+    st.markdown('<style> section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(7) > div > div > div > img, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(9) > div > div > div > img, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(11) > div > div > div > img {margin-left: 6rem;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(17) > div > div > div > img, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(21) > div > div > div > img, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(23) > div > div > div > img {margin-left: 3rem;} </style>', unsafe_allow_html=True)
 
     def df_background_color(s):
         return ['background-color: #202028']*len(s) if (s['round']%2)==0 else ['background-color: #0e1117']*len(s)
@@ -83,7 +83,7 @@ def run():
 
         Par exemple :
         """)
-    st.dataframe(df.reset_index().head(20))
+    st.dataframe(df.drop('podium', axis=1).reset_index().head(20))
     st.markdown(
         """
         Pour prédire le top 3 d’un Grand prix, nous récupérons les probabilités des classes du modèle avec la fonction predict_proba() et nous avons testée une première méthode :
@@ -99,16 +99,22 @@ def run():
                 </ul>
             </li>
         </ul>
-        **image**
-        <ul>
+    """, unsafe_allow_html=True)
+    st.image(r'./assets/modelisation_top3_etape1.jpg')
+    st.markdown(
+        """
+        <ul style="margin: 0 0 1rem 2.7rem;">
             <ul>
                 <li>La ligne qui vient d’être assignée à la première place est filtrée.</li>
                 <li>La valeur maximale de la probabilité classe 2 est identifiée.</li>
                 <li>On définit la valeur 2 dans la colonne « Prédiction » pour cette ligne.</li>
             </ul>
         </ul>
-        **image**
-        <ul>
+    """, unsafe_allow_html=True)
+    st.image(r'./assets/modelisation_top3_etape2.jpg')
+    st.markdown(
+        """
+        <ul style="margin: 0 0 1rem 2.7rem;">
             <ul>
                 <li>Les lignes assignées aux deux premières places sont filtrées.</li>
                 <li>La valeur maximale de la probabilité classe 3 est identifiée.</li>
@@ -116,6 +122,7 @@ def run():
             </ul>
         </ul>
         """, unsafe_allow_html=True)
+    st.image(r'./assets/modelisation_top3_etape3.jpg')
     
     # ----------------------------
     # Algorithmes
@@ -486,9 +493,23 @@ def run():
         """
         ## Méthodologie : Podium
 
-        Nous avons opté pour une variable cible « podium » qui a pour valeur 1 les positions 1 / 2 / 3 de la variable « positionOrder » et zéro pour les autres positions.
+        Nous avons essayé un autre approche en optant pour une variable cible « podium » :
+        
+        - On définit la valeur 1 pour les positions 1 / 2 / 3 de la variable « positionOrder »
+        - La valeur 0 pour les autres positions
+
+        Par exemple :
 
         """)
+    st.dataframe(df.reset_index().head(20))
+    st.markdown(
+        """
+        Pour les prédiction, on utlise la même méthode que lors de la modélisation vainqueur.
+
+        Nous récupérons les probabilités des classes du modèle (avec la fonction **predict_proba**) et on détermine les pilotes arrivés sur le podium en sélectionnant les 3 valeurs maximales de la classe 1.
+
+        """)
+    st.image(r'./assets/modelisation_podium.jpg')
     
     model_selector_2 = st.selectbox(label='', options=('', 'Régression logistique', 'Forêt aléatoire', 'Arbre de décision'), key='iter2',
                                     format_func=lambda x: "< Choix du modèle >" if x == '' else x)
@@ -790,8 +811,10 @@ def run():
 
         <b><u>Option 1</u> :</b><br>
         A partir de la méthodologie « podium », on récupère les 3 valeurs maximales des probabilités de la classe 1 et on associe les valeur 1/2/3 dans les prédictions.
-
-
+        """, unsafe_allow_html=True)
+    st.image(r'./assets/modelisation_top3_podium_opt1.jpg')
+    st.markdown(
+        """
         <b><u>Option 2</u> :</b><br>
         On combine les probabilités obtenues pour le top 3 et le podium de la manière suivante :
         - proba_1 = proba_1_podium + proba_1_top3
@@ -804,6 +827,7 @@ def run():
         - On filtre la ligne de la 2e place attribuée et on récupère la valeur max de proba_3 pour déterminer la 3e place.
 
         """, unsafe_allow_html=True)
+    st.image(r'./assets/modelisation_top3_podium_opt2.jpg')
     
     model_selector_3 = st.selectbox(label='', options=('', 'Régression logistique', 'Forêt aléatoire', 'Arbre de décision'), key='iter3',
                                     format_func=lambda x: "< Choix du modèle >" if x == '' else x)

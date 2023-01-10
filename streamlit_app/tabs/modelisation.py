@@ -77,7 +77,7 @@ def run():
     st.dataframe(df.reset_index().head(20))
     st.markdown(
         """
-        Néammoins, cela engendre un déséquilibre des données avec la valeur 0 comme classe majoritaire. On utilise donc une méthode de réechantillonnage pour équilibrer les données et avoir un ratio classes minoritaire / majoritaire satisfaisant (nous avons utlisée la méthode **RandomOverSampler**).
+        Cela engendre un déséquilibre des données avec la valeur 0 comme classe majoritaire. On utilise donc une méthode de rééchantillonnage pour équilibrer les données et avoir un ratio classes minoritaire / majoritaire satisfaisant (nous avons utlisée la méthode **RandomOverSampler**).
         
         Pour les prédictions, on récupère des modèles la probabilité que chaque pilote finisse à la première place. Le vainqueur sera celui avec la plus forte probabilité de gagner.
 
@@ -88,7 +88,6 @@ def run():
         La colonne **proba_0** indique la probabilité que le pilote soit perdant. Inversement la colonne **proba_1** indique la probabilité que le pilote soit gagnant.</li></ul>
         """, unsafe_allow_html=True)
     st.image(r'./assets/modelisation_vainqueur_proba_etape1.jpg')
-    st.markdown('<style> section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(6) > div > div > div > img {margin-left: 3rem;} </style>', unsafe_allow_html=True)
     st.markdown(
         """
         <ul><li><b>Etape 2</b> : définition du vainqueur pour chaque course
@@ -99,7 +98,6 @@ def run():
         <li>Une colonne « Prédiction » initialisée à 0 est rajoutée.</li></ul>
         """, unsafe_allow_html=True)
     st.image(r'./assets/modelisation_vainqueur_proba_etape2.jpg')
-    st.markdown('<style> section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(9) > div > div > div > img {margin-left: 3rem;} </style>', unsafe_allow_html=True)
     st.markdown(
         """
         <ul><li><b>Etape 3</b> : prédiction
@@ -111,13 +109,13 @@ def run():
         <li>Sur cette ligne, on définit la valeur 1 dans la colonne « Prédiction »</li></ul>
         """, unsafe_allow_html=True)
     st.image(r'./assets/modelisation_vainqueur_proba_etape3.jpg')
-    st.markdown('<style> section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(12) > div > div > div > img {margin-left: 3rem;} </style>', unsafe_allow_html=True)
     st.markdown(
         """
         Cette méthodologie nous permet d’avoir un vainqueur pour chaque Grand Prix dans les prédictions et ce même si les probabilités de la classe 1 ne dépassent pas les 50% sur un même Grand Prix.
 
         ---
         """, unsafe_allow_html=True)
+    st.markdown('<style> section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div > div > div > div > img {margin-left: 3rem;} </style>', unsafe_allow_html=True)
 
     
     # ----------------------------
