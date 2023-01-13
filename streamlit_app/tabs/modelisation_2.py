@@ -1548,6 +1548,8 @@ def run():
         """
         ## Résultats
 
+        NB : Le type de pari « Top 3  placé » n’existe pas dans l’univers des paris français, l'exercice d'analyse a été réalisée à titre indicatif.
+
         """)
     plt.rcParams['font.sans-serif'] = 'Arial'
     plt.rcParams['font.size'] = 11
@@ -1582,6 +1584,16 @@ def run():
 
     st.pyplot(fig_top3)
 
+    st.markdown(
+        """
+        Le modèle Foret aléatoire réalise une bonne performance pour le Top 3 non classé.
+
+        On remarque que pour tous les modèles, les 2 favoris Hamilton et Verstapen sont quasi systématiquement prédits dans le Top 3. Ce qui différencie les modèles au niveau des scores, c'est leur capacité à prédire correctement les outsiders.
+
+        En effet, le modèle de régression logistique a prédit soit Perez, soit Bottas aux côté d'Hamilton et Verstapen. Les modèles de Forêt aléatoire et Arbre de décision ont donné plus de pilotes outsiders : Perez, Bottas, Leclerc, Sainz, Norris, Ricciardo entre autres.
+
+        """)
+
     st.write(
         """
         #### Podium
@@ -1602,6 +1614,16 @@ def run():
     col1_results, col2_results = st.columns(2)
     with col1_results:
         st.pyplot(fig_podium)
+    
+    st.markdown(
+        """
+        Les résultats sont supérieurs à 60% pour tous les modèles et confirment cette approche "podium".
+
+        La différence se joue également sur les pilotes outisders.
+
+        La régression logistique a de nouveau tendance à privilégier Perez et Bottas mais les détecte mieux. Sinon, le modèle arbre de décision est celui qui tire le mieux son épingle du jeu.
+
+        """)
     
     st.markdown(
         """
@@ -1642,3 +1664,48 @@ def run():
         plt.annotate(str(score_models_top3_podium_opt2[i]), xy=(models_top3_podium_opt2[i], score_models_top3_podium_opt2[i]), ha='center', va='bottom', color='#fff')
     
     st.pyplot(fig_top3_podium_opt2)
+
+    st.markdown(
+        """
+        Pour l'option 1, nous retrouvons logiquement les mêmes scores Top 3 non classés que ceux de la méthode "Podium". Nous pouvouns constater une légère amélioration pour les scores Top 3 classé à part pour le modèle Arbre de décision
+
+        Concernant l'option 2, les scores Top 3 non classés sont assez proche des score de l'option mais on note une amélioration de 4 points pour le modèle Arbre de décision.
+
+        En analysant les résultats de chaque modèle :
+
+        <ul><li>Régression logistique :
+
+        Ici encore, les deux favoris (Hamilton et Verstappen) sont souvent cités mais le modèle n’arrive pas à trouver le 3ème pilotes du podium (il choisit soit Perez ou soit Bottas). Ce modèle n’arrive donc pas à trouver ce qu’on appelle les « upsets », ces pilotes qui bouleversent les statistiques (Norris et Ricciardo notamment).</li>
+
+
+        <li>Forêt aléatoire :
+
+        Mis à part les favoris Hamilton et Pérez, ce modèle arrive à détecter des upsets. Par exemple, Ricciardo est bien pronostiqué.</li>
+
+
+        <li>Arbre de décision :
+ 
+        On note qu’hormis les favoris, les autres pilotes sont souvent correctement prédits. On observe même des Grand Prix où le trio de tête est prédit dans le bon ordre ! Ce modèle réalise la meilleur performance avec l'option 2.</li></ul>
+
+
+
+
+        Conclusion :
+
+        On peut deviner la stratégie des bookmakers : proposer une cote trop faible pour les deux favoris et une cote « alléchante » pour les éventuels troisièmes.
+
+        Cependant en 2021, on avait potentiellement 4 troisièmes potentiels (Sainz et Leclerc chez Ferrari, Perez chez Redbull et Bottas chez Mercedes). 
+        En grossissant le trait, on avait donc 25% des parieurs qui pariaient sur l’un de ces 4 pilotes. Avec une cote entre 2.2 et 3.5 en général, on se retrouve mathématiquement avec un gain pour le bookmaker.
+
+        Explication :
+        - Si l’on a les 4 pilotes avec une cote à 3.5 (cas le plus défavorable)
+        - 25% des parieurs misent sur le pilote A, 25% sur B, etc.
+        - 1000 € sont pariés par pilote : le bookmaker a encaissé 4000€
+        
+        En cas de victoire du pilote A par exemple, le bookmaker doit payer aux parieurs 3500€
+
+        Il lui reste donc 500 €. Le raisonnement est le même avec les pilotes B, C et D.
+
+
+        Cette piste de s’intéresser au top 3 plutôt qu’au gagnant semble bien plus intéressante. En effet, en simulant des paris avec des mises de 20€ sur chaque pilote, le ROI pour le meilleur modèle est de 70% (848€ de gain divisé par 1200€ de mise) ce qui est énorme dans le monde du pari. Le simple fait d’être bénéficiaire sur une saison est déjà rare.
+        """, unsafe_allow_html=True)

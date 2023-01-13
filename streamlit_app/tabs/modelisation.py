@@ -1242,6 +1242,4 @@ def run():
 
         On note que le modèle semble relativement bon pour prédire les favoris mais a du mal à détecter les outsiders.
 
-        En utilisant ce modèle, on a simulé les paris sur la saison 2021 : avec une mise de 100€, on aurait obtenu un gain net de 320€
-
         """, unsafe_allow_html=True)
