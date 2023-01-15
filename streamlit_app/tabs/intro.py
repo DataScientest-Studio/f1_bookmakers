@@ -67,18 +67,6 @@ def run():
 
         ---
 
-        ## Les datas dans le monde de la Formule 1
-
-        Le monde de la formule 1 a toujours été à la pointe de l’innovation en inventant de nombreuses technologies que l’on retrouve aujourd’hui dans les voitures de série. On peut citer notamment l’invention de l’injection directe, du frein à disque, de l’aileron, de l’ABS, de l’antipatinage, des palettes au volant…
-
-        Aujourd’hui cette innovation se retrouve dans l’utilisation des données. Lors de chaque course, 120 capteurs positionnés sur chaque voiture génèrent 3 Go de données et 1 500 points de données sont générés chaque seconde !
-
-        Ces données sont utilisées pour extraire des statistiques mais aussi pour établir des prédictions de course.
-
-        Une grande partie de ces données est rendu disponible au public à la fin de chaque week-end de Grand Prix par l’intermédiaire du groupement d’entreprises « Formula 1 » qui est responsable de la promotion du Championnat du monde FIA de Formule 1.
-
-        ---
-
         ## La Formule 1, une compétition mondiale
 
         La Formule 1 (F1) est une compétition automobile internationale avec des voitures de course monoplaces régie par la Fédération Internationale de l'Automobile (FIA). Le mot « Formule » dans le nom fait référence à l'ensemble des règles auxquelles doivent se conformer les voitures de tous les participants.
@@ -100,6 +88,18 @@ def run():
         La course se déroule le dimanche. Les pilotes doivent effectuer un nombre défini de tours (300km + 1 tour) en appliquant une stratégie (arrêts aux stands, choix des pneumatiques, quantité d’essence et ravitaillement, …) pour terminer à la meilleure place possible. A l’issue de la course, les points sont attribués aux 10 premiers pilotes et les trois premiers montent sur le podium.
 
         A l’issue de la saison, le pilote qui a le plus de points est champion du monde, tandis que l'écurie ayant le plus de points est championne des constructeurs.
+
+        ---
+
+        ## La data dans le monde de la Formule 1
+
+        Le monde de la formule 1 a toujours été à la pointe de l’innovation en inventant de nombreuses technologies que l’on retrouve aujourd’hui dans les voitures de série. On peut citer notamment l’invention de l’injection directe, du frein à disque, de l’aileron, de l’ABS, de l’antipatinage, des palettes au volant…
+
+        Aujourd’hui cette innovation se retrouve dans l’utilisation des données. Lors de chaque course, 120 capteurs positionnés sur chaque voiture génèrent 3 Go de données et 1 500 points de données sont générés chaque seconde !
+
+        Ces données sont utilisées pour extraire des statistiques mais aussi pour établir des prédictions de course.
+
+        Une grande partie de ces données est rendu disponible au public à la fin de chaque week-end de Grand Prix par l’intermédiaire du groupement d’entreprises « Formula 1 » qui est responsable de la promotion du Championnat du monde FIA de Formule 1.
 
 
         """, unsafe_allow_html=True

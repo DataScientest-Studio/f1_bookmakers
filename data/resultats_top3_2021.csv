@@ -1,61 +1,181 @@
-﻿round;position;Driver;Predicted driver - régression logistique;Cote Top 3 - régression logistique;Predicted driver - Forêt aléatoire;Cote Top 3 - Forêt aléatoire;Predicted driver - Arbre de décision;Cote Top 3 - Arbre de décision
-1;1;Hamilton;Hamilton;1,3;Hamilton;1,3;Verstappen;1,4
-1;2;Verstappen;Pérez;2,7;Bottas;2,7;Hamilton;1,3
-1;3;Bottas;Verstappen;1,4;Leclerc;2,3;Bottas;2,9
-2;1;Verstappen;Hamilton;1,9;Hamilton;1,3;Hamilton;1,3
-2;2;Hamilton;Verstappen;1,7;Verstappen;1,4;Pérez;2,1
-2;3;Norris;Pérez;2,3;Leclerc;2,3;Verstappen;1,4
-3;1;Hamilton;Hamilton;1,3;Hamilton;1,3;Hamilton;1,3
-3;2;Verstappen;Verstappen;1,4;Bottas;2,6;Bottas;3,5
-3;3;Bottas;Bottas;3,5;Verstappen;1,4;Verstappen;1,4
-4;1;Hamilton;Hamilton;1,3;Hamilton;1,3;Hamilton;1,3
-4;2;Verstappen;Verstappen;1,4;Verstappen;1,4;Verstappen;1,4
-4;3;Bottas;Bottas;3,5;Bottas;2,2;Bottas;3,5
-5;1;Verstappen;Hamilton;1,3;Verstappen;1,3;Leclerc;2,3
-5;2;Sainz;Verstappen;1,4;Leclerc;2,3;Verstappen;1,3
-5;3;Norris;Bottas;5;Bottas;2,3;Bottas;2,3
-6;1;Pérez;Hamilton;3,5;Verstappen;1,4;Hamilton;1,3
-6;2;Vettel;Verstappen;1,4;Hamilton;1,3;Leclerc;2,6
-6;3;Gasly;Pérez;2,9;Leclerc;2,6;Verstappen;1,4
-7;1;Verstappen;Verstappen;1,4;Verstappen;1,4;Verstappen;1,4
-7;2;Hamilton;Hamilton;1,3;Hamilton;1,3;Hamilton;1,3
-7;3;Pérez;Pérez;2,9;Bottas;2,1;Bottas;2,1
-8;1;Verstappen;Hamilton;1,3;Verstappen;1,3;Verstappen;1,3
-8;2;Hamilton;Verstappen;1,3;Hamilton;1,3;Hamilton;1,3
-8;3;Bottas;Pérez;2,3;Norris;2,9;Pérez;2,3
-9;1;Verstappen;Verstappen;1,3;Pérez;2,5;Verstappen;1,4
-9;2;Bottas;Hamilton;1,4;Verstappen;1,4;Norris;9
-9;3;Norris;Pérez;5;Norris;9;Pérez;2,5
-10;1;Hamilton;Verstappen;1,2;Verstappen;1,2;Verstappen;1,2
-10;2;Leclerc;Hamilton;1,2;Hamilton;1,2;Hamilton;1,2
-10;3;Bottas;Pérez;2,3;Bottas;2,9;Bottas;2,9
-11;1;Ocon;Verstappen;1,2;Hamilton;1,2;Hamilton;1,2
-11;2;Hamilton;Hamilton;1,2;Verstappen;1,2;Bottas;2,8
-11;3;Sainz;Pérez;2,6;Bottas;2,8;Verstappen;1,2
-12;1;Verstappen;Verstappen;1,2;Verstappen;1,2;Verstappen;1,2
-12;2;Russell;Hamilton;1,2;Hamilton;1,2;Russell;2,8
-12;3;Hamilton;Pérez;2,2;Pérez;2,2;Hamilton;1,2
-13;1;Verstappen;Verstappen;1,2;Hamilton;1,2;Verstappen;1,2
-13;2;Hamilton;Hamilton;1,2;Pérez;2,2;Hamilton;1,2
-13;3;Bottas;Pérez;2,2;Verstappen;1,2;Bottas;2,8
-14;1;Ricciardo;Verstappen;1,2;Verstappen;1,2;Verstappen;1,2
-14;2;Norris;Hamilton;1,2;Hamilton;1,2;Ricciardo;25
-14;3;Bottas;Pérez;2,2;Ricciardo;25;Hamilton;1,2
-15;1;Hamilton;Hamilton;1,2;Norris;5;Norris;2
-15;2;Verstappen;Verstappen;1,2;Hamilton;1,2;Sainz;2,6
-15;3;Sainz;Pérez;2,2;Verstappen;1,2;Hamilton;1,2
-16;1;Bottas;Verstappen;1,2;Bottas;2,7;Bottas;2,7
-16;2;Verstappen;Hamilton;1,2;Hamilton;1,2;Verstappen;1,2
-16;3;Pérez;Pérez;2,7;Verstappen;1,2;Pérez;2,7
-18;1;Verstappen;Verstappen;1,2;Hamilton;1,2;Hamilton;1,2
-18;2;Hamilton;Hamilton;1,2;Bottas;2,6;Bottas;2,6
-18;3;Pérez;Bottas;2,6;Verstappen;1,2;Verstappen;1,2
-19;1;Hamilton;Verstappen;1,2;Verstappen;1,2;Bottas;2,6
-19;2;Verstappen;Hamilton;1,2;Bottas;2,3;Verstappen;1,2
-19;3;Bottas;Pérez;2,1;Sainz;2,9;Sainz;2,9
-21;1;Hamilton;Verstappen;1,2;Hamilton;1,2;Hamilton;1,2
-21;2;Verstappen;Hamilton;1,2;Verstappen;1,2;Bottas;2,6
-21;3;Bottas;Pérez;2,2;Bottas;2,6;Verstappen;1,2
-22;1;Verstappen;Verstappen;1,2;Hamilton;1,2;Verstappen;1,2
-22;2;Hamilton;Hamilton;1,2;Verstappen;1,2;Hamilton;1,2
-22;3;Sainz;Pérez;2,1;Norris;5;Pérez;2,9
+﻿round;position;Driver;Predicted driver;Cote Top 3;Model
+1;1;Hamilton;Hamilton;1,3;Logistic regression
+1;2;Verstappen;Pérez;2,7;Logistic regression
+1;3;Bottas;Verstappen;1,4;Logistic regression
+2;1;Verstappen;Hamilton;1,9;Logistic regression
+2;2;Hamilton;Verstappen;1,7;Logistic regression
+2;3;Norris;Pérez;2,3;Logistic regression
+3;1;Hamilton;Hamilton;1,3;Logistic regression
+3;2;Verstappen;Verstappen;1,4;Logistic regression
+3;3;Bottas;Bottas;3,5;Logistic regression
+4;1;Hamilton;Hamilton;1,3;Logistic regression
+4;2;Verstappen;Verstappen;1,4;Logistic regression
+4;3;Bottas;Bottas;3,5;Logistic regression
+5;1;Verstappen;Hamilton;1,3;Logistic regression
+5;2;Sainz;Verstappen;1,4;Logistic regression
+5;3;Norris;Bottas;5;Logistic regression
+6;1;Pérez;Hamilton;3,5;Logistic regression
+6;2;Vettel;Verstappen;1,4;Logistic regression
+6;3;Gasly;Pérez;2,9;Logistic regression
+7;1;Verstappen;Verstappen;1,4;Logistic regression
+7;2;Hamilton;Hamilton;1,3;Logistic regression
+7;3;Pérez;Pérez;2,9;Logistic regression
+8;1;Verstappen;Hamilton;1,3;Logistic regression
+8;2;Hamilton;Verstappen;1,3;Logistic regression
+8;3;Bottas;Pérez;2,3;Logistic regression
+9;1;Verstappen;Verstappen;1,3;Logistic regression
+9;2;Bottas;Hamilton;1,4;Logistic regression
+9;3;Norris;Pérez;5;Logistic regression
+10;1;Hamilton;Verstappen;1,2;Logistic regression
+10;2;Leclerc;Hamilton;1,2;Logistic regression
+10;3;Bottas;Pérez;2,3;Logistic regression
+11;1;Ocon;Verstappen;1,2;Logistic regression
+11;2;Hamilton;Hamilton;1,2;Logistic regression
+11;3;Sainz;Pérez;2,6;Logistic regression
+12;1;Verstappen;Verstappen;1,2;Logistic regression
+12;2;Russell;Hamilton;1,2;Logistic regression
+12;3;Hamilton;Pérez;2,2;Logistic regression
+13;1;Verstappen;Verstappen;1,2;Logistic regression
+13;2;Hamilton;Hamilton;1,2;Logistic regression
+13;3;Bottas;Pérez;2,2;Logistic regression
+14;1;Ricciardo;Verstappen;1,2;Logistic regression
+14;2;Norris;Hamilton;1,2;Logistic regression
+14;3;Bottas;Pérez;2,2;Logistic regression
+15;1;Hamilton;Hamilton;1,2;Logistic regression
+15;2;Verstappen;Verstappen;1,2;Logistic regression
+15;3;Sainz;Pérez;2,2;Logistic regression
+16;1;Bottas;Verstappen;1,2;Logistic regression
+16;2;Verstappen;Hamilton;1,2;Logistic regression
+16;3;Pérez;Pérez;2,7;Logistic regression
+18;1;Verstappen;Verstappen;1,2;Logistic regression
+18;2;Hamilton;Hamilton;1,2;Logistic regression
+18;3;Pérez;Bottas;2,6;Logistic regression
+19;1;Hamilton;Verstappen;1,2;Logistic regression
+19;2;Verstappen;Hamilton;1,2;Logistic regression
+19;3;Bottas;Pérez;2,1;Logistic regression
+21;1;Hamilton;Verstappen;1,2;Logistic regression
+21;2;Verstappen;Hamilton;1,2;Logistic regression
+21;3;Bottas;Pérez;2,2;Logistic regression
+22;1;Verstappen;Verstappen;1,2;Logistic regression
+22;2;Hamilton;Hamilton;1,2;Logistic regression
+22;3;Sainz;Pérez;2,1;Logistic regression
+1;1;Hamilton;Hamilton;1,3;Random forest
+1;2;Verstappen;Bottas;2,9;Random forest
+1;3;Bottas;Leclerc;2,3;Random forest
+2;1;Verstappen;Hamilton;1,3;Random forest
+2;2;Hamilton;Verstappen;1,4;Random forest
+2;3;Norris;Leclerc;2,3;Random forest
+3;1;Hamilton;Hamilton;1,3;Random forest
+3;2;Verstappen;Bottas;2,6;Random forest
+3;3;Bottas;Verstappen;1,4;Random forest
+4;1;Hamilton;Hamilton;1,3;Random forest
+4;2;Verstappen;Verstappen;1,4;Random forest
+4;3;Bottas;Bottas;2,2;Random forest
+5;1;Verstappen;Verstappen;1,3;Random forest
+5;2;Sainz;Leclerc;2,3;Random forest
+5;3;Norris;Bottas;2,3;Random forest
+6;1;Pérez;Verstappen;1,4;Random forest
+6;2;Vettel;Hamilton;1,3;Random forest
+6;3;Gasly;Leclerc;2,6;Random forest
+7;1;Verstappen;Verstappen;1,4;Random forest
+7;2;Hamilton;Hamilton;1,3;Random forest
+7;3;Pérez;Bottas;2,1;Random forest
+8;1;Verstappen;Verstappen;1,3;Random forest
+8;2;Hamilton;Hamilton;1,3;Random forest
+8;3;Bottas;Norris;2,9;Random forest
+9;1;Verstappen;Pérez;2,5;Random forest
+9;2;Bottas;Verstappen;1,4;Random forest
+9;3;Norris;Norris;9;Random forest
+10;1;Hamilton;Verstappen;1,2;Random forest
+10;2;Leclerc;Hamilton;1,2;Random forest
+10;3;Bottas;Bottas;2,9;Random forest
+11;1;Ocon;Hamilton;1,2;Random forest
+11;2;Hamilton;Verstappen;1,2;Random forest
+11;3;Sainz;Bottas;2,8;Random forest
+12;1;Verstappen;Verstappen;1,2;Random forest
+12;2;Russell;Hamilton;1,2;Random forest
+12;3;Hamilton;Pérez;2,2;Random forest
+13;1;Verstappen;Hamilton;1,2;Random forest
+13;2;Hamilton;Pérez;2,2;Random forest
+13;3;Bottas;Verstappen;1,2;Random forest
+14;1;Ricciardo;Verstappen;1,2;Random forest
+14;2;Norris;Hamilton;1,2;Random forest
+14;3;Bottas;Ricciardo;25;Random forest
+15;1;Hamilton;Norris;5;Random forest
+15;2;Verstappen;Hamilton;1,2;Random forest
+15;3;Sainz;Verstappen;1,2;Random forest
+16;1;Bottas;Bottas;2,7;Random forest
+16;2;Verstappen;Hamilton;1,2;Random forest
+16;3;Pérez;Verstappen;1,2;Random forest
+18;1;Verstappen;Hamilton;1,2;Random forest
+18;2;Hamilton;Bottas;2,6;Random forest
+18;3;Pérez;Verstappen;1,2;Random forest
+19;1;Hamilton;Verstappen;1,2;Random forest
+19;2;Verstappen;Bottas;2,3;Random forest
+19;3;Bottas;Sainz;2,9;Random forest
+21;1;Hamilton;Hamilton;1,2;Random forest
+21;2;Verstappen;Verstappen;1,2;Random forest
+21;3;Bottas;Bottas;2,6;Random forest
+22;1;Verstappen;Hamilton;1,2;Random forest
+22;2;Hamilton;Verstappen;1,2;Random forest
+22;3;Sainz;Norris;5;Random forest
+1;1;Hamilton;Verstappen;1,4;Decision tree
+1;2;Verstappen;Hamilton;1,3;Decision tree
+1;3;Bottas;Bottas;2,9;Decision tree
+2;1;Verstappen;Hamilton;1,3;Decision tree
+2;2;Hamilton;Pérez;2,1;Decision tree
+2;3;Norris;Verstappen;1,4;Decision tree
+3;1;Hamilton;Hamilton;1,3;Decision tree
+3;2;Verstappen;Bottas;3,5;Decision tree
+3;3;Bottas;Verstappen;1,4;Decision tree
+4;1;Hamilton;Hamilton;1,3;Decision tree
+4;2;Verstappen;Verstappen;1,4;Decision tree
+4;3;Bottas;Bottas;3,5;Decision tree
+5;1;Verstappen;Leclerc;2,3;Decision tree
+5;2;Sainz;Verstappen;1,3;Decision tree
+5;3;Norris;Bottas;2,3;Decision tree
+6;1;Pérez;Hamilton;1,3;Decision tree
+6;2;Vettel;Leclerc;2,6;Decision tree
+6;3;Gasly;Verstappen;1,4;Decision tree
+7;1;Verstappen;Verstappen;1,4;Decision tree
+7;2;Hamilton;Hamilton;1,3;Decision tree
+7;3;Pérez;Bottas;2,1;Decision tree
+8;1;Verstappen;Verstappen;1,3;Decision tree
+8;2;Hamilton;Hamilton;1,3;Decision tree
+8;3;Bottas;Pérez;2,3;Decision tree
+9;1;Verstappen;Verstappen;1,4;Decision tree
+9;2;Bottas;Norris;9;Decision tree
+9;3;Norris;Pérez;2,5;Decision tree
+10;1;Hamilton;Verstappen;1,2;Decision tree
+10;2;Leclerc;Hamilton;1,2;Decision tree
+10;3;Bottas;Bottas;2,9;Decision tree
+11;1;Ocon;Hamilton;1,2;Decision tree
+11;2;Hamilton;Bottas;2,8;Decision tree
+11;3;Sainz;Verstappen;1,2;Decision tree
+12;1;Verstappen;Verstappen;1,2;Decision tree
+12;2;Russell;Russell;2,8;Decision tree
+12;3;Hamilton;Hamilton;1,2;Decision tree
+13;1;Verstappen;Verstappen;1,2;Decision tree
+13;2;Hamilton;Hamilton;1,2;Decision tree
+13;3;Bottas;Bottas;2,8;Decision tree
+14;1;Ricciardo;Verstappen;1,2;Decision tree
+14;2;Norris;Ricciardo;25;Decision tree
+14;3;Bottas;Hamilton;1,2;Decision tree
+15;1;Hamilton;Norris;2;Decision tree
+15;2;Verstappen;Sainz;2,6;Decision tree
+15;3;Sainz;Hamilton;1,2;Decision tree
+16;1;Bottas;Bottas;2,7;Decision tree
+16;2;Verstappen;Verstappen;1,2;Decision tree
+16;3;Pérez;Pérez;2,7;Decision tree
+18;1;Verstappen;Hamilton;1,2;Decision tree
+18;2;Hamilton;Bottas;2,6;Decision tree
+18;3;Pérez;Verstappen;1,2;Decision tree
+19;1;Hamilton;Bottas;2,6;Decision tree
+19;2;Verstappen;Verstappen;1,2;Decision tree
+19;3;Bottas;Sainz;2,9;Decision tree
+21;1;Hamilton;Hamilton;1,2;Decision tree
+21;2;Verstappen;Bottas;2,6;Decision tree
+21;3;Bottas;Verstappen;1,2;Decision tree
+22;1;Verstappen;Verstappen;1,2;Decision tree
+22;2;Hamilton;Hamilton;1,2;Decision tree
+22;3;Sainz;Pérez;2,9;Decision tree

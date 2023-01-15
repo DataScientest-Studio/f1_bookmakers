@@ -8,6 +8,8 @@ sidebar_name = "Paris"
 
 def run():
 
+    st.markdown('<style>section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] {border-top: 5px solid var(--red-color); border-right: 5px solid var(--red-color); border-top-right-radius: 20px;} section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] img {border-top-right-radius: 15px;} </style>', unsafe_allow_html=True)
+
     st.title(title)
 
     st.markdown(
@@ -19,7 +21,6 @@ def run():
 
     races = pd.read_csv(r'../data/races.csv')
     races = races[races['year']==2021].sort_values(by='round')
-    circuits_list = list(races['name'])
 
     resultats_vainqueurs_2021 = pd.read_csv(r"../data/resultats_vainqueurs_2021.csv", sep=';', decimal=',')
     resultats_vainqueurs_2021 = resultats_vainqueurs_2021.merge(right=races[['round', 'name']], on='round')
@@ -27,6 +28,7 @@ def run():
     resultats_top3_2021 = pd.read_csv(r"../data/resultats_top3_2021.csv", sep=';')
     resultats_top3_2021 = resultats_top3_2021.merge(right=races[['round', 'name']], on='round')
 
+    circuits_list = list(resultats_vainqueurs_2021['name'].drop_duplicates())
 
     # st.write('Résultats Vainqueurs')
     # st._legacy_dataframe(resultats_vainqueurs_2021)
@@ -45,7 +47,7 @@ def run():
 
         if st.checkbox('Voir les prédictions', key='winner_bet_result'):  
 
-            #st.dataframe(resultats_vainqueurs_2021[resultats_vainqueurs_2021['name']==grand_prix_winner_selector])
+            # st.dataframe(resultats_vainqueurs_2021[resultats_vainqueurs_2021['name']==grand_prix_winner_selector])
 
             grand_prix_pred_df = resultats_vainqueurs_2021[resultats_vainqueurs_2021['name']==grand_prix_winner_selector].reset_index(drop=True)
 
@@ -60,16 +62,19 @@ def run():
 
             with result_winner_col1:
                 st.write('#### Régression logistique')
+                st.image(r'./assets/Drivers2021/{}.jpg'.format(predicted_winner_log_reg_name), width=260)
                 st.write('Pilote :', predicted_winner_log_reg_name)
                 st.write('Cote :', str(predicted_winner_log_reg_cote))
             
             with result_winner_col2:
                 st.write('#### Fôret aléatoire')
+                st.image(r'./assets/Drivers2021/{}.jpg'.format(predicted_winner_rf_name), width=260)
                 st.write('Pilote :', predicted_winner_rf_name)
                 st.write('Cote :', str(predicted_winner_rf_cote))
             
             with result_winner_col3:
                 st.write('#### Arbre de décision')
+                st.image(r'./assets/Drivers2021/{}.jpg'.format(predicted_winner_dt_name), width=260)
                 st.write('Pilote :', predicted_winner_dt_name)
                 st.write('Cote :', str(predicted_winner_dt_cote))
             
@@ -106,5 +111,106 @@ def run():
 
     elif bet_selector == 'Pari Top 3':
 
-        st.write('Top 3 - à faire')
+        grand_prix_top3_selector = st.selectbox(label='Choix de la course', options=circuits_list, index=0, key='grand_prix_top3')
+
+        if st.checkbox('Voir les prédictions', key='top3_bet_result'):  
+
+            st.dataframe(resultats_top3_2021[resultats_top3_2021['name']==grand_prix_top3_selector])
+
+            grand_prix_pred_df = resultats_top3_2021[resultats_top3_2021['name']==grand_prix_top3_selector].reset_index(drop=True)
+
+            predicted_top3_log_reg_name1 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Logistic regression'].reset_index(drop=True).loc[0,'Predicted driver']
+            predicted_top3_log_reg_cote1 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Logistic regression'].reset_index(drop=True).loc[0,'Cote Top 3']
+            predicted_top3_log_reg_name2 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Logistic regression'].reset_index(drop=True).loc[1,'Predicted driver']
+            predicted_top3_log_reg_cote2 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Logistic regression'].reset_index(drop=True).loc[1,'Cote Top 3']
+            predicted_top3_log_reg_name3 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Logistic regression'].reset_index(drop=True).loc[2,'Predicted driver']
+            predicted_top3_log_reg_cote3 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Logistic regression'].reset_index(drop=True).loc[2,'Cote Top 3']
+            predicted_top3_rf_name1 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Random forest'].reset_index(drop=True).loc[0,'Predicted driver']
+            predicted_top3_rf_cote1 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Random forest'].reset_index(drop=True).loc[0,'Cote Top 3']
+            predicted_top3_rf_name2 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Random forest'].reset_index(drop=True).loc[1,'Predicted driver']
+            predicted_top3_rf_cote2 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Random forest'].reset_index(drop=True).loc[1,'Cote Top 3']
+            predicted_top3_rf_name3 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Random forest'].reset_index(drop=True).loc[2,'Predicted driver']
+            predicted_top3_rf_cote3 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Random forest'].reset_index(drop=True).loc[2,'Cote Top 3']
+            predicted_top3_dt_name1 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Decision tree'].reset_index(drop=True).loc[0,'Predicted driver']
+            predicted_top3_dt_cote1 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Decision tree'].reset_index(drop=True).loc[0,'Cote Top 3']
+            predicted_top3_dt_name2 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Decision tree'].reset_index(drop=True).loc[1,'Predicted driver']
+            predicted_top3_dt_cote2 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Decision tree'].reset_index(drop=True).loc[1,'Cote Top 3']
+            predicted_top3_dt_name3 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Decision tree'].reset_index(drop=True).loc[2,'Predicted driver']
+            predicted_top3_dt_cote3 = grand_prix_pred_df[grand_prix_pred_df['Model']=='Decision tree'].reset_index(drop=True).loc[2,'Cote Top 3']
+
+            st.write('#### Régression logistique')
+            result_top3_log_reg_col1, result_top3_log_reg_col2, result_top3_log_reg_col3 = st.columns(3)
+            with result_top3_log_reg_col1:
+                st.image(r'./assets/Drivers2021/{}.jpg'.format(predicted_top3_log_reg_name1), width=260)
+                st.write('Pilote 1 :', predicted_top3_log_reg_name1)
+                st.write('Cote :', str(predicted_top3_log_reg_cote1))
+            with result_top3_log_reg_col2:
+                st.image(r'./assets/Drivers2021/{}.jpg'.format(predicted_top3_log_reg_name2), width=260)
+                st.write('Pilote 2 :', predicted_top3_log_reg_name2)
+                st.write('Cote :', str(predicted_top3_log_reg_cote2))
+            with result_top3_log_reg_col3:
+                st.image(r'./assets/Drivers2021/{}.jpg'.format(predicted_top3_log_reg_name3), width=260)
+                st.write('Pilote 3 :', predicted_top3_log_reg_name3)
+                st.write('Cote :', str(predicted_top3_log_reg_cote3))
+            
+            st.write('---')
+
+            st.write('#### Fôret aléatoire')
+            result_top3_rf_col1, result_top3_rf_col2, result_top3_rf_col3 = st.columns(3)
+            with result_top3_rf_col1:
+                st.image(r'./assets/Drivers2021/{}.jpg'.format(predicted_top3_rf_name1), width=260)
+                st.write('Pilote 1 :', predicted_top3_rf_name1)
+                st.write('Cote :', str(predicted_top3_rf_cote1))
+            with result_top3_rf_col2:
+                st.image(r'./assets/Drivers2021/{}.jpg'.format(predicted_top3_rf_name2), width=260)
+                st.write('Pilote 2 :', predicted_top3_rf_name2)
+                st.write('Cote :', str(predicted_top3_rf_cote2))
+            with result_top3_rf_col3:
+                st.image(r'./assets/Drivers2021/{}.jpg'.format(predicted_top3_rf_name3), width=260)
+                st.write('Pilote 3 :', predicted_top3_rf_name3)
+                st.write('Cote :', str(predicted_top3_rf_cote3))
+            
+            st.write('---')
+
+            st.write('#### Arbre de décision')
+            result_top3_dt_col1, result_top3_dt_col2, result_top3_dt_col3 = st.columns(3)
+            with result_top3_dt_col1:
+                st.image(r'./assets/Drivers2021/{}.jpg'.format(predicted_top3_dt_name1), width=260)
+                st.write('Pilote 1 :', predicted_top3_dt_name1)
+                st.write('Cote :', str(predicted_top3_dt_cote1))
+            with result_top3_dt_col2:
+                st.image(r'./assets/Drivers2021/{}.jpg'.format(predicted_top3_dt_name2), width=260)
+                st.write('Pilote 2 :', predicted_top3_dt_name2)
+                st.write('Cote :', str(predicted_top3_dt_cote2))
+            with result_top3_dt_col3:
+                st.image(r'./assets/Drivers2021/{}.jpg'.format(predicted_top3_dt_name3), width=260)
+                st.write('Pilote 3 :', predicted_top3_dt_name3)
+                st.write('Cote :', str(predicted_top3_dt_cote3))
+            
+
+            top3_predicted_drivers = grand_prix_pred_df[['Predicted driver', 'Cote Top 3']].drop_duplicates()
+            st.write(top3_predicted_drivers)
+
+            top3_drivers = grand_prix_pred_df['Driver'].unique()
+            st.write(list(top3_drivers))
+
+            select_top3_drivers_col1, select_top3_bet_col2 = st.columns(2)
+            with select_top3_drivers_col1:
+                drivers_selection = st.multiselect(label='Quels pilotes parier ?', options=top3_predicted_drivers, key='bet_top3_selection')
+
+            with select_top3_bet_col2:
+                bet_top3_amount = st.number_input('Mise')
+
+            if len(drivers_selection) > 3:
+                st.warning("You have to select only 3 drivers")
+            
+            elif (len(drivers_selection) == 3) & (bet_top3_amount!=0):
+                st.write(drivers_selection)
+                if st.button('Résultat', key='top_bet'):
+                    for driver in drivers_selection:
+                        if driver in top3_drivers:
+                            st.write('{} : ok'.format(driver))
+                        else:
+                            st.write('{} : ko'.format(driver))
+
 

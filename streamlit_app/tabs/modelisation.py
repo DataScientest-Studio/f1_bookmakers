@@ -1234,12 +1234,12 @@ def run():
     
     st.markdown(
         """
-        Les modèles obtiennent sensiblement les mêmes scores, mis à part le modèle de **foret aléatoire** auquel on observe une amélioration significative dans la 2e itérations.
+        Les modèles obtiennent sensiblement les mêmes scores, mis à part le modèle de **foret aléatoire** où on observe une amélioration significative dans la 2e itérations.
 
         Il est également à noter que le modèle **SVC** a un temps de calcul assez long. Il n'a pas été retenu pour la 2e itération, vu qu'une boucle est appliquée à chaque Grand Prix de la saison.
-        
-        Avec un score de 55%, le modèle **régression logistique** est le plus performant. Les résultats identiques sur les 2 itérations confirme la bonne stabilité du modèle et nous indique qu’il n’est pas nécessaire de réajuster les jeux d’entrainement sur une saison.
 
-        On note que le modèle semble relativement bon pour prédire les favoris mais a du mal à détecter les outsiders.
+        Avec un score de 55%, le modèle **régression logistique** obtient un bon résultat. Le modèle semble relativement bon pour prédire les favoris mais n’arrive pas à trouver les outsiders. On observe la même tendance pour les autres modèles avec un score de 50%.
+
+        On peut donc voir que la qualité d’un modèle se dessine plutôt sur les outsiders. Il semble aisé pour un modèle de prédire un favori, mais la différence entre deux modèles se fera surtout sur les outsiders, voire les upsets.
 
         """, unsafe_allow_html=True)
