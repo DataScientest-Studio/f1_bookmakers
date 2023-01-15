@@ -8,7 +8,7 @@ sidebar_name = "Paris"
 
 def run():
 
-    st.markdown('<style>section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] {border-top: 5px solid var(--red-color); border-right: 5px solid var(--red-color); border-top-right-radius: 20px;} section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] img {border-top-right-radius: 15px;} </style>', unsafe_allow_html=True)
+    st.markdown('<style>section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] {border-top: 5px solid var(--red-color); border-right: 5px solid var(--red-color); border-top-right-radius: 20px;} section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] img {border-top-right-radius: 15px;} .stMultiSelect div div div div div:nth-of-type(2) {visibility: hidden;} .stMultiSelect div div div div div:nth-of-type(2)::before {visibility: visible; content:"Choisissez 3 pilotes"} </style>', unsafe_allow_html=True)
 
     st.title(title)
 
@@ -25,7 +25,7 @@ def run():
     resultats_vainqueurs_2021 = pd.read_csv(r"../data/resultats_vainqueurs_2021.csv", sep=';', decimal=',')
     resultats_vainqueurs_2021 = resultats_vainqueurs_2021.merge(right=races[['round', 'name']], on='round')
 
-    resultats_top3_2021 = pd.read_csv(r"../data/resultats_top3_2021.csv", sep=';')
+    resultats_top3_2021 = pd.read_csv(r"../data/resultats_top3_2021.csv", sep=';', decimal=',')
     resultats_top3_2021 = resultats_top3_2021.merge(right=races[['round', 'name']], on='round')
 
     circuits_list = list(resultats_vainqueurs_2021['name'].drop_duplicates())
@@ -115,7 +115,7 @@ def run():
 
         if st.checkbox('Voir les prédictions', key='top3_bet_result'):  
 
-            st.dataframe(resultats_top3_2021[resultats_top3_2021['name']==grand_prix_top3_selector])
+            #st.dataframe(resultats_top3_2021[resultats_top3_2021['name']==grand_prix_top3_selector])
 
             grand_prix_pred_df = resultats_top3_2021[resultats_top3_2021['name']==grand_prix_top3_selector].reset_index(drop=True)
 
@@ -187,30 +187,36 @@ def run():
                 st.write('Pilote 3 :', predicted_top3_dt_name3)
                 st.write('Cote :', str(predicted_top3_dt_cote3))
             
-
+            st.write('---')
             top3_predicted_drivers = grand_prix_pred_df[['Predicted driver', 'Cote Top 3']].drop_duplicates()
-            st.write(top3_predicted_drivers)
+            #st.write(top3_predicted_drivers)
 
             top3_drivers = grand_prix_pred_df['Driver'].unique()
-            st.write(list(top3_drivers))
+            #st.write(list(top3_drivers))
 
             select_top3_drivers_col1, select_top3_bet_col2 = st.columns(2)
             with select_top3_drivers_col1:
                 drivers_selection = st.multiselect(label='Quels pilotes parier ?', options=top3_predicted_drivers, key='bet_top3_selection')
 
             with select_top3_bet_col2:
-                bet_top3_amount = st.number_input('Mise')
+                bet_top3_amount = st.number_input('Mise pour chaque pilote')
 
             if len(drivers_selection) > 3:
                 st.warning("You have to select only 3 drivers")
             
             elif (len(drivers_selection) == 3) & (bet_top3_amount!=0):
-                st.write(drivers_selection)
+                #st.write(drivers_selection)
                 if st.button('Résultat', key='top_bet'):
+                    total_gain = 0
                     for driver in drivers_selection:
                         if driver in top3_drivers:
-                            st.write('{} : ok'.format(driver))
+                            selected_driver_top3_cote = top3_predicted_drivers[top3_predicted_drivers['Predicted driver']==driver].reset_index(drop=True).loc[0,'Cote Top 3']
+                            driver_gain = (selected_driver_top3_cote * bet_top3_amount) - bet_top3_amount
+                            st.write('{} : ✅'.format(driver), '   Gain :', str(driver_gain))
+                            total_gain += driver_gain
                         else:
-                            st.write('{} : ko'.format(driver))
+                            st.write('{} : ❌'.format(driver), '   Perte :', str(- bet_top3_amount))
+                            total_gain += (- bet_top3_amount)
+                    st.write('Total :', str(total_gain))
 
 
