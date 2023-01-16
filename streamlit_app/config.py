@@ -11,11 +11,11 @@ TITLE = "Streamlit Formula 1"
 
 TEAM_MEMBERS = [
     Member(
-        name="John Doe",
-        linkedin_url="https://www.linkedin.com/in/charlessuttonprofile/",
-        github_url="https://github.com/charlessutton",
+        name="Seb",
+        linkedin_url="https://www.linkedin.com/in/seblebreton/",
+        github_url="https://github.com/kente92",
     ),
-    Member("Jane Doe"),
+    Member("Alexandre", ),
 ]
 
-PROMOTION = "Promotion Continue Data Scientist - Avril 2022"
+PROMOTION = "Promotion Continue<br>Data Scientist - Avril 2022"

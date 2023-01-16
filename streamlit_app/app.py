@@ -12,7 +12,7 @@ from tabs import intro, dataset, dataviz, data_preparation, modelisation, modeli
 
 st.set_page_config(
     page_title=config.TITLE,
-    page_icon="https://datascientest.com/wp-content/uploads/2020/03/cropped-favicon-datascientest-1-32x32.png",
+    page_icon=r"assets/favicon.png",
 )
 
 with open("style.css", "r") as f:
@@ -45,9 +45,9 @@ def run():
     )
     tab_name = st.sidebar.radio("", list(TABS.keys()), 0)
     st.sidebar.markdown("---")
-    st.sidebar.markdown(f"## {config.PROMOTION}")
+    st.sidebar.markdown(f"## {config.PROMOTION}", unsafe_allow_html=True)
 
-    st.sidebar.markdown("### Team members:")
+    #st.sidebar.markdown("### Team members:")
     for member in config.TEAM_MEMBERS:
         st.sidebar.markdown(member.sidebar_markdown(), unsafe_allow_html=True)
 
