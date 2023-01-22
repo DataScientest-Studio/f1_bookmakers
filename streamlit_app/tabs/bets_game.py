@@ -3,20 +3,14 @@ import streamlit as st
 import pandas as pd
 
 
-title = "Paris"
-sidebar_name = "Paris"
+title = "Faites vos paris !"
+sidebar_name = "Bonus : pariez !"
 
 def run():
 
     st.markdown('<style>section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] {border-top: 5px solid var(--red-color); border-right: 5px solid var(--red-color); border-top-right-radius: 20px;} section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] img {border-top-right-radius: 15px;} .stMultiSelect div div div div div:nth-of-type(2) {visibility: hidden;} .stMultiSelect div div div div div:nth-of-type(2)::before {visibility: visible; content:"Choisissez 3 pilotes"} </style>', unsafe_allow_html=True)
 
     st.title(title)
-
-    st.markdown(
-        """
-        Faites vos paris !
-        """
-    )
 
 
     races = pd.read_csv(r'../data/races.csv')
@@ -38,8 +32,8 @@ def run():
     # st._legacy_dataframe(races)
 
 
-    bet_selector = st.selectbox(label='Quel pari ?', options=('', 'Pari vainqueur', 'Pari Top 3'), key="bets",
-                                    format_func=lambda x: "< Choix du pari >" if x == '' else x)
+    bet_selector = st.selectbox(label='', options=('', 'Pari vainqueur', 'Pari Top 3'), key="bets",
+                                    format_func=lambda x: "< Choisissez un pari >" if x == '' else x)
     
     if bet_selector == 'Pari vainqueur':
 

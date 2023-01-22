@@ -7,7 +7,7 @@ import streamlit as st
 import config
 
 # TODO : you can (and should) rename and add tabs in the ./tabs folder, and import them here.
-from tabs import intro, dataset, dataviz, data_preparation, modelisation, modelisation_2,season_classement, bets_game
+from tabs import intro, dataset, dataviz, data_preparation, modelisation, modelisation_2,season_classement, conclusion, bets_game
 
 
 st.set_page_config(
@@ -28,11 +28,12 @@ TABS = OrderedDict(
     [
         (intro.sidebar_name, intro),
         (dataset.sidebar_name, dataset),
-        (dataviz.sidebar_name, dataviz),
         (data_preparation.sidebar_name, data_preparation),
+        (dataviz.sidebar_name, dataviz),
         (modelisation.sidebar_name, modelisation),
         (modelisation_2.sidebar_name, modelisation_2),
         (season_classement.sidebar_name, season_classement),
+         (conclusion.sidebar_name, conclusion),
         (bets_game.sidebar_name, bets_game)
     ]
 )

@@ -1,8 +1,10 @@
 import streamlit as st
-
+import pandas as pd
 
 title = "Préparation des données"
 sidebar_name = "Préparation des données"
+
+
 
 
 def run():
@@ -13,6 +15,14 @@ def run():
         """
         Point de départ : données table Results
         
+        """)
+    results = pd.read_csv(r'..\data\results.csv',sep=',',index_col=0)
+    st.dataframe(results.sample(10))   
+    
+
+    
+    st.markdown(
+          """      
         ## Classe du circuit
 
         Nous avons donc choisi de classer les circuits en 4 classes de vitesse. La méthode est la suivante : 
@@ -22,9 +32,23 @@ def run():
             - Le circuit d’Abu Dhabi a par exemple 14 « RaceId » différents car il y a eu 14 Grand Prix mais un seul « Circuit ID »
         - On fait la moyenne des « fastesLapSpeed » pour chaque circuit.
         - On découpe ces vitesses en 4 quartiles et on attribue à chaque circuit sa classe correspondante classée de 1 à 4.
+        
+        
+        """)
 
-        (image/dataframe)
-
+    st.image("assets/data_preparation_circuit_class.jpg")
+    
+    st.markdown(
+          """  
+          Ce qui nous donne la nouvelle colonne suivante dans le dataframe
+          """)
+    #import tableau final pour afficher la colonne fastestlapspeedclasses
+    df_results_final = pd.read_csv(r'..\data\df_results_meteo_circuit_classement.csv',sep=';')
+    st.dataframe(df_results_final['fastestLapSpeed_classes'].sample(10))
+    
+    
+    st.markdown(
+        """
         On se retrouve donc avec 4 classes que l’on pourrait définir par :
         - Circuit rapide
         - Circuit moyennement rapide
@@ -50,9 +74,14 @@ def run():
         - La piste était-elle sèche ?
         - La piste était-elle mouillée ?
         - Faisait-il nuageux ?
+        
+        """)
 
-        (image/dataframe)
 
+    st.image("assets/data_preparation_weather.jpg")
+        
+    st.markdown(
+        """
         ---
 
         ## Données classement et points
@@ -65,13 +94,25 @@ def run():
 
         Nous devons effectuer un ajustement sur les 1ers Grand Prix de chaque saison. En effet, les données fusionnées sont celles du dernier Grand Prix de la saison précédentes. Il faut donc les réinitialiser à 0 pour avoir des données cohérentes.
 
-        (image/dataframe)
-
         ---
 
-        ## Traitement
-
-        Une normalisation des données est appliquée avec la méthode **StandardScaler**
+        ## Dataframe final
+        
+        Après suppression des features inutiles, voici un échantillon du dataframe obtenu :
 
         """
-    )
+        )
+
+    df_results_final.dropna(inplace=True)
+    st.dataframe(df_results_final.sample(10))
+    
+    # st.markdown(
+    #     """
+    #     ---
+   
+    #     ## Traitement
+
+    #     Enfin, une normalisation des données est appliquée avec la méthode _**StandardScaler**_
+
+    #     """
+    # )

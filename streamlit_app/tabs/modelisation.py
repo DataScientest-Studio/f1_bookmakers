@@ -115,7 +115,7 @@ def run():
 
         ---
         """, unsafe_allow_html=True)
-    st.markdown('<style> section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div > div > div > div > img {margin-left: 3rem;} </style>', unsafe_allow_html=True)
+    st.markdown('<style> section[tabindex="0"] > div > div:nth-child(1) > div > div > div > div > div > img {margin-left: 3rem;} </style>', unsafe_allow_html=True)
 
     
     # ----------------------------

@@ -18,7 +18,7 @@ sidebar_name = "Modélisation - Top 3"
 
 def run():
 
-    st.markdown('<style> section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(7) > div > div > div > img, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(9) > div > div > div > img, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(11) > div > div > div > img {margin-left: 6rem;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(17) > div > div > div > img, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(21) > div > div > div > img, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(23) > div > div > div > img {margin-left: 3rem;} </style>', unsafe_allow_html=True)
+    st.markdown('<style> section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(7) > div > div > div > img, section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(9) > div > div > div > img, section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(11) > div > div > div > img {margin-left: 6rem;} section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(17) > div > div > div > img, section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(21) > div > div > div > img, section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(23) > div > div > div > img {margin-left: 3rem;} </style>', unsafe_allow_html=True)
 
     def df_background_color(s):
         return ['background-color: #202028']*len(s) if (s['round']%2)==0 else ['background-color: #0e1117']*len(s)
@@ -1688,9 +1688,9 @@ def run():
         On note qu’hormis les favoris, les autres pilotes sont souvent correctement prédits. On observe même des Grand Prix où le trio de tête est prédit dans le bon ordre ! Ce modèle réalise la meilleur performance avec l'option 2.</li></ul>
 
 
+        ---
 
-
-        Conclusion :
+        ## Conclusion
 
         On peut deviner la stratégie des bookmakers : proposer une cote trop faible pour les deux favoris et une cote « alléchante » pour les éventuels troisièmes.
 

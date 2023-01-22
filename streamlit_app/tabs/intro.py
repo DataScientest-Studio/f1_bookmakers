@@ -6,7 +6,7 @@ sidebar_name = "Introduction"
 
 def run():
 
-    st.markdown('<style>section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] {border-top: 8px solid var(--red-color); border-right: 8px solid var(--red-color); border-top-right-radius: 23px;} section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] img {border-top-right-radius: 15px;} button[title="View fullscreen"] {display: none;}</style>', unsafe_allow_html=True)
+    st.markdown('<style>section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] {border-top: 8px solid var(--red-color); border-right: 8px solid var(--red-color); border-top-right-radius: 23px; margin: auto;} section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] img {border-top-right-radius: 15px;} button[title="View fullscreen"] {display: none;}</style>', unsafe_allow_html=True)
     st.image(r"./assets/banniere_intro.jpg", width=1080)
 
     st.title(title)
@@ -39,10 +39,15 @@ def run():
         ### Qu’est-ce qu’une cote ?
 
         Nous allons citer __[Wikipedia](https://fr.wikipedia.org/wiki/Pari_sportif#Cote_europ%C3%A9enne)__ qui l’explique simplement :
-        « La cote européenne est utilisée comme son nom l'indique en Europe. En France par exemple, elle est proposée par défaut sur les sites de paris sportifs. C'est un indice décimal, qui indique le gain potentiel suivant la mise :
+        « La cote européenne est utilisée comme son nom l'indique en Europe. En France par exemple, elle est proposée par défaut sur les sites de paris sportifs. C'est un indice décimal, qui indique le gain potentiel suivant la mise : **Gain = Cote * Mise**
 
-        **Gain = Cote * Mise**
-        
+         """, unsafe_allow_html=True
+    )
+
+    st.image(r"./assets/cotes-paris-sportifs.png", width=600)       
+
+    st.markdown(
+                """ 
         Pour un pari d'une mise de 100 euros sur la victoire de A, si elle se réalise, le parieur reçoit un gain correspondant à la mise multipliée par la cote, soit 100 * 1,2 = 120 euros. En tenant compte de la mise de 100 euros, le parieur a donc réalisé une plus-value de 120 - 100 = 20 euros. »
 
         La cote est définie par les bookmakers comme l’inverse de la probabilité d’un évènement. Par exemple, si le bookmaker estime que l’équipe A a 63 % de chance de gagner, l’équipe B 14 % et le match nul 23% alors les côtes maximales seront : 
