@@ -33,7 +33,7 @@ TABS = OrderedDict(
         (modelisation.sidebar_name, modelisation),
         (modelisation_2.sidebar_name, modelisation_2),
         (season_classement.sidebar_name, season_classement),
-         (conclusion.sidebar_name, conclusion),
+        (conclusion.sidebar_name, conclusion),
         (bets_game.sidebar_name, bets_game)
     ]
 )

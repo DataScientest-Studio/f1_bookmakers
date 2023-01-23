@@ -136,9 +136,9 @@ def run():
     
     def df_background_color_class_ok(s):
         if s['classement_final'] == s['classement_final_reel']:
-            return ['background-color: #43D41E']*len(s)
+            return ['background-color: #386641']*len(s)
         elif abs(s['classement_final'] - s['classement_final_reel']) == 1:
-            return ['background-color: #F5B10F']*len(s)
+            return ['background-color: #C15300']*len(s)
         else:
             return ['background-color: #0e1117']*len(s)
     
