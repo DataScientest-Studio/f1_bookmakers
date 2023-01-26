@@ -25,7 +25,7 @@ def run():
         
         - 5 modèles : Régression Logistique, Forêt aléatoire, Arbre de décision, SVC, KNN
         - f1-score : de 0.31 (KNN) à 0.55 (régression logistique)
-        - ROI des paris associés : :red[-10,5 % (forêt aléatoire)] à :green[16 % (régression logistique)]
+        - ROI des paris associés : <span style="color:#c10909">-10,5 % (forêt aléatoire)</span> à <span style="color:#05a705">16 % (régression logistique)</span>
         - _Rappel : le ROI moyen pour des paris en France : -17%_
         - _Les parieurs "pro" annoncent un ROI de 10%_
         
@@ -34,7 +34,7 @@ def run():
         
         - 3 modèles : Régression Logistique, Forêt aléatoire, Arbre de décision
         - f1-score : de 0.62 (forêt aléatoire & régression logistique) à 0.69 (arbre de décision)
-        - ROI des paris associés :  :red[-10 % (régression logistique)], :green[48 % (forêt aléatoire)] et :green[**72 % (arbre de décision)**]
+        - ROI des paris associés :  <span style="color:#c10909">-10 % (régression logistique)</span>, <span style="color:#05a705">48 % (forêt aléatoire)</span> et <span style="color:#05a705">**72 % (arbre de décision)**</span>
         - _Rappel : le ROI moyen pour des paris en France : -17%_
         - _Les parieurs "pro" annoncent un ROI de 10%_
 
@@ -51,8 +51,8 @@ def run():
         à ces paris.
         
         - 4 modèles : Régression Logistique, Forêt aléatoire, Arbre de décision, Linear SVC
-        - Ecart de points moyen : :green[10.5 (Arbre de décision)] à :red[88 (LinearSVC)]
-        - Ecart de classement moyen :  :green[0.4 (Arbre de décision)] à :red[4 (LinearSVC)]
+        - Ecart de points moyen : <span style="color:#05a705">10.5 (Arbre de décision)</span> à <span style="color:#c10909">88 (LinearSVC)</span>
+        - Ecart de classement moyen :  <span style="color:#05a705">0.4 (Arbre de décision)</span> à <span style="color:#c10909">4 (LinearSVC)</span>
         
         ---
 

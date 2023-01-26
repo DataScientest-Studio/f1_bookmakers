@@ -95,17 +95,24 @@ section[tabindex="0"] ul {
   margin: 0 0 1rem 1rem;
 }
 
-
-/* Intro */
-/* section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] {
-  border-top: 8px solid var(--red-color);
-  border-right: 8px solid var(--red-color);
-  border-top-right-radius: 23px;
+table.css-zuelfj {
+  width: unset;
 }
-
-section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] img {
-  border-top-right-radius: 15px;
-} */
+table.css-zuelfj thead th:first-child,
+table.css-zuelfj tbody th {
+  display: none;
+}
+table.css-zuelfj tbody td:last-child {
+  text-align: right !important;
+}
+table.css-zuelfj tbody tr:nth-child(1) td:last-child,
+table.css-zuelfj tbody tr:nth-child(2) td:last-child {
+  color: #05a705;
+}
+table.css-zuelfj tbody tr:nth-child(3) td:last-child,
+table.css-zuelfj tbody tr:nth-child(4) td:last-child {
+  color: #c10909;
+}
 
 
 /* 

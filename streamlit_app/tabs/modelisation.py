@@ -1240,6 +1240,11 @@ def run():
 
         Avec un score de 55%, le modèle **régression logistique** obtient un bon résultat. Le modèle semble relativement bon pour prédire les favoris mais n’arrive pas à trouver les outsiders. On observe la même tendance pour les autres modèles avec un score de 50%.
 
-        On peut donc voir que la qualité d’un modèle se dessine plutôt sur les outsiders. Il semble aisé pour un modèle de prédire un favori, mais la différence entre deux modèles se fera surtout sur les outsiders, voire les upsets.
+        On peut donc voir que la qualité d’un modèle se dessine plutôt sur les outsiders. Il semble aisé pour un modèle de prédire un favori, mais la différence entre deux modèles se fera surtout sur les « outsiders », voire les « upsets » (pilotes qui bouleversent les statistiques).
+
+        En simulant les paris sur le Championnat 2021 avec les meilleurs résultats obtenus de chaque modèle, nous aurions obtenus les montants ci-dessous. Nous avons constaté que la différence entre les modèles, sur le plan financier, se fait bien sur ces « outsiders ».
 
         """, unsafe_allow_html=True)
+    
+    st.table(pd.DataFrame({'Modèle' : ['Régression logistique', 'Arbre de décision', 'KNN', 'Forêt aléatoire'],
+                            'Résultat net' : ['320 €', '50 €', '-20 €', '-210 €']}))

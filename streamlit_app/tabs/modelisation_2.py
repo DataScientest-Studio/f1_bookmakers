@@ -1707,5 +1707,10 @@ def run():
         Il lui reste donc 500 €. Le raisonnement est le même avec les pilotes B, C et D.
 
 
-        Cette piste de s’intéresser au top 3 plutôt qu’au gagnant semble bien plus intéressante. En effet, en simulant des paris avec des mises de 20€ sur chaque pilote, le ROI pour le meilleur modèle est de 70% (848€ de gain divisé par 1200€ de mise) ce qui est énorme dans le monde du pari. Le simple fait d’être bénéficiaire sur une saison est déjà rare.
+        Cette piste de s’intéresser au top 3 plutôt qu’au gagnant semble bien plus intéressante. En effet, en simulant des paris avec des mises de 20€ sur chaque pilote, le ROI pour le meilleur modèle est de 70% (862€ de gain divisé par 1200€ de mise) ce qui est énorme dans le monde du pari. Le simple fait d’être bénéficiaire sur une saison est déjà rare.
+
+        En croisant les meilleurs résultats obtenus de chaque modèle, nous avons simulé les paris sur le Championnat 2021 et obtenu les montants ci-dessous :
         """, unsafe_allow_html=True)
+    
+    st.table(pd.DataFrame({'Modèle' : ['Arbre de décision', 'Forêt aléatoire', 'Régression logistique'],
+                            'Résultat net' : ['862 €', '572 €', '-122 €']}))
