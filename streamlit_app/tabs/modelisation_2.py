@@ -1695,22 +1695,28 @@ def run():
         On peut deviner la stratégie des bookmakers : proposer une cote trop faible pour les deux favoris et une cote « alléchante » pour les éventuels troisièmes.
 
         Cependant en 2021, on avait potentiellement 4 troisièmes potentiels (Sainz et Leclerc chez Ferrari, Perez chez Redbull et Bottas chez Mercedes). 
-        En grossissant le trait, on avait donc 25% des parieurs qui pariaient sur l’un de ces 4 pilotes. Avec une cote entre 2.2 et 3.5 en général, on se retrouve mathématiquement avec un gain pour le bookmaker.
+        En grossissant le trait, on avait donc 25% des joueurs qui pariaient sur l’un de ces 4 pilotes. Avec une cote entre 2.2 et 3.5 en général, on se retrouve mathématiquement avec un gain pour le bookmaker.
 
         Explication :
         - Si l’on a les 4 pilotes avec une cote à 3.5 (cas le plus défavorable)
         - 25% des parieurs misent sur le pilote A, 25% sur B, etc.
         - 1000 € sont pariés par pilote : le bookmaker a encaissé 4000€
         
-        En cas de victoire du pilote A par exemple, le bookmaker doit payer aux parieurs 3500€
-
-        Il lui reste donc 500 €. Le raisonnement est le même avec les pilotes B, C et D.
+        En cas de victoire du pilote A par exemple, le bookmaker doit payer aux parieurs 3500€. Il lui reste donc 500 €. Le raisonnement est le même avec les pilotes B, C et D.
 
 
-        Cette piste de s’intéresser au top 3 plutôt qu’au gagnant semble bien plus intéressante. En effet, en simulant des paris avec des mises de 20€ sur chaque pilote, le ROI pour le meilleur modèle est de 70% (862€ de gain divisé par 1200€ de mise) ce qui est énorme dans le monde du pari. Le simple fait d’être bénéficiaire sur une saison est déjà rare.
 
-        En croisant les meilleurs résultats obtenus de chaque modèle, nous avons simulé les paris sur le Championnat 2021 et obtenu les montants ci-dessous :
+        Comme pour les vainqueurs, nous avons simuler les paris sur le Championnat 2021 avec des mises de 20 € sur chaque pilote (mise totale 1200 € sur la saison).
+        
+        Nous aurions obtenus les montants ci-dessous :
         """, unsafe_allow_html=True)
     
     st.table(pd.DataFrame({'Modèle' : ['Arbre de décision', 'Forêt aléatoire', 'Régression logistique'],
                             'Résultat net' : ['862 €', '572 €', '-122 €']}))
+
+    st.markdown(
+        """
+        Les résultats sont très encourageants ! Deux des trois modèles sont bénéficiaires.
+
+        Cette piste de s’intéresser au top 3 plutôt qu’au gagnant semble bien plus intéressante. En effet, le ROI pour le meilleur modèle est de 70% (862€ de gain divisé par 1200€ de mise) ce qui est énorme dans le monde du pari. Le simple fait d’être bénéficiaire sur une saison est déjà rare.
+        """)

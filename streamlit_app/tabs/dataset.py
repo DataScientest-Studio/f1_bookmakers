@@ -48,7 +48,7 @@ def run():
         """
         ### Circuits
 
-        La table « Circuits » fournit les informations des différents circuits sur lesquels se sont déroulés les Grand Prix dans l’histoire de la Formule 1.
+        La table « Circuits » fournit les informations des différents circuits sur lesquels se sont déroulés les Grands Prix dans l’histoire de la Formule 1.
         """
     )
     if st.checkbox('Voir la table « Circuits »'):
@@ -76,7 +76,7 @@ def run():
         """
         ### Constructors results
 
-        La table « Constructor results » fournit les résultats des écuries à l’issue des Grand Prix.
+        La table « Constructor results » fournit les résultats des écuries à l’issue des Grands Prix.
         """
     )
     if st.checkbox('Voir la table « Constructor results »'):
@@ -110,10 +110,10 @@ def run():
             - __constructorStandingsId__ = ID (clé primaire)
             - __raceId__ = ID du Grand prix
             - __constructorId__ = ID écurie
-            - __points__ = Points gagnés par l'écurie et cumulés au fil des Grand Prix d'une saison
+            - __points__ = Points gagnés par l'écurie et cumulés au fil des Grands Prix d'une saison
             - __position__ = Position écurie au classement constructeurs
             - __positionText__ = Idem 'position' au format texte
-            - __wins__ = Nb de victoires cumulés au fil d'une saison
+            - __wins__ = Nombre de victoires cumulées au fil d'une saison
             """
         )
         
@@ -162,10 +162,10 @@ def run():
             - __driverStandingsId__ = ID (clé primaire)
             - __raceId__ = ID du Grand prix
             - __driverId__ = ID du pilote
-            - __points__ = Points gagnés par le pilote et cumulés au fil des Grand Prix d'une saison
+            - __points__ = Points gagnés par le pilote et cumulés au fil des Grands Prix d'une saison
             - __position__ = Position au classement pilotes
             - __positionText__ = Idem 'position' au format texte
-            - __wins__ = Nb de victoires cumulés au fil d'une saison
+            - __wins__ = Nombre de victoires cumulées au fil d'une saison
             """
         )
         
@@ -226,7 +226,7 @@ def run():
             """
         )
         
-        df = pd.read_csv(r'../data/drivers.csv')
+        df = pd.read_csv(r'../data/lap_times.csv')
 
         st.dataframe(df.head())
 
@@ -281,10 +281,10 @@ def run():
             - __driverId__ = ID du pilote
             - __constructorId__ = ID écurie
             - __number__ = Numéro du pilote
-            - __position__ = Position pour la grille de départ course
-            - __q1__ = Chrono en qualif Q1
-            - __q2__ = Chrono en qualif Q2 ou nul si disqualifié Q1
-            - __q3__ = Chrono en qualif Q3 ou nul si disqualifié Q2
+            - __position__ = Position pour la grille de départ de la course
+            - __q1__ = Chrono en première phase de qualification
+            - __q2__ = Chrono en deuxième phase de qualification ou nul si disqualifié Q1
+            - __q3__ = Chrono en troisème phase de qualification ou nul si disqualifié Q2
             """
         )
         
@@ -299,7 +299,7 @@ def run():
         """
         ### Races
 
-        La table « Races » fournit les informations sur les différents Grand Prix organisés dans l’histoire de la Formule 1.
+        La table « Races » fournit les informations sur les différents Grands Prix organisés dans l’histoire de la Formule 1.
         """
     )
     if st.checkbox('Voir la table « Races »'):
@@ -332,7 +332,7 @@ def run():
         """
         ### Results
 
-        La table « Results » fournit les résultats des Grand Prix organisés dans l’histoire de la Formule 1.
+        La table « Results » fournit les résultats des Grands Prix organisés dans l’histoire de la Formule 1.
 
         __Note__ : Les données sur le tour le plus rapide des pilotes sont disponibles à partir de la saison _2004_.
         """
@@ -346,16 +346,16 @@ def run():
             - __constructorId__ = ID écurie
             - __number__ = Numéro du pilote
             - __grid__ = Position sur la grille de départ
-            - __position__ = Position à la ligne d'arrivé (ou nul)
+            - __position__ = Position à la ligne d'arrivée (ou nul)
             - __positionText__ = Idem 'position' au format texte
             - __positionOrder__ = Numéro pour tri
-            - __points__ = Points gagnés par pilote pour la course
-            - __laps__ = Nb tours complétés
-            - __time__ = Temps cumulée arrivée du 1er / écart
-            - __milliseconds__ = Temps cumulée arrivée du 1er / écart converti en millisecondes
-            - __fastestLap__ = Numéro du tour le plus rapide du pilote
+            - __points__ = Points gagnés par le pilote à l'issue de la course
+            - __laps__ = Nombre de tours complétés
+            - __time__ = Temps total cumulé à l'issue de la course pour le pilote arrivé 1er / écart par rapport au 1er
+            - __milliseconds__ = Temps total cumulé converti en millisecondes
+            - __fastestLap__ = Numéro du tour le plus rapide réalisé par le pilote
             - __rank__ = Classement du tour le plus rapide par rapport aux autres pilotes
-            - __fastestLapTime__ = Chrono du tour le plus rapide du pilote
+            - __fastestLapTime__ = Chrono du tour le plus rapide réalisé par le pilote
             - __fastestLapSpeed__ = Vitesse (km/h) du tour le plus rapide
             - __statusId__ = ID statut classement final (arrivé/abandon…)
             """
@@ -396,9 +396,9 @@ def run():
 
         La table « Sprint results » fournit les résultats des séances Sprint des pilotes.
 
-        C’est une mini-course introduite en 2021 sur 3 Grand Prix en test et reconduite pour 2022.
+        C’est une mini-course introduite en 2021 sur 3 Grands Prix en test et reconduite pour 2022.
 
-        Le Sprint se déroule après la séance de qualification dont le classement final constitue la grille de départ du Sprint. Le classement à l'arrivée du Sprint définit la grille de départ de la course.
+        Le Sprint se déroule après la séance de qualifications dont le classement final constitue la grille de départ du Sprint. Le classement à l'arrivée du Sprint définit la grille de départ de la course.
         """
     )
     if st.checkbox('Voir la table « Sprint results »'):
@@ -413,12 +413,12 @@ def run():
             - __position__ = Position arrivé (ou nul)
             - __positionText__ = Idem au format texte
             - __positionOrder__ = Numéro pour tri
-            - __points__ = Points gagnées par le pilote pour le sprint
-            - __laps__ = Nb tours complétés
-            - __time__ = Temps cumulée arrivée du 1er / écart
-            - __milliseconds__ = Temps cumulée arrivée du 1er / écart converti en millisecondes
-            - __fastestLap__ = Numéro du tour le plus rapide du pilote
-            - __fastestLapTime__ = Chrono du tour le plus rapide du pilote
+            - __points__ = Points gagnés par le pilote à l'issue du Sprint
+            - __laps__ = Nombre de tours complétés
+            - __time__ = Temps total cumulé à l'issue du Sprint pour le pilote arrivé 1er / écart par rapport au 1er
+            - __milliseconds__ = Temps total cumulé converti en millisecondes
+            - __fastestLap__ = Numéro du tour le plus rapide réalisé par le pilote
+            - __fastestLapTime__ = Chrono du tour le plus rapide réalisé par le pilote
             - __statusId__ = ID statut classement final (arrivé/abandon…)
             """
         )
@@ -434,7 +434,7 @@ def run():
         """
         ### Status
 
-        La table « Status » fournit les informations sur les différents statut arrivée course/sprint.
+        La table « Status » fournit les informations sur les différents statuts à l'arrivée de la course/sprint.
         """
     )
     if st.checkbox('Voir la table « Status »'):

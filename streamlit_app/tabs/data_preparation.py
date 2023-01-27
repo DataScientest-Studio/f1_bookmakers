@@ -13,7 +13,8 @@ def run():
 
     st.markdown(
         """
-        Point de départ : données table Results
+
+        La table « Results » est le point de départ de notre travail :
         
         """)
     results = pd.read_csv(r'..\data\results.csv',sep=',',index_col=0)
@@ -22,19 +23,22 @@ def run():
 
     
     st.markdown(
-          """      
+        """
+        ---
+
         ## Classe du circuit
 
         Nous avons donc choisi de classer les circuits en 4 classes de vitesse. La méthode est la suivante : 
-        - On possède les vitesses des tours les plus rapides (« fastestLapSpeed») de chaque Grand Prix (« RaceId »).
-        - On prend la « fastestLapSpeed » la plus élevée
-        - On regroupe les Grand Prix par circuit :
-            - Le circuit d’Abu Dhabi a par exemple 14 « RaceId » différents car il y a eu 14 Grand Prix mais un seul « Circuit ID »
-        - On fait la moyenne des « fastesLapSpeed » pour chaque circuit.
-        - On découpe ces vitesses en 4 quartiles et on attribue à chaque circuit sa classe correspondante classée de 1 à 4.
+        <ul><li>On possède les vitesses des tours les plus rapides (« <b>fastestLapSpeed</b> ») de chaque Grand Prix (« RaceId »).</li>
+        <li>On prend la « <b>fastestLapSpeed</b> » la plus élevée</li>
+        <li>On regroupe les Grands Prix par circuit.<br>
+            <p>Par exemple :<br>
+            Le circuit d’Abu Dhabi a 14 « <b>RaceId</b> » différents car il y a eu 14 Grands Prix mais un seul « <b>Circuit ID</b> »</p></li>
+        <li>On fait la moyenne des « <b>fastesLapSpeed</b> » pour chaque circuit.</li>
+        <li>On découpe ces vitesses en 4 quartiles et on attribue à chaque circuit sa classe correspondante classée de 1 à 4.</li></ul>
         
         
-        """)
+        """, unsafe_allow_html=True)
 
     st.image("assets/data_preparation_circuit_class.jpg")
     
@@ -88,7 +92,7 @@ def run():
 
         Pour compléter notre jeu de données, on rajoute les données liées aux classements des pilotes et constructeurs au moment du départ du Grand Prix.
 
-        Pour cela, on récupère ces données dans les datasets « Driver standing » et « Constructor standings ».
+        Pour cela, on récupère ces données dans les datasets « __Driver standing__ » et « __Constructor standings__ ».
 
         Dans le jeu de données, on utilise une colonne intermédiaire « prev-raceId » correspondant à l’ID de la course précédente. On fusionne les données classements pilotes/écuries avec cette colonne comme clé.
 

@@ -22,7 +22,7 @@ from fastf1 import utils
 import datetime
 
 
-title = "Dataviz"
+title = "DataViz'"
 sidebar_name = "DataViz'"
 
 
@@ -32,11 +32,11 @@ def run():
 
     st.title(title)
     st.write('Cette page va présenter divers graphiques exploitant nos jeux de données :')
-    st.write("    - le premier jeu de données sera constitué de la librairie [fastf1](https://theoehrly.github.io/Fast-F1/) "
+    st.write("    - le premier jeu de données sera constitué de la librairie [FastF1](https://theoehrly.github.io/Fast-F1/) "
              "dont on utilisera certaines fonctions. "
-             " A noter que cette librairie ne proposent des données qu'à partir de 2018. C'est pourquoi nous "
+             " À noter que cette librairie ne propose des données qu'à partir de 2018. C'est pourquoi nous "
              "ne l'avons pas utilisé dans nos modèles. Néanmoins il nous semble intéressant de voir les possibilités qu'elle offre. ")
-    st.write("**_A noter que la quantité de données à télécharger pour chaque graphique est relativement conséquente. Si vous "
+    st.write("**_À noter que la quantité de données à télécharger pour chaque graphique est relativement conséquente. Si vous "
              "êtes le premier à demander l'affichage d'un duo 'année/course' alors l'affichage devrait prendre "
              "une vingtaine de secondes environ. Un peu moins sinon._**")
     st.write('    - le second jeu de données sera constitué de certains dataframes présentés précédemment')
@@ -48,6 +48,8 @@ def run():
 
     st.markdown(
             """
+            ---
+
             ## Où se sont déroulées toutes les courses de F1 de l'histoire ?
 
             """
@@ -56,13 +58,13 @@ def run():
     races = pd.read_csv(r'..\data\races.csv',sep=',')
     
     st.write("On souhaite présenter sur une carte l'emplacement de tous les Grands Prix de l'histoire")
-    st.write('Pour cela, on a au départ deux dataframes issus de notre jeu de données qui ressemblent à ca : ')
+    st.write('Pour cela, on a au départ deux dataframes issus de notre jeu de données qui ressemblent à ça : ')
     
     
-    st.write('Le dataframe Circuits')
+    st.write('- Le dataframe « __Circuits__ »')
     st.dataframe(circuits.head())
 
-    st.write('Le dataframe Races')
+    st.write('- Le dataframe « __Races__ »')
     st.dataframe(races.head())
 
     st.write('On ne garde que les infos qui nous intéressent et on arrive à ces deux dataframes : ')   
@@ -72,9 +74,9 @@ def run():
     races = races.drop(['raceId','round','time','url','fp1_date','fp1_time','fp2_date','fp2_time',
                         'fp3_date','fp3_time','quali_date','quali_time','sprint_date','sprint_time'],axis=1)
     
-    st.write('Le dataframe Circuits')
+    st.write('- Le dataframe « __Circuits__ »')
     st.dataframe(circuits.head())
-    st.write('Le dataframe Races')
+    st.write('- Le dataframe « __Races__ »')
     st.dataframe(races.head())
     
     
@@ -101,7 +103,7 @@ def run():
                        'sinusoidal']
     
     #création du slider
-    saison_min,saison_max=st.slider("Choisissez les années voulues ", min_value=year_min, max_value=year_max,value=(year_min,year_max))
+    saison_min,saison_max=st.slider("Choisissez les années souhaitées ", min_value=year_min, max_value=year_max,value=(year_min,year_max))
     #choix de la projection
     projection = st.selectbox(label='Choisissez la projection (_pour les cartophiles_) ', options=map_projections, help="Quelle carte ?",key='projection')
     #affichage              
@@ -130,13 +132,15 @@ def run():
     
     st.markdown(
              """
+             ---
+
              ## Quelle course a eu lieu le jour de votre anniversaire ?
              
     
              """
      )   
-    st.write("Après avoir vu **où** se déroulait les courses, il est maintenant intéréssant de savoir **quand** elles se sont déroulées.")
-    st.write('Une petite transformation à notre tableau pour ajouter les colonnes "mois" et "jour" : ')
+    st.write("Après avoir vu **où** se déroulaient les courses, il est maintenant intéressant de savoir **quand** elles se sont déroulées.")
+    st.write('Une petite transformation à notre tableau pour ajouter les colonnes "_mois_" et "_jour_" :')
     
     df_races_final['date'] = pd.to_datetime(df_races_final['date']).dt.date
     df_races_final['day'] = df_races_final['date'].map(lambda dt: dt.strftime('%d')).astype(int)
@@ -188,10 +192,12 @@ def run():
     ########## Début  Partie      --- Comparaison chrono sur la course 
     st.markdown(
         """
-        ## Comparaison tour par tour du chrono de deux pilotes durant une course.
+        ---
+
+        ## Comparaison tour par tour du chrono de deux pilotes durant une course
         """
     )  
-    st.write("Dans cette première utilisation de fastf1 nous allons présenter les chronos de deux pilotes tout au long d'une course. ")
+    st.write("Dans cette première utilisation de FastF1 nous allons présenter les chronos de deux pilotes tout au long d'une course. ")
     st.write("Il faut donc choisir l'année, puis le Grand Prix, puis les pilotes.")
     races = pd.read_csv(r'..\data\races.csv',sep=',')
     results = pd.read_csv(r'..\data\results.csv',sep=',')
@@ -279,10 +285,12 @@ def run():
   
     st.markdown(
         """
-        ## Comparaison de la télémétrie de deux pilotes en course.
+        ---
+
+        ## Comparaison de la télémétrie de deux pilotes en course
         """
     )
-    st.write('Pour cette deuxième utilisation de fastf1, nous allons comparer la **télémetrie** de deux pilotes sur leur meilleur tour en course.')
+    st.write('Pour cette deuxième utilisation de FastF1, nous allons comparer la **télémétrie** de deux pilotes sur leur meilleur tour en course.')
     st.write("Ici aussi, il faut donc choisir l'année, puis le Grand Prix, puis les pilotes.")
     st.write("")
     st.write("Il en ressort alors deux graphiques, un présentant la vitesse en fonction du temps "
@@ -437,27 +445,20 @@ def run():
 
 
 ########## Fin Partie - Télémétrie deux pilotes
-    st.text("")
-    st.text("")
-    st.text("")
-    st.text("")
-    st.text("")
-    st.text("")
+
+
 ######### Début Partie  - Dégradé de vitesse lors du Tour le plus rapide
 
     st.markdown(
         """
-        
-        
-        
-        
-        
+        ---
+
         ## Visualisation de la vitesse sur le circuit lors de son tour le plus rapide
 
          """
     )
-    st.write("Dans cette dernière utilisation de fastf1, nous allons présenter l'évolution de la vitesse sur le circuit"
-             "lors du tour le plus rapide du pilote")
+    st.write("Dans cette dernière utilisation de FastF1, nous allons présenter l'évolution de la vitesse sur le circuit"
+             " lors du tour le plus rapide du pilote.")
     st.write("Il faut donc choisir l'année, puis le Grand Prix, puis le pilote.")
     races = pd.read_csv(r'..\data\races.csv',sep=',')
     results = pd.read_csv(r'..\data\results.csv',sep=',')
@@ -560,12 +561,3 @@ def run():
 
 
 ######### Fin Partie  - Dégradé de vitesse lors du Tour le plus rapide
-    st.text("")
-    st.text("")
-    st.text("")
-    st.text("")
-    st.text("")
-    st.text("")
-    st.text("")
-
-######### Début Partie 5 ????

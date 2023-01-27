@@ -62,7 +62,7 @@ def run():
 
     st.markdown(
         """
-        Dans cette partie, nous allons aborder la méthodologie de modélisation pour prédire le vainqueur des Grand Prix.
+        Dans cette partie, nous allons aborder la méthodologie de modélisation pour prédire le vainqueur des Grands Prix.
 
         ## Méthodologie
 
@@ -70,7 +70,7 @@ def run():
 
         Afin de déterminer le vainqueur :
         - La position 1 aura la valeur 1
-        - Les autres positions auront les valeurs 0
+        - Les autres positions auront la valeur 0
         
         Voici par exemple ce que l'on obtient :
         """)
@@ -1238,13 +1238,22 @@ def run():
 
         Il est également à noter que le modèle **SVC** a un temps de calcul assez long. Il n'a pas été retenu pour la 2e itération, vu qu'une boucle est appliquée à chaque Grand Prix de la saison.
 
-        Avec un score de 55%, le modèle **régression logistique** obtient un bon résultat. Le modèle semble relativement bon pour prédire les favoris mais n’arrive pas à trouver les outsiders. On observe la même tendance pour les autres modèles avec un score de 50%.
+        Avec un score de 55%, le modèle **régression logistique** obtient un bon résultat. Le modèle semble relativement bon pour prédire les favoris mais n’arrive pas à trouver les « outsiders » (cote entre 2.1 et 4). On observe la même tendance pour les autres modèles avec un score de 50%.
 
-        On peut donc voir que la qualité d’un modèle se dessine plutôt sur les outsiders. Il semble aisé pour un modèle de prédire un favori, mais la différence entre deux modèles se fera surtout sur les « outsiders », voire les « upsets » (pilotes qui bouleversent les statistiques).
+        On peut donc voir que la qualité d’un modèle se dessine plutôt sur les « outsiders ». Il semble aisé pour un modèle de prédire un favori, mais la différence entre deux modèles se fera surtout sur les « outsiders », voire les « upsets » (pilotes qui bouleversent les statistiques et avec une cote > 4).
 
-        En simulant les paris sur le Championnat 2021 avec les meilleurs résultats obtenus de chaque modèle, nous aurions obtenus les montants ci-dessous. Nous avons constaté que la différence entre les modèles, sur le plan financier, se fait bien sur ces « outsiders ».
+        Nous avons simuler les paris sur le Championnat 2021 avec les meilleurs résultats obtenus de chaque modèle, en misant 100 € sur un pilote (mise totale 2000 € sur la saison).
+        
+        Nous aurions obtenus les montants ci-dessous :
 
         """, unsafe_allow_html=True)
     
     st.table(pd.DataFrame({'Modèle' : ['Régression logistique', 'Arbre de décision', 'KNN', 'Forêt aléatoire'],
                             'Résultat net' : ['320 €', '50 €', '-20 €', '-210 €']}))
+    
+    st.markdown(
+        """
+        Sur les quatre modèles, nous avons été bénéficiaires sur deux modèles. La régression logistique se détache clairement puisqu’elle a permis un bénéfice de 320€ pour une mise de 2000€, soit un ROI de 16%.
+
+        La différence entre les modèles, sur le plan financier, se fait bien sur ces « outsiders ».
+        """)
