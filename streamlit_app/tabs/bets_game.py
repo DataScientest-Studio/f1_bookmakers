@@ -8,7 +8,7 @@ sidebar_name = "Bonus : pariez !"
 
 def run():
 
-    st.markdown('<style>section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] {border-top: 5px solid var(--red-color); border-right: 5px solid var(--red-color); border-top-right-radius: 20px;} section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] img {border-top-right-radius: 15px;} .stMultiSelect div div div div div:nth-of-type(2) {visibility: hidden;} .stMultiSelect div div div div div:nth-of-type(2)::before {visibility: visible; content:"Choisissez 3 pilotes"} </style>', unsafe_allow_html=True)
+    st.markdown('<style>section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] {border-top: 5px solid var(--red-color); border-right: 5px solid var(--red-color); border-top-right-radius: 20px;} section[tabindex="0"] div[data-testid="stVerticalBlock"] div[data-testid="stImage"] img {border-top-right-radius: 15px;} .stMultiSelect div div div div div:nth-of-type(2) {visibility: hidden;} .stMultiSelect div div div div div:nth-of-type(2)::before {visibility: visible; content:"Choisissez 3 pilotes"} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(7) div[data-testid="column"].css-1r6slb0 {border-right: 2px solid var(--gray-color); border-top: 2px solid var(--gray-color); border-top-right-radius: 20px;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(7) div[data-testid="stVerticalBlock"].css-1rzu5eb {text-align: center; padding: 5px 0;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(7) div.css-1kyxreq {justify-content: center;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(7) > div > div:nth-child(1) > div > div:nth-child(3) div[data-testid="stMarkdownContainer"].css-13sdm1b, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(7) > div > div:nth-child(1) > div > div:nth-child(4) div[data-testid="stMarkdownContainer"].css-13sdm1b {font-family: "Zen Dots";} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(7) > div > div[data-testid="stMarkdownContainer"].css-13sdm1b, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(9) > div > div[data-testid="stMarkdownContainer"].css-13sdm1b, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(11) > div > div[data-testid="stMarkdownContainer"].css-13sdm1b {border-top: 2px solid var(--gray-color); border-right: 2px solid var(--gray-color); border-top-right-radius: 20px; text-align: center;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div[data-testid="stHorizontalBlock"].css-ocqkz7:nth-child(8), section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div[data-testid="stHorizontalBlock"].css-ocqkz7:nth-child(10), section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div[data-testid="stHorizontalBlock"].css-ocqkz7:nth-child(12) {border-right: 2px solid var(--gray-color);} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(8) div[data-testid="column"].css-1r6slb0, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(10) div[data-testid="column"].css-1r6slb0, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(12) div[data-testid="column"].css-1r6slb0 {text-align: center;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(8) div[data-testid="stVerticalBlock"].css-xr8hm4 div.css-1kyxreq, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(10) div[data-testid="stVerticalBlock"].css-xr8hm4 div.css-1kyxreq, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(12) div[data-testid="stVerticalBlock"].css-xr8hm4 div.css-1kyxreq {justify-content: center;} section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(8) div[data-testid="stMarkdownContainer"].css-13sdm1b, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(10) div[data-testid="stMarkdownContainer"].css-13sdm1b, section.main.css-1v3fvcr.egzxvld3 > div > div:nth-child(1) > div > div:nth-child(12) div[data-testid="stMarkdownContainer"].css-13sdm1b {font-family: "Zen Dots";} </style>', unsafe_allow_html=True)
 
     st.title(title)
 
@@ -30,7 +30,6 @@ def run():
     # st._legacy_dataframe(resultats_top3_2021)
     # st.write('Races 2021')
     # st._legacy_dataframe(races)
-
 
     bet_selector = st.selectbox(label='', options=('', 'Pari vainqueur', 'Pari Top 3'), key="bets",
                                     format_func=lambda x: "< Choisissez un pari >" if x == '' else x)
@@ -73,35 +72,37 @@ def run():
                 st.write('Cote :', str(predicted_winner_dt_cote))
             
             unique_drivers = grand_prix_pred_df[['Winner', 'Predicted winner', 'Cote']].drop_duplicates()
-            #st.write(unique_drivers)
             
-            select_driver_col1, select_bet_col2 = st.columns(2)
-            with select_driver_col1:
-                predicted_winners_selector = st.selectbox(label='Quel pilote parier ?',
-                                                            options=['']+list(unique_drivers['Predicted winner']),
-                                                            index=0, key='predicted_winners',
-                                                            format_func=lambda x: "< Choix du pilote >" if x == '' else x)
-
-            with select_bet_col2:
-                bet_amount = st.number_input('Mise')
+            st.write('---')
             
-            if (predicted_winners_selector in list(unique_drivers['Predicted winner'])) & (bet_amount!=0):
-                if st.button('Résultat', key='winner_bet'):
-                    
-                    true_winner = unique_drivers[unique_drivers['Predicted winner']==predicted_winners_selector].reset_index(drop=True).loc[0,'Winner']
-                    selected_driver_cote = unique_drivers[unique_drivers['Predicted winner']==predicted_winners_selector].reset_index(drop=True).loc[0,'Cote']
+            with st.container():
+                select_driver_col1, select_bet_col2 = st.columns(2)
+                with select_driver_col1:
+                    predicted_winners_selector = st.selectbox(label='Quel pilote parier ?',
+                                                                options=['']+list(unique_drivers['Predicted winner']),
+                                                                index=0, key='predicted_winners',
+                                                                format_func=lambda x: "< Choix du pilote >" if x == '' else x)
 
-                    if predicted_winners_selector == true_winner:
-                        st.write('Bravo, vous avez gagné le pari')
-                        st.write('Gain :', str((selected_driver_cote * bet_amount) - bet_amount))
-                    else:
-                        st.write(
-                            f"""
-                            Dommage, vous avez perdu le pari
+                with select_bet_col2:
+                    bet_amount = st.number_input('Mise')
+                
+                if (predicted_winners_selector in list(unique_drivers['Predicted winner'])) & (bet_amount!=0):
+                    if st.button('Résultat', key='winner_bet'):
+                        
+                        true_winner = unique_drivers[unique_drivers['Predicted winner']==predicted_winners_selector].reset_index(drop=True).loc[0,'Winner']
+                        selected_driver_cote = unique_drivers[unique_drivers['Predicted winner']==predicted_winners_selector].reset_index(drop=True).loc[0,'Cote']
 
-                            Le vainqueur est : {true_winner}
-                            """)
-                        st.write('Perte :', str(- bet_amount))
+                        if predicted_winners_selector == true_winner:
+                            st.write('Bravo, vous avez gagné le pari')
+                            st.write('Gain :', str((selected_driver_cote * bet_amount) - bet_amount), ' €')
+                        else:
+                            st.write(
+                                f"""
+                                Dommage, vous avez perdu le pari
+
+                                Le vainqueur est : {true_winner}
+                                """)
+                            st.write('Perte :', str(- bet_amount), ' €')
 
     elif bet_selector == 'Pari Top 3':
 
@@ -147,7 +148,6 @@ def run():
                 st.write('Pilote 3 :', predicted_top3_log_reg_name3)
                 st.write('Cote :', str(predicted_top3_log_reg_cote3))
             
-            st.write('---')
 
             st.write('#### Fôret aléatoire')
             result_top3_rf_col1, result_top3_rf_col2, result_top3_rf_col3 = st.columns(3)
@@ -164,7 +164,6 @@ def run():
                 st.write('Pilote 3 :', predicted_top3_rf_name3)
                 st.write('Cote :', str(predicted_top3_rf_cote3))
             
-            st.write('---')
 
             st.write('#### Arbre de décision')
             result_top3_dt_col1, result_top3_dt_col2, result_top3_dt_col3 = st.columns(3)
@@ -196,7 +195,7 @@ def run():
                 bet_top3_amount = st.number_input('Mise pour chaque pilote')
 
             if len(drivers_selection) > 3:
-                st.warning("You have to select only 3 drivers")
+                st.warning("Vous devez sélectionner seulement 3 pilotes")
             
             elif (len(drivers_selection) == 3) & (bet_top3_amount!=0):
                 #st.write(drivers_selection)
@@ -206,11 +205,11 @@ def run():
                         if driver in top3_drivers:
                             selected_driver_top3_cote = top3_predicted_drivers[top3_predicted_drivers['Predicted driver']==driver].reset_index(drop=True).loc[0,'Cote Top 3']
                             driver_gain = (selected_driver_top3_cote * bet_top3_amount) - bet_top3_amount
-                            st.write('{} : ✅'.format(driver), '   Gain :', str(driver_gain))
+                            st.write('{} : ✅'.format(driver), '   Gain :', str(driver_gain), ' €')
                             total_gain += driver_gain
                         else:
-                            st.write('{} : ❌'.format(driver), '   Perte :', str(- bet_top3_amount))
+                            st.write('{} : ❌'.format(driver), '   Perte :', str(- bet_top3_amount), ' €')
                             total_gain += (- bet_top3_amount)
-                    st.write('Total :', str(total_gain))
+                    st.write('Total :', str(total_gain), ' €')
 
 

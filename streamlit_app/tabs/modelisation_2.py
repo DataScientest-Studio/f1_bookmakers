@@ -22,6 +22,19 @@ def run():
 
     def df_background_color(s):
         return ['background-color: #202028']*len(s) if (s['round']%2)==0 else ['background-color: #0e1117']*len(s)
+    
+    # fonction pour les boutons avec session_state
+    def stateful_button(*args, key=None, **kwargs):
+        if key is None:
+            raise ValueError("Must pass key")
+
+        if key not in st.session_state:
+            st.session_state[key] = False
+
+        if st.button(*args, **kwargs):
+            st.session_state[key] = not st.session_state[key]
+
+        return st.session_state[key]
 
     st.title(title)
 
@@ -86,15 +99,15 @@ def run():
     st.dataframe(df.drop('podium', axis=1).reset_index().head(20))
     st.markdown(
         """
-        Pour prédire le top 3 d’un Grand prix, nous récupérons les probabilités des classes du modèle avec la fonction predict_proba() et nous avons testée une première méthode :
+        Pour prédire le top 3 d’un Grand prix, nous récupérons les probabilités des classes du modèle avec la fonction predict_proba() et nous avons testé une première méthode :
 
         <ul>
-            <li>Les probabilités sont fusionnées avec le jeu données test.</li>
-            <li>Une colonne « Prédiction » initialisée à 0 est rajoutée.</li>
+            <li>Les probabilités sont fusionnées avec le jeu de données test.</li>
+            <li>Une colonne « Prédiction », initialisée à 0, est rajoutée.</li>
             <li>Une boucle est appliquée pour chaque Grand Prix :
                 <ul>
                     <li>Les données du Grand Prix correspondant sont sélectionnées.</li>
-                    <li>La valeur maximale de la probabilité classe 1 est identifiée.</li>
+                    <li>La valeur maximale de la probabilité pour la classe 1 est identifiée.</li>
                     <li>On définit la valeur 1 dans la colonne « Prédiction » pour la ligne correspondant à la probabilité maxi définie précédemment.</li>
                 </ul>
             </li>
@@ -106,7 +119,7 @@ def run():
         <ul style="margin: 0 0 1rem 2.7rem;">
             <ul>
                 <li>La ligne qui vient d’être assignée à la première place est filtrée.</li>
-                <li>La valeur maximale de la probabilité classe 2 est identifiée.</li>
+                <li>La valeur maximale de la probabilité pour la classe 2 est identifiée.</li>
                 <li>On définit la valeur 2 dans la colonne « Prédiction » pour cette ligne.</li>
             </ul>
         </ul>
@@ -117,7 +130,7 @@ def run():
         <ul style="margin: 0 0 1rem 2.7rem;">
             <ul>
                 <li>Les lignes assignées aux deux premières places sont filtrées.</li>
-                <li>La valeur maximale de la probabilité classe 3 est identifiée.</li>
+                <li>La valeur maximale de la probabilité pour la classe 3 est identifiée.</li>
                 <li>On définit la valeur 3 dans la colonne « Prédiction » pour cette ligne.</li>
             </ul>
         </ul>
@@ -143,7 +156,8 @@ def run():
         with param_col1_iter1:
             C_param_selector = st.selectbox(label='C', options=(0.001, 0.01, 0.1, 1, 10), index=0, key='log-iter1')
 
-        if st.button('Résultats', key='log-iter1'):  
+        if stateful_button(label='Résultats Top 3 - Régression logistique', key='button-log-iter1'):
+        # if st.button('Résultats', key='log-iter1'):  
 
             st.write('---')
 
@@ -263,7 +277,8 @@ def run():
         with param_col3_iter1:
             max_features_param_selector = st.selectbox(label='max_features', options=('sqrt', 'log2'), index=1, key='rf_param3-iter1')
 
-        if st.button('Résultats', key='rf-iter1'):
+        if stateful_button(label='Résultats Top 3 - Forêt aléatoire', key='button-rf-iter1'):
+        # if st.button('Résultats', key='rf-iter1'):
 
             st.write('---')
         
@@ -382,7 +397,8 @@ def run():
         with param_col2_iter1:
             max_depth_param_selector = st.selectbox(label='max_depth', options=(1, 2, 3, 4, 5, 6, 7), index=4, key='dt_param2-iter1')
 
-        if st.button('Résultats', key='dt-iter1'):
+        if stateful_button(label='Résultats Top 3 - Arbre de décision', key='button-dt-iter1'):
+        # if st.button('Résultats', key='dt-iter1'):
 
             st.write('---')
 
@@ -493,7 +509,7 @@ def run():
         """
         ## Méthodologie : Podium
 
-        Nous avons essayé un autre approche en optant pour une variable cible « podium » :
+        Nous avons essayé une autre approche en optant pour une variable cible « podium » :
         
         - On définit la valeur 1 pour les positions 1 / 2 / 3 de la variable « positionOrder »
         - La valeur 0 pour les autres positions
@@ -504,7 +520,7 @@ def run():
     st.dataframe(df.reset_index().head(20))
     st.markdown(
         """
-        Pour les prédiction, on utlise la même méthode que lors de la modélisation vainqueur.
+        Pour les prédictions, on utilise la même méthode que pour la modélisation vainqueur.
 
         Nous récupérons les probabilités des classes du modèle (avec la fonction **predict_proba**) et on détermine les pilotes arrivés sur le podium en sélectionnant les 3 valeurs maximales de la classe 1.
 
@@ -526,7 +542,8 @@ def run():
         with param_col1_iter2:
             C_param_selector = st.selectbox(label='C', options=(0.001, 0.01, 0.1, 1, 10), index=0, key='log-iter2')
 
-        if st.button('Résultats', key='log-iter2'):  
+        if stateful_button(label='Résultats Podium - Régression logistique', key='button-log-iter2'):
+        # if st.button('Résultats', key='log-iter2'):  
 
             st.write('---')
 
@@ -624,7 +641,8 @@ def run():
         with param_col3_iter2:
             max_features_param_selector = st.selectbox(label='max_features', options=('sqrt', 'log2'), index=1, key='rf_param3-iter2')
 
-        if st.button('Résultats', key='rf-iter2'):
+        if stateful_button(label='Résultats Podium - Forêt aléatoire', key='button-rf-iter2'):
+        #if st.button('Résultats', key='rf-iter2'):
 
             st.write('---')
 
@@ -720,7 +738,8 @@ def run():
         with param_col2_iter2:
             max_depth_param_selector = st.selectbox(label='max_depth', options=(1, 2, 3, 4, 5, 6, 7), index=4, key='dt_param2-iter2')
 
-        if st.button('Résultats', key='dt-iter2'):
+        if stateful_button(label='Résultats Podium - Arbre de décision', key='button-dt-iter2'):
+        # if st.button('Résultats', key='dt-iter2'):
 
             st.write('---')
 
@@ -810,7 +829,7 @@ def run():
         Après avoir exploré l’approche « podium », nous avons pensé à 2 possibilités pour obtenir un classement top 3 :
 
         <b><u>Option 1</u> :</b><br>
-        A partir de la méthodologie « podium », on récupère les 3 valeurs maximales des probabilités de la classe 1 et on associe les valeur 1/2/3 dans les prédictions.
+        À partir de la méthodologie « podium », on récupère les 3 valeurs maximales des probabilités de la classe 1 et on associe les valeurs 1/2/3 dans les prédictions.
         """, unsafe_allow_html=True)
     st.image(r'./assets/modelisation_top3_podium_opt1.jpg')
     st.markdown(
@@ -849,7 +868,8 @@ def run():
             st.write('Modèle Top 3')
             C_param_selector_opt2 = st.selectbox(label='C', options=(0.0001, 0.001, 0.01, 0.1, 1, 10), index=1, key='log-iter3-opt2')
 
-        if st.button('Résultats', key='log-iter3'):  
+        if stateful_button(label='Résultats Top 3 + Podium - Régression logistique', key='button-log-iter3'):
+        # if st.button('Résultats', key='log-iter3'):  
 
             st.write('---')
 
@@ -1088,7 +1108,8 @@ def run():
             min_samples_leaf_param_selector_opt2 = st.selectbox(label='min_samples_leaf', options=(1, 3, 5), index=0, key='rf_param2-iter3-opt2')
             max_features_param_selector_opt2 = st.selectbox(label='max_features', options=('sqrt', 'log2'), index=1, key='rf_param3-iter3-opt2')
 
-        if st.button('Résultats', key='rf-iter3'):
+        if stateful_button(label='Résultats Top 3 + Podium - Forêt aléatoire', key='button-rf-iter3'):
+        # if st.button('Résultats', key='rf-iter3'):
 
             st.write('---')
         
@@ -1324,7 +1345,8 @@ def run():
             criterion_param_selector_opt1 = st.selectbox(label='criterion', options=('entropy', 'gini'), index=0, key='dt_param1-iter3-opt2')
             max_depth_param_selector_opt1 = st.selectbox(label='max_depth', options=(1, 2, 3, 4, 5, 6, 7), index=4, key='dt_param2-iter3-opt2')
 
-        if st.button('Résultats', key='dt-iter3'):
+        if stateful_button(label='Résultats Top 3 + Podium - Arbre de décision', key='button-dt-iter3'):
+        # if st.button('Résultats', key='dt-iter3'):
 
             st.write('---')
 
@@ -1548,7 +1570,7 @@ def run():
         """
         ## Résultats
 
-        NB : Le type de pari « Top 3  placé » n’existe pas dans l’univers des paris français, l'exercice d'analyse a été réalisée à titre indicatif.
+        NB : Le type de pari « Top 3  placé » n’existe pas dans l’univers des paris français, l'exercice d'analyse a été réalisé à titre indicatif.
 
         """)
     plt.rcParams['font.sans-serif'] = 'Arial'
@@ -1590,7 +1612,7 @@ def run():
 
         On remarque que pour tous les modèles, les 2 favoris Hamilton et Verstapen sont quasi systématiquement prédits dans le Top 3. Ce qui différencie les modèles au niveau des scores, c'est leur capacité à prédire correctement les outsiders.
 
-        En effet, le modèle de régression logistique a prédit soit Perez, soit Bottas aux côté d'Hamilton et Verstapen. Les modèles de Forêt aléatoire et Arbre de décision ont donné plus de pilotes outsiders : Perez, Bottas, Leclerc, Sainz, Norris, Ricciardo entre autres.
+        En effet, le modèle de régression logistique a prédit soit Perez, soit Bottas aux côtés d'Hamilton et Verstapen. Les modèles de Forêt aléatoire et Arbre de décision ont donné plus de pilotes outsiders : Perez, Bottas, Leclerc, Sainz, Norris, Ricciardo entre autres.
 
         """)
 
@@ -1619,7 +1641,7 @@ def run():
         """
         Les résultats sont supérieurs à 60% pour tous les modèles et confirment cette approche "podium".
 
-        La différence se joue également sur les pilotes outisders.
+        La différence se joue également sur les pilotes outsiders.
 
         La régression logistique a de nouveau tendance à privilégier Perez et Bottas mais les détecte mieux. Sinon, le modèle arbre de décision est celui qui tire le mieux son épingle du jeu.
 
@@ -1667,15 +1689,15 @@ def run():
 
     st.markdown(
         """
-        Pour l'option 1, nous retrouvons logiquement les mêmes scores Top 3 non classés que ceux de la méthode "Podium". Nous pouvouns constater une légère amélioration pour les scores Top 3 classé à part pour le modèle Arbre de décision
+        Pour l'option 1, nous retrouvons logiquement les mêmes scores Top 3 non classés que ceux de la méthode "Podium". Nous pouvons constater une légère amélioration pour les scores Top 3 classé à part pour le modèle Arbre de décision
 
-        Concernant l'option 2, les scores Top 3 non classés sont assez proche des score de l'option mais on note une amélioration de 4 points pour le modèle Arbre de décision.
+        Concernant l'option 2, les scores Top 3 non classés sont assez proches des scores de l'option mais on note une amélioration de 4 points pour le modèle Arbre de décision.
 
         En analysant les résultats de chaque modèle :
 
         <ul><li>Régression logistique :
 
-        Ici encore, les deux favoris (Hamilton et Verstappen) sont souvent cités mais le modèle n’arrive pas à trouver le 3ème pilotes du podium (il choisit soit Perez ou soit Bottas). Ce modèle n’arrive donc pas à trouver ce qu’on appelle les « upsets », ces pilotes qui bouleversent les statistiques (Norris et Ricciardo notamment).</li>
+        Ici encore, les deux favoris (Hamilton et Verstappen) sont souvent cités mais le modèle n’arrive pas à trouver le 3e pilote du podium (il choisit soit Perez ou soit Bottas). Ce modèle n’arrive donc pas à trouver ce qu’on appelle les « upsets », ces pilotes qui bouleversent les statistiques (Norris et Ricciardo notamment).</li>
 
 
         <li>Forêt aléatoire :
@@ -1700,15 +1722,15 @@ def run():
         Explication :
         - Si l’on a les 4 pilotes avec une cote à 3.5 (cas le plus défavorable)
         - 25% des parieurs misent sur le pilote A, 25% sur B, etc.
-        - 1000 € sont pariés par pilote : le bookmaker a encaissé 4000€
+        - 1000 € sont pariés par pilote : le bookmaker a encaissé 4000 €
         
-        En cas de victoire du pilote A par exemple, le bookmaker doit payer aux parieurs 3500€. Il lui reste donc 500 €. Le raisonnement est le même avec les pilotes B, C et D.
+        En cas de victoire du pilote A par exemple, le bookmaker doit payer aux parieurs 3500 €. Il lui reste donc 500 €. Le raisonnement est le même avec les pilotes B, C et D.
 
 
 
-        Comme pour les vainqueurs, nous avons simuler les paris sur le Championnat 2021 avec des mises de 20 € sur chaque pilote (mise totale 1200 € sur la saison).
+        Comme pour les vainqueurs, nous avons simulé les paris sur le Championnat 2021 avec des mises de 20 € sur chaque pilote (mise totale 1200 € sur la saison).
         
-        Nous aurions obtenus les montants ci-dessous :
+        Nous aurions obtenu les montants ci-dessous :
         """, unsafe_allow_html=True)
     
     st.table(pd.DataFrame({'Modèle' : ['Arbre de décision', 'Forêt aléatoire', 'Régression logistique'],
@@ -1718,5 +1740,5 @@ def run():
         """
         Les résultats sont très encourageants ! Deux des trois modèles sont bénéficiaires.
 
-        Cette piste de s’intéresser au top 3 plutôt qu’au gagnant semble bien plus intéressante. En effet, le ROI pour le meilleur modèle est de 70% (862€ de gain divisé par 1200€ de mise) ce qui est énorme dans le monde du pari. Le simple fait d’être bénéficiaire sur une saison est déjà rare.
+        Cette piste de s’intéresser au top 3 plutôt qu’au gagnant semble bien plus intéressante. En effet, le ROI pour le meilleur modèle est de 70% (862 € de gain divisé par 1200 € de mise) ce qui est énorme dans le monde du pari. Le simple fait d’être bénéficiaire sur une saison est déjà rare.
         """)

@@ -5,13 +5,20 @@ title = "Conclusion"
 sidebar_name = "Conclusion"
 
 def run():
-    
+
     st.title(title)
 
     st.markdown(
         """
         
+        ---
+        
+        > **"En Formule 1, chance et malchance n'existent pas.**
+        > **Cette dernière n'est autre que la somme d'éléments ou de situations que nous n'avons pas su ou pu prévoir",** _Enzo Ferrari_
 
+        ---
+        
+        
         ## Objectif du projet
 
         Le but du projet était de prédire le gagnant et le top 3 des courses de Formule 1, de parier et voir si nos pronostics étaient gagnants. 
@@ -63,20 +70,24 @@ def run():
         - La classe du circuit n'a pas d'impact en l'état.
         
         Compléter le jeu de données :
-        - Echanger avec un professionnel du métier évidemment.
-        - Utiliser la libraire fastf1 pour l'enrichir (vitesse max, vitesse moyenne dans les virages, régularité du pilote, etc.).
+        - Echanger avec un professionnel du métier.
+        - Utiliser la librairie fastf1 pour l'enrichir (vitesse max, vitesse moyenne dans les virages, régularité du pilote, etc.).
           - La classe du circuit aura peut-être alors un intérêt.
         - Créer un indicateur "forme du moment" ou "efficacité de la stratégie".
         - Budget de l'écurie ou le salaire du pilote.
-        - Nombre d'apparitions de la Safety Car sur le circuit.
+        - Différencier pilote principal d'une écurie et deuxième pilote.
+        - Probabilité d'apparitions de la Safety Car sur le circuit.
         - ...
         
-        ---
-        
-        > **"En Formule 1, chance et malchance n'existent pas.**
-        > **Cette dernière n'est autre que la somme d'éléments ou de situations que nous n'avons pas su ou pu prévoir",** _Enzo Ferrari_
+        Concernant les modèles :
+        - Essayer d'autres modèles évidemment.
+        - Utiliser une combinaison de plusieurs modèles.
+        - Utiliser un réseau de neurones.
+        - ...
 
-        ---
+
+        Ce projet semble montrer que l'utilisation de machine learning est une piste intéressante pour battre les bookmakers dans le domaine de la F1.
+        
         
         """, unsafe_allow_html=True
     )

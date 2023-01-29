@@ -19,6 +19,20 @@ title = "Modélisation - Vainqueur"
 sidebar_name = "Modélisation - Vainqueur"
 
 def run():
+
+    # fonction pour les boutons avec session_state
+    def stateful_button(*args, key=None, **kwargs):
+        if key is None:
+            raise ValueError("Must pass key")
+
+        if key not in st.session_state:
+            st.session_state[key] = False
+
+        if st.button(*args, **kwargs):
+            st.session_state[key] = not st.session_state[key]
+
+        return st.session_state[key]
+
     st.title(title)
 
     # -----------------------
@@ -77,7 +91,7 @@ def run():
     st.dataframe(df.reset_index().head(20))
     st.markdown(
         """
-        Cela engendre un déséquilibre des données avec la valeur 0 comme classe majoritaire. On utilise donc une méthode de rééchantillonnage pour équilibrer les données et avoir un ratio classes minoritaire / majoritaire satisfaisant (nous avons utlisée la méthode **RandomOverSampler**).
+        Cela engendre un déséquilibre des données avec la valeur 0 comme classe majoritaire. On utilise donc une méthode de rééchantillonnage pour équilibrer les données et avoir un ratio classes minoritaire / majoritaire satisfaisant (nous avons utilisée la méthode **RandomOverSampler**).
         
         Pour les prédictions, on récupère des modèles la probabilité que chaque pilote finisse à la première place. Le vainqueur sera celui avec la plus forte probabilité de gagner.
 
@@ -85,7 +99,7 @@ def run():
         
         Avec la fonction <b>predict_proba()</b>, nous récupérons les probabilités des classes du modèle :
         
-        La colonne **proba_0** indique la probabilité que le pilote soit perdant. Inversement la colonne **proba_1** indique la probabilité que le pilote soit gagnant.</li></ul>
+        La colonne **proba_0** indique la probabilité que le pilote ne finisse pas la course 1er. Inversement la colonne **proba_1** indique la probabilité que le pilote soit gagnant.</li></ul>
         """, unsafe_allow_html=True)
     st.image(r'./assets/modelisation_vainqueur_proba_etape1.jpg')
     st.markdown(
@@ -95,7 +109,7 @@ def run():
         Pour déterminer le vainqueur d’un Grand prix :
 
         <ul><li>Les probabilités sont fusionnées avec le jeu de données test.</li>
-        <li>Une colonne « Prédiction » initialisée à 0 est rajoutée.</li></ul>
+        <li>Une colonne « prediction », initialisée à 0, est rajoutée.</li></ul>
         """, unsafe_allow_html=True)
     st.image(r'./assets/modelisation_vainqueur_proba_etape2.jpg')
     st.markdown(
@@ -105,8 +119,8 @@ def run():
         Une boucle est appliquée pour tous les grands Grand Prix (ou « raceId ») :
         
         <ul><li>On regroupe par raceId</li>
-        <li>La valeur maximale de la probabilité classe 1 (ou proba_1) est identifiée</li>
-        <li>Sur cette ligne, on définit la valeur 1 dans la colonne « Prédiction »</li></ul>
+        <li>La valeur maximale de la probabilité pour la classe 1 (colonne <b>proba_1</b>) est identifiée</li>
+        <li>Sur cette ligne, on définit la valeur 1 dans la colonne « prediction »</li></ul>
         """, unsafe_allow_html=True)
     st.image(r'./assets/modelisation_vainqueur_proba_etape3.jpg')
     st.markdown(
@@ -150,7 +164,8 @@ def run():
         with param_col1_iter1:
             C_param_selector = st.selectbox(label='C', options=(0.001, 0.01, 0.1, 1, 10), index=1, key='log-iter1')
 
-        if st.button('Résultats', key='log-iter1'):  
+        if stateful_button(label='Résultats itération 1 - Régression logistique', key='button-log-iter1'):
+        # if st.button('Résultats', key='log-iter1'):  
 
             st.write('---')
 
@@ -238,7 +253,8 @@ def run():
         with param_col3_iter1:
             max_features_param_selector = st.selectbox(label='max_features', options=('sqrt', 'log2'), index=1, key='rf_param3-iter1')
 
-        if st.button('Résultats', key='rf-iter1'):
+        if stateful_button(label='Résultats itération 1 - Forêt aléatoire', key='button-rf-iter1'):
+        # if st.button('Résultats', key='rf-iter1'):
 
             st.write('---')
         
@@ -325,7 +341,8 @@ def run():
         with param_col2_iter1:
             max_depth_param_selector = st.selectbox(label='max_depth', options=(1, 2, 3, 4, 5, 6, 7), index=4, key='dt_param2-iter1')
 
-        if st.button('Résultats', key='dt-iter1'):
+        if stateful_button(label='Résultats itération 1 - Arbre de décision', key='button-dt-iter1'):
+        # if st.button('Résultats', key='dt-iter1'):
 
             st.write('---')
 
@@ -411,7 +428,8 @@ def run():
         with param_col2_iter1:
             kernel_param_selector = st.selectbox(label='kernel', options=('linear', 'poly', 'rbf'), index=0, key='svc_param2-iter1')
 
-        if st.button('Résultats', key='svc-iter1'):
+        if stateful_button(label='Résultats itération 1 - SVC', key='button-svc-iter1'):
+        # if st.button('Résultats', key='svc-iter1'):
 
             st.write('---')
 
@@ -497,7 +515,8 @@ def run():
         with param_col2_iter1:
             metric_param_selector = st.selectbox(label='metric', options=('minkowski', 'manhattan', 'chebyshev'), index=1, key='knn_param2-iter1')
 
-        if st.button('Résultats', key='knn-iter1'):
+        if stateful_button(label='Résultats itération 1 - KNN', key='button-knn-iter1'):
+        # if st.button('Résultats', key='knn-iter1'):
 
             st.write('---')
 
@@ -578,7 +597,7 @@ def run():
 
         Nous souhaitions voir s’il était possible d’ajouter les données des courses passées dans le jeu d’entrainement à chaque course et observer les résultats obtenus.
 
-        Pour la <u>première course</u> du championnat, nous avons la répartition des données suivante :
+        Pour la <u>première course</u> du championnat, nous avons la répartition des données comme suit :
         - Jeu d’entraînement : toutes les données jusqu’à l’année 2020 incluse.
         - Jeu de test : les données de la 1ere course du championnat 2021.
 
@@ -611,7 +630,8 @@ def run():
         with param_col1_iter2:
             C_param_selector = st.selectbox(label='C', options=(0.001, 0.01, 0.1, 1, 10), index=1, key='log-iter2')
 
-        if st.button('Résultats', key='log-iter2'):  
+        if stateful_button(label='Résultats itération 2 - Régression logistique', key='button-log-iter2'):
+        # if st.button('Résultats', key='log-iter2'):  
 
             st.write('---')
 
@@ -755,7 +775,8 @@ def run():
         with param_col3_iter2:
             max_features_param_selector = st.selectbox(label='max_features', options=('sqrt', 'log2'), index=1, key='rf_param3-iter2')
 
-        if st.button('Résultats', key='rf-iter2'):
+        if stateful_button(label='Résultats itération 2 - Forêt aléatoire', key='button-rf-iter2'):
+        # if st.button('Résultats', key='rf-iter2'):
 
             st.write('---')
 
@@ -896,7 +917,8 @@ def run():
         with param_col2_iter2:
             max_depth_param_selector = st.selectbox(label='max_depth', options=(1, 2, 3, 4, 5, 6, 7), index=4, key='dt_param2-iter2')
 
-        if st.button('Résultats', key='dt-iter2'):
+        if stateful_button(label='Résultats itération 2 - Arbre de décision', key='button-dt-iter2'):
+        # if st.button('Résultats', key='dt-iter2'):
 
             st.write('---')
 
@@ -1037,7 +1059,8 @@ def run():
         with param_col2_iter2:
             metric_param_selector = st.selectbox(label='metric', options=('minkowski', 'manhattan', 'chebyshev'), index=1, key='knn_param2-iter2')
 
-        if st.button('Résultats', key='knn-iter2'):
+        if stateful_button(label='Résultats itération 2 - KNN', key='button-knn-iter2'):
+        # if st.button('Résultats', key='knn-iter2'):
 
             st.write('---')
 
@@ -1234,17 +1257,17 @@ def run():
     
     st.markdown(
         """
-        Les modèles obtiennent sensiblement les mêmes scores, mis à part le modèle de **foret aléatoire** où on observe une amélioration significative dans la 2e itérations.
+        Les modèles obtiennent sensiblement les mêmes scores, mis à part le modèle de **foret aléatoire** où on observe une amélioration significative dans la 2e itération.
 
         Il est également à noter que le modèle **SVC** a un temps de calcul assez long. Il n'a pas été retenu pour la 2e itération, vu qu'une boucle est appliquée à chaque Grand Prix de la saison.
 
-        Avec un score de 55%, le modèle **régression logistique** obtient un bon résultat. Le modèle semble relativement bon pour prédire les favoris mais n’arrive pas à trouver les « outsiders » (cote entre 2.1 et 4). On observe la même tendance pour les autres modèles avec un score de 50%.
+        Avec un score de 55%, le modèle **régression logistique** obtient un bon résultat. Le modèle semble relativement bon pour prédire les favoris mais n’arrive pas à trouver les « _outsiders_ » (cote entre 2.1 et 4). On observe la même tendance pour les autres modèles avec un score de 50%.
 
-        On peut donc voir que la qualité d’un modèle se dessine plutôt sur les « outsiders ». Il semble aisé pour un modèle de prédire un favori, mais la différence entre deux modèles se fera surtout sur les « outsiders », voire les « upsets » (pilotes qui bouleversent les statistiques et avec une cote > 4).
+        On peut donc voir que la qualité d’un modèle se dessine plutôt sur les « _outsiders_ ». Il semble aisé pour un modèle de prédire un favori, mais la différence entre deux modèles se fera surtout sur les « _outsiders_ », voire les « _upsets_ » (pilotes qui bouleversent les statistiques et avec une cote > 4).
 
-        Nous avons simuler les paris sur le Championnat 2021 avec les meilleurs résultats obtenus de chaque modèle, en misant 100 € sur un pilote (mise totale 2000 € sur la saison).
+        Nous avons simulé les paris sur le Championnat 2021 avec les meilleurs résultats obtenus de chaque modèle, en misant 100 € sur un pilote (mise totale 2000 € sur la saison).
         
-        Nous aurions obtenus les montants ci-dessous :
+        Nous aurions obtenu les montants ci-dessous :
 
         """, unsafe_allow_html=True)
     
@@ -1255,5 +1278,5 @@ def run():
         """
         Sur les quatre modèles, nous avons été bénéficiaires sur deux modèles. La régression logistique se détache clairement puisqu’elle a permis un bénéfice de 320€ pour une mise de 2000€, soit un ROI de 16%.
 
-        La différence entre les modèles, sur le plan financier, se fait bien sur ces « outsiders ».
+        La différence entre les modèles, sur le plan financier, se fait bien sur ces « _outsiders_ ».
         """)

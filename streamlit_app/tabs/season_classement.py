@@ -2,22 +2,8 @@ import streamlit as st
 import pandas as pd
 
 import matplotlib.pyplot as plt
-#import plotly.express as px 
-
-
-# import numpy as np
-# import time
-# from joblib import dump, load
-# from sklearn import svm
-# from sklearn.svm import SVC
-
-# from sklearn.svm import LinearSVC
-# from sklearn.calibration import CalibratedClassifierCV
-# from imblearn.over_sampling import RandomOverSampler, SMOTE
-# from imblearn.metrics import classification_report_imbalanced, geometric_mean_score
 from PIL import Image
-# import raceplotly
-# from raceplotly.plots import barplot
+
 
 title = "Classement sur une saison"
 sidebar_name = "Classement 2021"
@@ -25,16 +11,9 @@ sidebar_name = "Classement 2021"
 
 def run():
 
-    st.markdown('<style>.stProgress div[role="progressbar"] > div > div {height: 1.6rem; background-color: unset;} .stProgress div[role="progressbar"] > div > div > div {background-color: #e10600;} section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(43) > div {gap:0.5rem;} section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(43) div[data-testid="stHorizontalBlock"] div[data-testid="column"]:nth-child(2) div[data-testid="stMarkdownContainer"] {font-family: "Zen Dots"; border-left: 3px solid #38383f;} section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(43) div[data-testid="stHorizontalBlock"] div[data-testid="column"]:nth-child(2) div[data-testid="stMarkdownContainer"] > p {padding: 2px 0 0 7px; font-size: 0.9rem; text-align: center;} section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(43) div[data-testid="stHorizontalBlock"] div[data-testid="column"]:nth-child(1) div[data-testid="stMarkdownContainer"] {font-family: "Zen Dots"; background-color: #d0d0d2; border-bottom-right-radius: 5px;} section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(43) div[data-testid="stHorizontalBlock"] div[data-testid="column"]:nth-child(1) div[data-testid="stMarkdownContainer"] > p {font-size: 0.9rem; color: #15151e; font-weight: 700; text-align: center;} section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(43) > div > div:nth-child(1) {margin-bottom: 1rem;} </style>', unsafe_allow_html=True)
+    st.markdown('<style>.stProgress div[role="progressbar"] > div > div {height: 1.6rem; background-color: unset;} .stProgress div[role="progressbar"] > div > div > div {background-color: #e10600;} section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(20) > div {gap:0.5rem;} section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(20) div[data-testid="stHorizontalBlock"] div[data-testid="column"]:nth-child(2) div[data-testid="stMarkdownContainer"] {font-family: "Zen Dots"; border-left: 3px solid #38383f;} section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(20) div[data-testid="stHorizontalBlock"] div[data-testid="column"]:nth-child(2) div[data-testid="stMarkdownContainer"] > p {padding: 2px 0 0 7px; font-size: 0.9rem; text-align: center;} section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(20) div[data-testid="stHorizontalBlock"] div[data-testid="column"]:nth-child(1) div[data-testid="stMarkdownContainer"] {font-family: "Zen Dots"; background-color: #d0d0d2; border-bottom-right-radius: 5px;} section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(20) div[data-testid="stHorizontalBlock"] div[data-testid="column"]:nth-child(1) div[data-testid="stMarkdownContainer"] > p {font-size: 0.9rem; color: #15151e; font-weight: 700; text-align: center;} section[tabindex="0"] > div > div:nth-child(1) > div > div:nth-child(20) > div > div:nth-child(1) {margin-bottom: 1rem;} </style>', unsafe_allow_html=True)
 
     st.title(title)
-
-    st.markdown(
-        """
-        L'idée de cette page est d'essayer de prédire le classement complet de chaque course et du Championnat sur la saison 2021.
-         
-        """
-    )
 
   
     points = pd.read_csv(r'..\data\points_classement_2021.csv',sep=',',index_col = 0)
@@ -53,53 +32,61 @@ def run():
     
     st.markdown(
         """
+        L'idée de cette page est d'essayer de prédire le classement complet de chaque course du Championnat sur la saison 2021.
+
         ## Modélisation et récupération des probabilités
+
+        Comme précédemment, on part donc de notre dataframe. On demande maintenant à nos modèles de nous donner la probabilité que chaque pilote finisse à chacune des 20 positions. Voici par exemple ce que l'on obtient :
+        - Chaque colonne « _proba_n_ » représentant la probabilité d'être en n-ième position
+        - Chaque ligne représentant un pilote _(driverId)_ lors d'un GP donné _(raceId)_ comme on peut le voir ici
         """)
-    st.write("Comme précédemment on part donc de notre dataframe. On demande maintenant à nos modèles de nous donner la probabilité "
-             "que chaque pilote finisse à chacune des 20 positions. Voici par exemple ce que l'on obtient : ")
-    st.write("Chaque colonne _proba_n_ représentant la probabilité d'être en n_ème position")
-    st.write("Chaque ligne représentant un pilote _(driverId)_ lors d'un GP donné _(raceId)_ comme on peut le voir ici")
     st.dataframe(rfc_proba.head())
     
     st.markdown(
         """
+        ---
+        
         ## Méthodologie
+
+        La méthodologie est alors la suivante :
+        - Regrouper par course/raceId.
+        - Choisir le premier GP de l'année.
+        - Choisir le pilote qui a la plus forte probabilité d'être premier sur ce Grand Prix.
+        - Lui attribuer la première place et les 25 points associés.
+        - Pour le deuxième, nous avions plusieurs options :
+            - Prendre celui avec la __proba_2__ la plus élevée.
+            - Additionner __proba_1__ et __proba_2__ et choisir le pilote avec la somme la plus élevée, **c'est ce que nous avons fait.**
+        - Attribuer alors les 18 points au pilote.
+        - Ainsi de suite jusqu'à la 20e position.
+        - Recommencer pour le Grand Prix n°2 de l'année.
+        - Faire la somme totale des points après chaque course.
+        
+        Ce qui nous donne un  nouveau dataframe :
         """)
-    st.write("La méthodologie est alors la suivante :")
-    st.write("    - regrouper par course/raceId. ")
-    st.write("    - choisir le premier GP de l'année. ")
-    st.write("    - choisir le pilote qui a la plus forte probabilité d'être premier sur ce GP. ")
-    st.write("    - lui attribuer la première place et les 25 points associés. ")
-    st.write("    - pour le deuxième, nous avions plusieurs options : ")
-    st.write("       - - prendre celui avec la proba_2 la plus élevée. ")
-    st.write("       - - additionner proba_1 et proba_2 et choisir le pilote avec la somme la plus élevée, **c'est ce que nous avons fait.** ")
-    st.write("    - attribuer alors les 18 points au pilote. ")  
-    st.write("    - ainsi de suite jusqu'à la 20eme position. ")
-    st.write("    - recommencer pour le GP no 2 de l'année. ")
-    st.write("    - faire la somme totale des points après chaque course. ")
-    st.write("   ")
-    st.write("Ce qui nous donne un  nouveau dataframe : ")
      
     st.dataframe(points.head())
-    st.write("Chaque pilote (driverId) se voit attribuer un classement et le nombre de points associés pour une course donnée"
-             " _classement_1052_ et _points_1052_ correspondent à la course dont l'id est 1052, c'est à dire le Gp de Bahrein. "
-             "On calcule aussi les points totaux après chaque course : _points_totaux_XXX_ ")
-    
-    st.write("Sur la base des points dans la colonne _points_totaux_1073_ qui correspond à la dernière course. "
-             "Il nous reste alors à établir le classement final prédit et le comparer au classement réel. ")
+    st.markdown(
+        """
+        Chaque pilote (_driverId_) se voit attribuer un classement et le nombre de points associés pour une course donnée : _classement_1052_ et _points_1052_ correspondent à la course dont l'id est 1052, c'est-à-dire le Grand Prix de Bahrein.
+        
+        On calcule aussi les points totaux après chaque course : _points_totaux_XXX_
+
+        Sur la base des points dans la colonne _points_totaux_1073_ qui correspond à la dernière course. Il nous reste alors à établir le classement final prédit et le comparer au classement réel.
+        """)
     
     st.markdown(
         """
+        ---
+
         ## Résultats
+
+        Ce qui nous donne en fonction de nos modèles :
         """)
-        
-    st.write("Ce qui nous donne en fonction de nos modèles: ")
-   
-    
  
     ##### AFFICHAGE des ecart de points et classement
     
-    
+    plt.rcParams['figure.facecolor'] = '#15151e'
+    plt.rcParams['axes.facecolor'] = '#0e1117'
     models = ['SVC','Random Forest Classifier','Régression Logistique','Arbre de décision']
     ecart_point  = [round(compar_svc['diff_points'].abs().mean(), 1),
                     round(compar_rfc['diff_points'].abs().mean(),1),
@@ -138,18 +125,24 @@ def run():
         if s['classement_final'] == s['classement_final_reel']:
             return ['background-color: #386641']*len(s)
         elif abs(s['classement_final'] - s['classement_final_reel']) == 1:
-            return ['background-color: #C15300']*len(s)
+            return ['background-color: #002B5C']*len(s)
         else:
             return ['background-color: #0e1117']*len(s)
     
         
     with st.expander("Pour avoir le détail des dataframes :"):
-        st.write("_Les deux premières colonnes _points_totaux_1073_ et _classement_final_ présentent les résultats du modèle._ " 
-                 "_Les colonnes _points_reels_ et _classement_final_reel_ sont les vrais résultats._ "
-                 "_Les deux colonnes de droite présentent les différences entre les résultats réels et ceux prédits._ ")
-        st.write("_La ligne apparait en vert si le classement du pilote prédit est le même que le classement réel._ \n\n "
-                 "_La ligne apparait en orange si la différence entre la prédiction et la réalite est d'une seule place._ ")
-        st.write("_Vous pouvez cliquer sur le nom d'une colonne pour l'ordonner (classé par classement final réel par défaut)_ ")
+        st.markdown(
+            """
+            - _Les deux premières colonnes _points_totaux_1073_ et _classement_final_ présentent les résultats du modèle._
+            - _Les colonnes _points_reels_ et _classement_final_reel_ sont les vrais résultats._
+            - _Les deux colonnes de droite présentent les différences entre les résultats réels et ceux prédits._
+
+            _La ligne apparait en <span style="color:#32cd32">vert</span> si le classement du pilote prédit est le même que le classement réel._
+
+            _La ligne apparait en <span style="color:#00bfff">bleu</span> si la différence entre la prédiction et la réalite est d'une seule place._ 
+
+            _Vous pouvez cliquer sur le nom d'une colonne pour l'ordonner (classé selon classement final réel par défaut)._
+            """,unsafe_allow_html=True)
         
         col1, col2, col3, col4 = st.columns(4)
 
@@ -196,10 +189,11 @@ def run():
     st.write("             ")
     st.markdown(
         """
-        ## Représentation Graphique
+        ---
+
+        ## Représentation graphique
         """)
-    st.write("Une image valant mille dataframes, voici les représentations graphiques associées comparant les prédictions des modèles "
-             "et les points réellement engrangés par les pilotes: ")
+    st.write("Une image valant mille dataframes, voici les représentations graphiques associées comparant les prédictions des modèles et les points réellement engrangés par les pilotes :")
     
 
     with st.expander("Pour avoir les représentations graphiques :"):
@@ -229,10 +223,10 @@ def run():
             st.image(image_svc_2)
             
             st.write("             ")
-            st.write("On remarque rapidement que ce modèle ne semble pas optimal, voire pas bon du tout. Ce que confirme l'écart moyen de 88 points."
+            st.write("On remarque rapidement que ce modèle ne semble pas optimal, voire pas bon du tout. Ce que confirme l'écart moyen de 88 points. "
                      "Il semble que celui-ci privilégie les anciens champions du monde ou en d'autres termes les pilotes avec le plus de victoires "
                      "en Championnat, en effet, il place Raikkonen, Hamilton, Vettel et Alonso en tête. ")
-            st.write(      "Sans surprise on observe des écarts de points entre les prédictions et la réalité allant jusqu'à 433...ce qui est énorme. "
+            st.write(      "Sans surprise on observe des écarts de points entre les prédictions et la réalité allant jusqu'à 433... ce qui est énorme. "
                      "Pour aller plus loin, il faudrait utiliser un outil comme [Shap](https://shap.readthedocs.io/en/latest/) pour "
                      "tenter de comprendre le comportement du modèle.")
         if rfc:
@@ -246,15 +240,14 @@ def run():
             image_rfc_2 = Image.open(r'..\data\classement_2021_rfc_2.png')
             st.image(image_rfc_2)
             st.write("             ")
-            st.write("Pour les deux premmières places, les résultats sont très bons ! "
-                     "On observe un écart de seulement 1.5 points pour Verstappen et 16.5 pour Hamilton soient respectivement 0.3% et 4.2% d'écart ! "
+            st.write("Pour les deux premières places, les résultats sont très bons ! "
+                     "On observe un écart de seulement 1.5 point pour Verstappen et 16.5 pour Hamilton soient respectivement 0.3% et 4.2% d'écart ! "
                      "L'écart moyen est seulement de 29.5 points contre 88 précédemment. ")
             st.write("Le plus grand écart de points est de 124 et cela concerne Pérez, qui a, d'après ce modèle, clairement sous-performé. "
                      "Mais cela peut s'expliquer : En regardant de plus près Perez n’a pas terminé 6 courses sur les 22 "
-                     "(ce qui est un chiffre très élevé pour une écurie comme RedBull). Sur les 16 restantes, "
+                     "(ce qui est un chiffre très élevé pour une écurie comme RedBull). Sur les 16 courses restantes, "
                      "il a marqué en moyenne 11.9 points, ce qui ramené à une saison de 22 courses aurait fait une saison "
                      "à 262 points. Même si on est encore loin des 314 points prédits, cela l’aurait quand même placé en 3ème position, comme prédit par le modèle.")
-    
     
         if log_reg:
             
@@ -279,13 +272,13 @@ def run():
             image_tree = Image.open(r'..\data\classement_2021_decision_tree.png')
             st.image(image_tree)
             
-            st.subheader("Régression Logistique - Ordonné selon le classement prédit")
+            st.subheader("Decision Tree - Ordonné selon le classement prédit")
             image_tree_2 = Image.open(r'..\data\classement_2021_decision_tree_2.png')
             st.image(image_tree_2)
             st.write("C'est de très loin le meilleur modèle ! Encore meilleur que le Random Forest, l'écart moyen est de 10.5 points! "
                      "Les plus grands écarts de points sont pour Verstappen et Hamilton (49 et 43 points), le 3ème plus grand n'est que de 28 points. ! "
                      "Point intéressant, sur les 21 pilotes, seuls 4 ont été surévalués (Russel, Gasly, Latifi, Vettel). Il semble que le modèle "
-                     "a une tendance a clairement sous-évalué les performances des pilotes. ")
+                     "ait une tendance à clairement sous-évaluer les performances des pilotes. ")
             st.write("Au niveau du classement le Top 7 est correctement prédit, dans l'ordre qui plus est. Les positions 8 et 9, "
                      "ainsi que 10 et 11 sont simplement inversées. ")
         
@@ -300,13 +293,16 @@ def run():
     
     st.markdown(
         """
-        # Probabilités de victoire pour un pilote 
+        ---
+
+        ## Probabilités de victoire pour un pilote
+
+        Puisque nous avons calculé les probabilités à chaque course, nous pouvons aussi les présenter de manière plus visuelle.
+
+        Nous allons représenter la probabilité qu'a chaque pilote de finir à une position donnée. Il faut donc choisir le modèle, l'année, puis le Grand Prix, puis le pilote.
+
+
         """)
-        
-    st.write("Puisque nous avons calculé les probabilités à chaque course, nous pouvons aussi les présenter de manière plus visuelle. ")
-    st.write("Nous allons représenter la probabilité qu'a chaque pilote de finir à une position donnée. "
-             "Il faut donc choisir le modèle, l'année, puis le Grand Prix, puis le pilote.")
-    st.write("")
 
     
     col1, col2, col3, col4 = st.columns(4)
@@ -342,11 +338,9 @@ def run():
         
     #récupération des pilotes dans la course avec ce raceID
     liste_driverId = results[results['raceId'] == race_id]['driverId'].tolist()
-    #st.write(liste_driverId)
     
     #réduction du tableau
     liste_surname = drivers[drivers['driverId'].isin(liste_driverId)]['surname'].sort_values(ascending=True)
-    #st.write(type(liste_surname))
     
     with col4: 
         driver_1 = st.selectbox(label='Choix du pilote 1', options = liste_surname, key='0_driver1')
@@ -394,20 +388,3 @@ def run():
             with col3:
                 my_bar = st.progress(0)
                 my_bar.progress(temp)
-        
-    # position = []
-    # pourcent = []
-    # barre = []
-    # for i in range(1,21):
-    #     temp = df_proba[(df_proba['raceId'] == race_id) & (df_proba['driverId'] == driver_id)]['proba_'+str(i)].iloc[0]
-    #     position.append("Position "+str(i))
-    #     pourcent.append(round(temp*100,2))
-    #     #barre.append(my_bar.progress(temp))
-    #     df=pd.DataFrame()
-    #     df['position'] = position
-    #     df['pourcent'] = pourcent
-    #     df['barre'] = 0
-    # df.iloc[0,2]=my_bar.progress(50)
-    # st.write(df.iloc[0,2])
-    # st.dataframe(df.head(20))
-    

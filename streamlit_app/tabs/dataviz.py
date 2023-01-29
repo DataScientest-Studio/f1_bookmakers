@@ -2,14 +2,11 @@ import streamlit as st
 
 import pandas as pd
 import numpy as np
-from PIL import Image
 
 import matplotlib as mpl
 from matplotlib.collections import LineCollection
 from matplotlib import cm
 import matplotlib.pyplot as plt
-import seaborn as sns
-import matplotlib.patches as patches
 import plotly.express as px
 
 
@@ -29,6 +26,20 @@ sidebar_name = "DataViz'"
 def run():
     
     st.markdown('<style>section[tabindex="0"] div[data-testid="stImage"] {margin: auto;} section[tabindex="0"] div[data-testid="stImage"] img {width: 900px !important;} </style>', unsafe_allow_html=True)
+
+    # fonction pour les boutons avec session_state
+    def stateful_button(*args, key=None, **kwargs):
+        if key is None:
+            raise ValueError("Must pass key")
+
+        if key not in st.session_state:
+            st.session_state[key] = False
+
+        if st.button(*args, **kwargs):
+            st.session_state[key] = not st.session_state[key]
+
+        return st.session_state[key]
+
 
     st.title(title)
     st.write('Cette page va présenter divers graphiques exploitant nos jeux de données :')
@@ -154,7 +165,6 @@ def run():
     date = st.date_input("Choisissez maintenant votre jour de naissance.",min_value=datetime.date(1950, 1, 1),max_value=datetime.date(2029,1 , 1))
     
     ### fonction permettant de surligner en vert la ligne
-    
     ### hexa vert  #006117
     def df_background_color_bday(s):
         return ['background-color: #006117']*len(s) if s['date'] == date else ['background-color: #0e1117']*len(s)
@@ -162,8 +172,9 @@ def run():
     day_birth = date.day
     month_birth = date.month
     
-    
-    if st.button(label="Alors ?",args=None, help ="ça arrive...", disabled=False):
+    # bouton
+    if stateful_button(label="Alors ?",args=None, help ="ça arrive...", disabled=False, key="anniversary"):
+    #if st.button(label="Alors ?",args=None, help ="ça arrive...", disabled=False):
         st.write("Voici la liste des courses s'étant déroulées le jour de votre naissance : ")
         st.dataframe(df_races_final[(df_races_final['day']==day_birth) &
                                     (df_races_final['month']==month_birth)]
@@ -218,22 +229,17 @@ def run():
         
         # récupération de raceId
         race_id = races[(races['year']== annee) & (races['name']== course)][['raceId']].iloc[0,0]
-        #st.write(race_id)
 
     #récupération des pilotes dans la course avec ce raceID
     liste_driverId = results[results['raceId'] == race_id]['driverId'].tolist()
-    #st.write(liste_driverId)
     
     #réduction du tableau
-    #temp = 
     liste_surname = drivers[drivers['driverId'].isin(liste_driverId)]['surname'].sort_values(ascending=True)
-    #st.write(type(liste_surname))
     
     with col3: 
-        driver_1 = st.selectbox(label='Choix du pilote 1', options = liste_surname, key='0_driver1')
+        driver_1 = st.selectbox(label='Choix du pilote 1', options = liste_surname, index=4, key='0_driver1')
     with col4: 
-        driver_2 = st.selectbox(label='Choix du pilote 2', options = liste_surname, key='0_driver2')
-    #st.write(driver_1)
+        driver_2 = st.selectbox(label='Choix du pilote 2', options = liste_surname, index=11, key='0_driver2')
     
     
     if driver_1 == 'Verstappen':
@@ -250,10 +256,9 @@ def run():
     else:
         trigramme_driver2 =  drivers[drivers['surname'] == driver_2]['code'].iloc[0]
 
-    #st.write(trigramme_driver1)
-    #st.write(trigramme_driver2)
-    
-    if st.button(label="Visualisation", key = 'visu_lap', args = None, help ="L'affichage peut prendre un peu de temps", disabled=False):     
+    # bouton
+    if stateful_button(label="Visualisation des chronos", args = None, help ="L'affichage peut prendre un peu de temps", disabled=False, key="visu_lap"):
+    # if st.button(label="Visualisation", key = 'visu_lap', args = None, help ="L'affichage peut prendre un peu de temps", disabled=False):
                 
         race = ff1.get_session(annee, course, 'R')
         race.load()
@@ -273,8 +278,8 @@ def run():
         ax.set_ylabel("Chrono")
         ax.legend()
         st.pyplot(fig)
-        st.write("_Les tours où le pilote est passé au stand changer ses pneus apparaissent souvent **très** clairement._ ")
-        st.write("_Les tours où les données sont manquantes correspondent très souvent aux tours où le pilote a été impliqué dans un accident._ ")
+        st.write("_Les tours où le pilote est passé au stand pour changer ses pneus apparaissent souvent **très** clairement._ ")
+        st.write("_Les tours où les données sont manquantes correspondent très souvent aux tours où la Safety Car est intervenue._ ")
         
     
   ########## Fin   Partie     --- Comparaison chrono sur la course   
@@ -317,22 +322,17 @@ def run():
         
     # récupération de raceId
     race_id = races[(races['year']== annee) & (races['name']== course)][['raceId']].iloc[0,0]
-    #st.write(race_id)
 
     #récupération des pilotes dans la course avec ce raceID
     liste_driverId = results[results['raceId'] == race_id]['driverId'].tolist()
-    #st.write(liste_driverId)
     
     #réduction du tableau
-    #temp = 
     liste_surname = drivers[drivers['driverId'].isin(liste_driverId)]['surname'].sort_values(ascending=True)
-    #st.write(type(liste_surname))
     
     with col3:
-        driver_1 = st.selectbox(label='Choix du pilote 1', options = liste_surname, key='1_driver1')
+        driver_1 = st.selectbox(label='Choix du pilote 1', options = liste_surname, index=4, key='1_driver1')
     with col4:
-        driver_2 = st.selectbox(label='Choix du pilote 2', options = liste_surname, key='1_driver2')
-    #st.write(driver_1)
+        driver_2 = st.selectbox(label='Choix du pilote 2', options = liste_surname, index=11, key='1_driver2')
     
     
     if driver_1 == 'Verstappen':
@@ -352,17 +352,12 @@ def run():
     
     session_type = 'R'  # R= race ; P1=Practice 1 ; ...
     
-
-    if st.button(label="Visualisation",args=None, help ="L'affichage peut prendre un peu de temps",
-                 disabled=False, key='1_visu',):
-        
+    # bouton
+    if stateful_button(label="Visualisation de la télémétrie",args=None, help ="L'affichage peut prendre un peu de temps", disabled=False, key="1_visu"):
+    # if st.button(label="Visualisation",args=None, help ="L'affichage peut prendre un peu de temps", disabled=False, key='1_visu',):
         
         session = ff1.get_session(annee, course, session_type)
         session.load()
-    
-        # on charge les données pour le driver 1
-    
-        #test = session.laps.pick_driver(driver_1)
     
         #renvoie les infos du tour le plus rapide : objet fastf1.core.lap
         fast_driver_1 = session.laps.pick_driver(trigramme_driver1).pick_fastest() 
@@ -479,21 +474,16 @@ def run():
     
     # récupération de raceId
     race_id = races[(races['year']== annee) & (races['name']== course)][['raceId']].iloc[0,0]
-    #st.write(race_id)
 
     #récupération des pilotes dans la course avec ce raceID
     liste_driverId = results[results['raceId'] == race_id]['driverId'].tolist()
-    #st.write(liste_driverId)
     
     #réduction du tableau
-    #temp = 
     liste_surname = drivers[drivers['driverId'].isin(liste_driverId)]['surname'].sort_values(ascending=True)
-    #st.write(type(liste_surname))
     
     with col3:   
-        driver_1 = st.selectbox(label='Choix du pilote 1', options = liste_surname, key='2_driver1')
+        driver_1 = st.selectbox(label='Choix du pilote', options = liste_surname, index=18, key='2_driver1')
 
-    #st.write(driver_1)
     
     
     if driver_1 == 'Verstappen':
@@ -506,10 +496,10 @@ def run():
         
     
     session_type = 'R'  # R= race ; P1=Practice 1 ; ...
-    #création de l'array des coordonnées x et y et des couleurs
     
-    if st.button(label="Visualisation",key='2_visu', args=None, help ="L'affichage peut prendre un peu de temps", disabled=False):
-        
+    if stateful_button(label="Visualisation de la vitesse",args=None, help ="L'affichage peut prendre un peu de temps", disabled=False, key="2_visu"):
+    # if st.button(label="Visualisation",key='2_visu', args=None, help ="L'affichage peut prendre un peu de temps", disabled=False):
+    
         session = ff1.get_session(annee, course, session_type)
         session.load()
         
