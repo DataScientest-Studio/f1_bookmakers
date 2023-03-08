@@ -1,43 +1,21 @@
 # AVR22 CDS : F1 Bookmakers
 
 
-## Explications et Instructions
-
-Ce repository contient les fichiers nécessaires à l'initialisation d'un projet fil-rouge dans le cadre de votre formation [DataScientest](https://datascientest.com/).
-
-Il contient principalement le présent fichier README.md et un template d'application [Streamlit](https://streamlit.io/).
-
-**README**
-
-Le fichier README.md est un élément central de tout repository git. Il permet de présenter votre projet, ses objectifs, ainsi que d'expliquer comment installer et lancer le projet, ou même y contribuer.
-
-Vous devrez donc modifier différentes sections du présent README.md, afin d'y inclure les informations nécessaires.
-
-- Complétez **en anglais** les sections (`## Presentation` et `## Installation` `## Streamlit App`) en suivant les instructions présentes dans ces sections.
-- Supprimer la présente section (`## Explications et Instructions`)
-
-**Application Streamlit**
-
-Un template d'application [Streamlit](https://streamlit.io/) est disponible dans le dossier [`streamlit_app`](streamlit_app). Vous pouvez partir de ce template pour mettre en avant votre projet.
 
 ## Presentation
 
-Complétez cette section **en anglais** avec une brève description de votre projet, le contexte (en incluant un lien vers le parcours DataScientest), et les objectifs.
 
-Vous pouvez également ajouter une brève présentation des membres de l'équipe avec des liens vers vos réseaux respectifs (GitHub et/ou LinkedIn par exemple).
+This repository contains the code for our project **F1 & Bookmakers**, developed during our [Data Scientist training](https://datascientest.com/en/data-scientist-course) at [DataScientest](https://datascientest.com/).
 
-**Exemple :**
-
-This repository contains the code for our project **PROJECT_NAME**, developed during our [Data Scientist training](https://datascientest.com/en/data-scientist-course) at [DataScientest](https://datascientest.com/).
-
-The goal of this project is to **...**
+The goal of this project is to **beat the bookmaker during a F1 season, predicting either the winner or the podium of each race of a F1 season.** In addition, we will also try to predict the overall standings for the 2021 season.
 
 This project was developed by the following team :
 
-- John Doe ([GitHub](https://github.com/) / [LinkedIn](http://linkedin.com/))
-- Martin Dupont ([GitHub](https://github.com/) / [LinkedIn](http://linkedin.com/))
+- Sébastien Lebreton ([GitHub](https://github.com/kente92) / [LinkedIn](https://www.linkedin.com/in/seblebreton/))
+- Alexandre Laroche ([GitHub](https://github.com/Alex-Laroche) / [LinkedIn](https://www.linkedin.com/in/alexandre-laroche-a96360263/))
 
 You can browse and run the [notebooks](./notebooks). You will need to install the dependencies (in a dedicated environment) :
+
 
 ```
 pip install -r requirements.txt
