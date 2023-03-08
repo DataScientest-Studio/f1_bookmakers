@@ -427,6 +427,8 @@ def run():
             C_param_selector = st.selectbox(label='C', options=(0.05, 0.1, 1, 10), index=1, key='svc_param1-iter1')
         with param_col2_iter1:
             kernel_param_selector = st.selectbox(label='kernel', options=('linear', 'poly', 'rbf'), index=0, key='svc_param2-iter1')
+        
+        st.warning('⚠️ Le calcul peut prendre plusieurs minutes')
 
         if stateful_button(label='Résultats itération 1 - SVC', key='button-svc-iter1'):
         # if st.button('Résultats', key='svc-iter1'):
