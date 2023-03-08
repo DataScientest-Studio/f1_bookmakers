@@ -23,14 +23,12 @@ pip install -r requirements.txt
 
 ## Streamlit App
 
-**Add explanations on how to use the app.**
-
 To run the app :
 
 ```shell
 cd streamlit_app
-conda create --name my-awesome-streamlit python=3.9
-conda activate my-awesome-streamlit
+conda create --name f1-bookmaker-streamlit python=3.9
+conda activate f1-bookmaker-streamlit
 pip install -r requirements.txt
 streamlit run app.py
 ```
