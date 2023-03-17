@@ -1,0 +1,185 @@
+:root{
+  --main-bg-color:#15151e;
+  --red-color: #e10600;
+  --gray-color: #38383f;
+  --color-1: #d0d0d2;
+}
+
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/titilliumweb/v15/NaPecZTIAOhVxoMyOr9n_E7fdMPmDQ.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Zen Dots';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/zendots/v10/XRXX3ICfm00IGoesQdaDRs4.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* @font-face {
+  font-family: 'Russo One';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/russoone/v14/Z9XUDmZRWg6M1LvRYsHOz8mJ.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+} */
+
+/* divers */
+div[data-testid="stDecoration"] {
+  display: none;
+}
+
+footer {
+  display: none !important;
+}
+
+
+/* sidebar */
+.css-b7s55g {
+  background-color: var(--main-bg-color);
+  width: 17rem;
+  border-right: 10px solid var(--gray-color);
+}
+
+section[data-testid="stSidebar"] button[title="View fullscreen"] {
+  display: none;
+}
+
+
+/* section */
+.css-ffhzg2 {
+  background-color: var(--main-bg-color);
+  letter-spacing: 0.2px;
+}
+
+.css-12oz5g7 {
+  max-width: 70rem;
+}
+
+section[tabindex="0"] h1 {
+  border-top: 5px solid var(--gray-color);
+  border-right: 5px solid var(--gray-color);
+  border-top-right-radius: 25px;
+  font-family: 'Zen Dots';
+  font-style: italic;
+}
+
+section[tabindex="0"] h2,
+section[tabindex="0"] h3 {
+  font-family: 'Zen Dots';
+}
+section[tabindex="0"] h2 .css-zt5igj,
+section[tabindex="0"] h3 .css-zt5igj {
+  width: fit-content;
+}
+section[tabindex="0"] h2 span,
+section[tabindex="0"] h3 span {
+  border-bottom: 2px solid var(--red-color);
+}
+
+.css-13sdm1b {
+  font-family: "Titillium Web";
+}
+
+.css-13sdm1b a {
+  font-weight: bold;
+  text-decoration: none;
+  font-style: 'Zen Dots';
+}
+
+section[tabindex="0"] ul {
+  margin: 0 0 1rem 1rem;
+}
+
+table.css-zuelfj {
+  width: unset;
+}
+table.css-zuelfj thead th:first-child,
+table.css-zuelfj tbody th {
+  display: none;
+}
+table.css-zuelfj tbody td:last-child {
+  text-align: right !important;
+}
+table.css-zuelfj tbody tr:nth-child(1) td:last-child,
+table.css-zuelfj tbody tr:nth-child(2) td:last-child {
+  color: #05a705;
+}
+table.css-zuelfj tbody tr:nth-child(3) td:last-child,
+table.css-zuelfj tbody tr:nth-child(4) td:last-child {
+  color: #c10909;
+}
+
+
+/* 
+code {
+  color: #1ec3bc;
+} */
+
+/* #MainMenu {
+  display: none;
+} */
+
+
+/* Radio buttons */
+
+/* .st-cc {
+  color: black;
+  font-weight: 500;
+} */
+
+/* Sidebar */
+
+/* section[data-testid="stSidebar"] > div {
+  background-color: #10b8dd;
+  padding-top: 2rem;
+  padding-left: 1.5rem;
+}
+
+section[data-testid="stSidebar"] button[kind="icon"] {
+  display: none;
+}
+
+section[data-testid="stSidebar"] .st-bk {
+  background-color: white;
+}
+
+section[data-testid="stSidebar"] .st-c0 {
+  background-color: black;
+}
+
+section[data-testid="stSidebar"] hr {
+  margin-top: 30px;
+  border-color: white;
+  width: 50px;
+}
+
+section[data-testid="stSidebar"] h2 {
+  color: white;
+} */
+
+/* Images */
+
+/* button[title="View fullscreen"] {
+  display: none;
+} */
+
+/* hr */
+
+/* hr {
+  width: 200px;
+  border-width: 5px;
+  border-color: #10b8dd;
+  margin-top: 0px;
+} */
+
+/* First Page */
+
+/* section[tabindex="0"] .block-container {
+  padding-top: 0px;
+  padding-bottom: 0px;
+} */
