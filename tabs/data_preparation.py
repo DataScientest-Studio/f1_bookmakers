@@ -17,7 +17,7 @@ def run():
         La table « Results » est le point de départ de notre travail :
         
         """)
-    results = pd.read_csv(r'.\data\results.csv',sep=',',index_col=0)
+    results = pd.read_csv(r'./data/results.csv',sep=',',index_col=0)
     st.dataframe(results.sample(10))   
     
 
@@ -47,7 +47,7 @@ def run():
           Ce qui nous donne la nouvelle colonne suivante dans le dataframe
           """)
     #import tableau final pour afficher la colonne fastestlapspeedclasses
-    df_results_final = pd.read_csv(r'.\data\df_results_meteo_circuit_classement.csv',sep=';')
+    df_results_final = pd.read_csv(r'./data/df_results_meteo_circuit_classement.csv',sep=';')
     st.dataframe(df_results_final['fastestLapSpeed_classes'].sample(10))
     
     
