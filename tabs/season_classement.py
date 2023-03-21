@@ -16,18 +16,18 @@ def run():
     st.title(title)
 
   
-    points = pd.read_csv(r'.\data\points_classement_2021.csv',sep=',',index_col = 0)
-    races = pd.read_csv(r'.\data\races.csv',sep=',')
-    results = pd.read_csv(r'.\data\results.csv',sep=',')
-    drivers = pd.read_csv(r'.\data\drivers.csv',sep=',')
-    rfc_proba = pd.read_csv(r'.\data\rfc_proba_complet.csv',sep=',',index_col=0)
-    svc_proba = pd.read_csv(r'.\data\svc_proba_complet.csv',sep=',',index_col=0)
-    logreg_proba = pd.read_csv(r'.\data\logreg_proba_complet.csv',sep=',',index_col=0)
-    tree_proba = pd.read_csv(r'.\data\decisiontree_proba_complet.csv',sep=',',index_col=0)
-    compar_svc = pd.read_csv(r'.\data\compar_svc_class_complet.csv',sep=',',index_col=0)
-    compar_rfc = pd.read_csv(r'.\data\compar_rfc_class_complet.csv',sep=',',index_col=0)
-    compar_logreg = pd.read_csv(r'.\data\compar_logreg_class_complet.csv',sep=',',index_col=0)
-    compar_tree = pd.read_csv(r'.\data\compar_decisiontreee_class_complet.csv',sep=',',index_col=0)
+    points = pd.read_csv(r'./data/points_classement_2021.csv',sep=',',index_col = 0)
+    races = pd.read_csv(r'./data/races.csv',sep=',')
+    results = pd.read_csv(r'./data/results.csv',sep=',')
+    drivers = pd.read_csv(r'./data/drivers.csv',sep=',')
+    rfc_proba = pd.read_csv(r'./data/rfc_proba_complet.csv',sep=',',index_col=0)
+    svc_proba = pd.read_csv(r'./data/svc_proba_complet.csv',sep=',',index_col=0)
+    logreg_proba = pd.read_csv(r'./data/logreg_proba_complet.csv',sep=',',index_col=0)
+    tree_proba = pd.read_csv(r'./data/decisiontree_proba_complet.csv',sep=',',index_col=0)
+    compar_svc = pd.read_csv(r'./data/compar_svc_class_complet.csv',sep=',',index_col=0)
+    compar_rfc = pd.read_csv(r'./data/compar_rfc_class_complet.csv',sep=',',index_col=0)
+    compar_logreg = pd.read_csv(r'./data/compar_logreg_class_complet.csv',sep=',',index_col=0)
+    compar_tree = pd.read_csv(r'./data/compar_decisiontreee_class_complet.csv',sep=',',index_col=0)
     
     
     st.markdown(
@@ -215,11 +215,11 @@ def run():
      
             ## import image SVC
             st.subheader("Linear SVC - Ordonné selon le classement réel")
-            image_svc = Image.open(r'.\data\classement_2021_svc.png')
+            image_svc = Image.open(r'./data/classement_2021_svc.png')
             st.image(image_svc)
             
             st.subheader("Linear SVC - Ordonné selon le classement prédit")
-            image_svc_2 = Image.open(r'.\data\classement_2021_svc_2.png')
+            image_svc_2 = Image.open(r'./data/classement_2021_svc_2.png')
             st.image(image_svc_2)
             
             st.write("             ")
@@ -233,11 +233,11 @@ def run():
             
             ## import image RFC
             st.subheader("Random Forest Classifier - Ordonné selon le classement réel")
-            image_rfc = Image.open(r'.\data\classement_2021_rfc.png')
+            image_rfc = Image.open(r'./data/classement_2021_rfc.png')
             st.image(image_rfc)
             
             st.subheader("Random Forest Classifier - Ordonné selon le classement prédit")
-            image_rfc_2 = Image.open(r'.\data\classement_2021_rfc_2.png')
+            image_rfc_2 = Image.open(r'./data/classement_2021_rfc_2.png')
             st.image(image_rfc_2)
             st.write("             ")
             st.write("Pour les deux premières places, les résultats sont très bons ! "
@@ -253,11 +253,11 @@ def run():
             
             ## import image logreg
             st.subheader("Régression Logistique - Ordonné selon le classement réel")
-            image_logreg = Image.open(r'.\data\classement_2021_log_reg.png')
+            image_logreg = Image.open(r'./data/classement_2021_log_reg.png')
             st.image(image_logreg)
             
             st.subheader("Régression Logistique - Ordonné selon le classement prédit")
-            image_logreg_2 = Image.open(r'.\data\classement_2021_log_reg_2.png')
+            image_logreg_2 = Image.open(r'./data/classement_2021_log_reg_2.png')
             st.image(image_logreg_2)
             st.write("             ")
             st.write("Ce modèle semble se comporter un peu comme le modèle SVC en plaçant Raikkonnen, Alonso et Vettel dans les 6 premiers. "
@@ -269,11 +269,11 @@ def run():
             
             ## import image tree
             st.subheader("Decision Tree - Ordonné selon le classement réel")
-            image_tree = Image.open(r'.\data\classement_2021_decision_tree.png')
+            image_tree = Image.open(r'./data/classement_2021_decision_tree.png')
             st.image(image_tree)
             
             st.subheader("Decision Tree - Ordonné selon le classement prédit")
-            image_tree_2 = Image.open(r'.\data\classement_2021_decision_tree_2.png')
+            image_tree_2 = Image.open(r'./data/classement_2021_decision_tree_2.png')
             st.image(image_tree_2)
             st.write("C'est de très loin le meilleur modèle ! Encore meilleur que le Random Forest, l'écart moyen est de 10.5 points! "
                      "Les plus grands écarts de points sont pour Verstappen et Hamilton (49 et 43 points), le 3ème plus grand n'est que de 28 points. ! "

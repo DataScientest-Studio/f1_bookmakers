@@ -65,8 +65,8 @@ def run():
 
             """
         )
-    circuits = pd.read_csv(r'.\data\circuits.csv',sep=',')
-    races = pd.read_csv(r'.\data\races.csv',sep=',')
+    circuits = pd.read_csv(r'./data/circuits.csv',sep=',')
+    races = pd.read_csv(r'./data/races.csv',sep=',')
     
     st.write("On souhaite présenter sur une carte l'emplacement de tous les Grands Prix de l'histoire")
     st.write('Pour cela, on a au départ deux dataframes issus de notre jeu de données qui ressemblent à ça : ')
@@ -210,9 +210,9 @@ def run():
     )  
     st.write("Dans cette première utilisation de FastF1 nous allons présenter les chronos de deux pilotes tout au long d'une course. ")
     st.write("Il faut donc choisir l'année, puis le Grand Prix, puis les pilotes.")
-    races = pd.read_csv(r'.\data\races.csv',sep=',')
-    results = pd.read_csv(r'.\data\results.csv',sep=',')
-    drivers = pd.read_csv(r'.\data\drivers.csv',sep=',')
+    races = pd.read_csv(r'./data/races.csv',sep=',')
+    results = pd.read_csv(r'./data/results.csv',sep=',')
+    drivers = pd.read_csv(r'./data/drivers.csv',sep=',')
     
    
     col1, col2, col3, col4 = st.columns(4)
@@ -304,9 +304,9 @@ def run():
     
     
     
-    races = pd.read_csv(r'.\data\races.csv',sep=',')
-    results = pd.read_csv(r'.\data\results.csv',sep=',')
-    drivers = pd.read_csv(r'.\data\drivers.csv',sep=',')
+    races = pd.read_csv(r'./data/races.csv',sep=',')
+    results = pd.read_csv(r'./data/results.csv',sep=',')
+    drivers = pd.read_csv(r'./data/drivers.csv',sep=',')
     
    
     col1, col2, col3, col4 = st.columns(4)  
@@ -455,9 +455,9 @@ def run():
     st.write("Dans cette dernière utilisation de FastF1, nous allons présenter l'évolution de la vitesse sur le circuit"
              " lors du tour le plus rapide du pilote.")
     st.write("Il faut donc choisir l'année, puis le Grand Prix, puis le pilote.")
-    races = pd.read_csv(r'.\data\races.csv',sep=',')
-    results = pd.read_csv(r'.\data\results.csv',sep=',')
-    drivers = pd.read_csv(r'.\data\drivers.csv',sep=',')
+    races = pd.read_csv(r'./data/races.csv',sep=',')
+    results = pd.read_csv(r'./data/results.csv',sep=',')
+    drivers = pd.read_csv(r'./data/drivers.csv',sep=',')
     
    
     col1, col2, col3= st.columns(3)  
