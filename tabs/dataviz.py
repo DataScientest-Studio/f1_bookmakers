@@ -11,7 +11,7 @@ import plotly.express as px
 
 
 import fastf1 as ff1
-ff1.Cache.enable_cache(cache_dir=r'tabs\cache')    # on met tout en cache pr que ca charge plus vite plus tard
+ff1.Cache.enable_cache(cache_dir=r'tabs/cache')    # on met tout en cache pr que ca charge plus vite plus tard
 from fastf1 import plotting
 ff1.plotting.setup_mpl() 
 from fastf1 import utils
